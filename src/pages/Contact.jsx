@@ -54,8 +54,13 @@ const quickLinks = [
 
 export default function Contact() {
   useDocumentMetadata(
+<<<<<<< HEAD
     "Contact ArthoVista | MSME & Business Consultants",
     "Contact ArthoVista for MSME consulting, government schemes, business loans, funding assistance and business support."
+=======
+    "Contact Us | ArthoVista",
+    "Get in touch with ArthoVista for business registration, subsidies, loans, and startup consulting. Contact our team in Noida."
+>>>>>>> origin/main
   );
   const [formData, setFormData] = useState({ name: "", phone: "", email: "", service: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
@@ -93,16 +98,27 @@ export default function Contact() {
   return (
     <div>
       {/* ====== HERO ====== */}
+<<<<<<< HEAD
       <section className="relative py-16 px-6 overflow-hidden border-b border-slate-200">
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <span className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold px-4 py-2 rounded-full mb-6">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600" />
+=======
+      <section className="hero-dark relative py-16 px-6 overflow-hidden">
+        <div className="grid-bg" />
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+          <span className="inline-flex items-center gap-2 bg-green-500/15 text-green-400 border border-green-500/20 text-xs font-semibold px-4 py-2 rounded-full mb-6">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
+>>>>>>> origin/main
             </span>
             Experts Are Online — Available Now
           </span>
           <h1
+<<<<<<< HEAD
             className="font-display font-black text-slate-900"
             style={{ fontSize: "clamp(30px, 5vw, 54px)" }}
           >
@@ -113,6 +129,18 @@ export default function Contact() {
           </p>
           <p className="text-sm text-slate-500 mt-3 flex items-center justify-center gap-2 font-medium">
             <Clock size={14} className="text-teal-600" />
+=======
+            className="font-display font-black text-white"
+            style={{ fontSize: "clamp(30px, 5vw, 54px)" }}
+          >
+            Get In <span className="gradient-text">Touch</span>
+          </h1>
+          <p className="text-white/50 mt-4 max-w-xl mx-auto">
+            Our experts are ready to help you take your business to the next level. Free consultation, no commitment.
+          </p>
+          <p className="text-sm text-white/30 mt-3 flex items-center justify-center gap-2">
+            <Clock size={14} className="text-orange-400" />
+>>>>>>> origin/main
             Mon-Sat, 9:30 AM - 6:00 PM IST · Free Consultation
           </p>
         </div>
@@ -120,7 +148,11 @@ export default function Contact() {
 
       {/* ====== STATS BAR ====== */}
       <section className="stats-section">
+<<<<<<< HEAD
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 divide-x divide-slate-200">
+=======
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10">
+>>>>>>> origin/main
           {stats.map((s) => (
             <div key={s.label} className="stat-card">
               <div className="stat-value">{s.value}</div>
@@ -131,7 +163,11 @@ export default function Contact() {
       </section>
 
       {/* ====== CONTACT CHANNELS ====== */}
+<<<<<<< HEAD
       <section className="py-12 px-6 border-b border-slate-200">
+=======
+      <section className="py-12 px-6 border-b border-slate-800/40">
+>>>>>>> origin/main
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-5">
             {channels.map((c) => (
@@ -140,12 +176,17 @@ export default function Contact() {
                 href={c.href}
                 target={c.href.startsWith("http") ? "_blank" : undefined}
                 rel="noreferrer"
+<<<<<<< HEAD
                 className="bg-white rounded-2xl overflow-hidden border border-slate-200/90 hover:border-teal-500 shadow-md group transition-all"
+=======
+                className="glass-card-dark rounded-2xl overflow-hidden card-3d group border border-slate-700 hover:border-teal-500 transition-all"
+>>>>>>> origin/main
               >
                 <div className={`bg-gradient-to-br ${c.color} p-5 relative`}>
                   <span className="absolute top-3 right-3 bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full border border-white/20">
                     {c.badge}
                   </span>
+<<<<<<< HEAD
                   <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center shadow-xs">
                     <c.icon size={22} className="text-white" />
                   </div>
@@ -155,6 +196,17 @@ export default function Contact() {
                   <p className="text-slate-600 text-sm font-normal mt-1">{c.desc}</p>
                   <p className="text-xs font-semibold text-teal-700 mt-2">{c.meta}</p>
                   <div className="mt-4 inline-flex items-center gap-1 text-teal-600 font-bold text-sm group-hover:gap-3 transition-all">
+=======
+                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center shadow-sm">
+                    <c.icon size={22} className="text-white" />
+                  </div>
+                </div>
+                <div className="p-5">
+                  <h3 className="font-display font-bold text-white text-lg drop-shadow-sm">{c.title}</h3>
+                  <p className="text-slate-100 text-sm font-medium mt-1">{c.desc}</p>
+                  <p className="text-xs font-semibold text-teal-300 mt-2">{c.meta}</p>
+                  <div className="mt-4 inline-flex items-center gap-1 text-teal-400 font-bold text-sm group-hover:gap-3 transition-all">
+>>>>>>> origin/main
                     {c.action} <ArrowRight size={13} />
                   </div>
                 </div>
@@ -165,6 +217,7 @@ export default function Contact() {
       </section>
 
       {/* ====== MAIN CONTACT SECTION ====== */}
+<<<<<<< HEAD
       <section className="py-10 md:py-14 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-[1fr_1.3fr] gap-8 lg:gap-10">
@@ -175,10 +228,23 @@ export default function Contact() {
                 Let's <span className="highlight">Talk Business</span>
               </h2>
               <p className="text-slate-600 text-base font-normal mb-8">
+=======
+      <section className="py-14 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-[1fr_1.3fr] gap-10">
+            {/* Left Side */}
+            <div>
+              <div className="eyebrow">We're Here to Help</div>
+              <h2 className="section-title text-white mb-3">
+                Let's <span className="highlight">Talk Business</span>
+              </h2>
+              <p className="text-slate-100 text-base font-medium mb-8">
+>>>>>>> origin/main
                 Choose your preferred way to connect with our MSME experts.
               </p>
 
               {/* Office Info */}
+<<<<<<< HEAD
               <div className="bg-white rounded-2xl p-6 mb-6 border border-slate-200 shadow-xs">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center shrink-0 border border-teal-200 shadow-2xs">
@@ -190,12 +256,30 @@ export default function Contact() {
                     <div className="flex flex-wrap gap-2 mt-3">
                       {["Business Registration", "MSME Loans", "Govt. Schemes", "PMEGP"].map((t) => (
                         <span key={t} className="text-[11px] bg-slate-100 border border-slate-200 rounded-full px-2.5 py-1 text-slate-700 font-bold">
+=======
+              <div className="glass-card-dark rounded-2xl p-6 mb-6 card-3d border border-slate-700">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center shrink-0 shadow-sm">
+                    <MapPin size={20} className="text-orange-400" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-white text-base">Visit Our Office in Noida</p>
+                    <p className="text-sm font-medium text-slate-100 mt-1">Logix Cyber Park, Sector 62, Noida, UP - 201309</p>
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {["Business Registration", "MSME Loans", "Govt. Schemes", "PMEGP"].map((t) => (
+                        <span key={t} className="text-[11px] bg-slate-800 border border-slate-600 rounded-full px-2.5 py-1 text-teal-300 font-bold">
+>>>>>>> origin/main
                           {t}
                         </span>
                       ))}
                     </div>
+<<<<<<< HEAD
                     <p className="text-xs text-slate-500 font-semibold mt-3 flex items-center gap-1.5">
                       <Clock size={12} className="text-teal-600" />
+=======
+                    <p className="text-xs text-slate-200 font-semibold mt-3 flex items-center gap-1.5">
+                      <Clock size={12} className="text-teal-400" />
+>>>>>>> origin/main
                       Mon-Sat 9:30 AM - 6:00 PM · 500+ approved visits
                     </p>
                   </div>
@@ -205,23 +289,41 @@ export default function Contact() {
               {/* Quick Links */}
               <div className="grid grid-cols-1 gap-3 mb-6">
                 {quickLinks.map((q) => (
+<<<<<<< HEAD
                   <div key={q.title} className="bg-white rounded-xl p-4 flex items-center gap-3 border border-slate-200 shadow-2xs">
+=======
+                  <div key={q.title} className="glass-card-dark rounded-xl p-4 flex items-center gap-3 card-3d border border-slate-700">
+>>>>>>> origin/main
                     <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${q.color}`}>
                       <q.icon size={18} />
                     </div>
                     <div className="flex-1">
+<<<<<<< HEAD
                       <p className="font-bold text-slate-900 text-sm">{q.title}</p>
                       <p className="text-xs font-medium text-slate-600 mt-0.5">{q.desc}</p>
                     </div>
                     <ArrowRight size={14} className="text-teal-600" />
+=======
+                      <p className="font-bold text-white text-sm">{q.title}</p>
+                      <p className="text-xs font-medium text-slate-200 mt-0.5">{q.desc}</p>
+                    </div>
+                    <ArrowRight size={14} className="text-teal-400" />
+>>>>>>> origin/main
                   </div>
                 ))}
               </div>
 
+<<<<<<< HEAD
               <p className="text-xs text-slate-600 font-semibold flex items-center gap-2">
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-600" />
+=======
+              <p className="text-xs text-slate-200 font-semibold flex items-center gap-2">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400" />
+>>>>>>> origin/main
                 </span>
                 3 experts online — Ready to assist you right now
               </p>
@@ -229,6 +331,7 @@ export default function Contact() {
 
             {/* Right - Form */}
             <div>
+<<<<<<< HEAD
               <div className="rounded-2xl overflow-hidden border border-slate-200/90 shadow-md bg-white">
                 <div className="p-5 flex items-center justify-between bg-gradient-to-r from-teal-700 to-teal-800 text-white">
                   <div>
@@ -238,10 +341,27 @@ export default function Contact() {
                   <div className="flex gap-1">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} size={13} className="text-amber-300 fill-amber-300" />
+=======
+              <div
+                className="rounded-2xl overflow-hidden border border-slate-700 shadow-2xl"
+              >
+                <div
+                  className="p-5 flex items-center justify-between"
+                  style={{ background: "linear-gradient(135deg, rgba(10,22,40,0.9), rgba(26,48,96,0.9))" }}
+                >
+                  <div>
+                    <h2 className="font-display font-bold text-white text-lg drop-shadow-sm">Send Us a Message</h2>
+                    <p className="text-slate-200 text-xs font-medium mt-0.5">We'll get back to you within 24 hours</p>
+                  </div>
+                  <div className="flex gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={13} className="text-amber-400 fill-amber-400" />
+>>>>>>> origin/main
                     ))}
                   </div>
                 </div>
 
+<<<<<<< HEAD
                 <div className="bg-white p-7">
                   {submitted ? (
                     <div className="py-12 text-center">
@@ -250,41 +370,76 @@ export default function Contact() {
                       </div>
                       <h3 className="font-display font-bold text-slate-900 text-xl">Message Sent!</h3>
                       <p className="text-slate-600 mt-2 text-sm font-medium">Our expert will call you within 24 hours.</p>
+=======
+                <div className="bg-slate-900/90 p-7">
+                  {submitted ? (
+                    <div className="py-12 text-center">
+                      <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <CheckCircle size={32} className="text-green-400" />
+                      </div>
+                      <h3 className="font-display font-bold text-white text-xl">Message Sent!</h3>
+                      <p className="text-slate-200 mt-2 text-sm font-medium">Our expert will call you within 24 hours.</p>
+>>>>>>> origin/main
                     </div>
                   ) : (
                     <form className="space-y-4" onSubmit={handleSubmit}>
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div>
+<<<<<<< HEAD
                           <label className="text-xs font-bold text-slate-700 block mb-1.5">Full Name *</label>
+=======
+                          <label className="text-xs font-bold text-slate-200 block mb-1.5">Full Name *</label>
+>>>>>>> origin/main
                           <input
                             type="text"
                             placeholder="Ramesh Kumar"
                             required
+<<<<<<< HEAD
                             className="w-full px-4 py-3 rounded-xl bg-white text-slate-900 placeholder-slate-400 border border-slate-300 text-sm font-medium focus:outline-none focus:border-teal-600 transition-all shadow-2xs"
+=======
+                            className="w-full px-4 py-3 rounded-xl bg-slate-800 text-white placeholder-slate-400 border border-slate-600 text-sm font-medium focus:outline-none focus:border-teal-500 transition-all"
+>>>>>>> origin/main
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           />
                         </div>
                         <div>
+<<<<<<< HEAD
                           <label className="text-xs font-bold text-slate-700 block mb-1.5">Phone Number *</label>
+=======
+                          <label className="text-xs font-bold text-slate-200 block mb-1.5">Phone Number *</label>
+>>>>>>> origin/main
                           <input
                             type="tel"
                             placeholder="98999 02568"
                             required
+<<<<<<< HEAD
                             className="w-full px-4 py-3 rounded-xl bg-white text-slate-900 placeholder-slate-400 border border-slate-300 text-sm font-medium focus:outline-none focus:border-teal-600 transition-all shadow-2xs"
+=======
+                            className="w-full px-4 py-3 rounded-xl bg-slate-800 text-white placeholder-slate-400 border border-slate-600 text-sm font-medium focus:outline-none focus:border-teal-500 transition-all"
+>>>>>>> origin/main
                             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           />
                         </div>
                       </div>
                       <div>
+<<<<<<< HEAD
                         <label className="text-xs font-bold text-slate-700 block mb-1.5">Email Address</label>
                         <input
                           type="email"
                           placeholder="ramesh@example.com"
                           className="w-full px-4 py-3 rounded-xl bg-white text-slate-900 placeholder-slate-400 border border-slate-300 text-sm font-medium focus:outline-none focus:border-teal-600 transition-all shadow-2xs"
+=======
+                        <label className="text-xs font-bold text-slate-200 block mb-1.5">Email Address</label>
+                        <input
+                          type="email"
+                          placeholder="ramesh@example.com"
+                          className="w-full px-4 py-3 rounded-xl bg-slate-800 text-white placeholder-slate-400 border border-slate-600 text-sm font-medium focus:outline-none focus:border-teal-500 transition-all"
+>>>>>>> origin/main
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         />
                       </div>
                       <div>
+<<<<<<< HEAD
                         <label className="text-xs font-bold text-slate-700 block mb-1.5">Service Interested In</label>
                         <select
                           className="w-full px-4 py-3 rounded-xl bg-white text-slate-900 border border-slate-300 text-sm font-medium focus:outline-none focus:border-teal-600 transition-all shadow-2xs"
@@ -307,11 +462,39 @@ export default function Contact() {
                           rows={4}
                           placeholder="Tell us what you need help with — business stage, industry, funding requirements..."
                           className="w-full px-4 py-3 rounded-xl bg-white text-slate-900 placeholder-slate-400 border border-slate-300 text-sm font-medium focus:outline-none focus:border-teal-600 transition-all resize-none shadow-2xs"
+=======
+                        <label className="text-xs font-bold text-slate-200 block mb-1.5">Service Interested In</label>
+                        <select
+                          className="w-full px-4 py-3 rounded-xl bg-slate-800 text-white border border-slate-600 text-sm font-medium focus:outline-none focus:border-teal-500 transition-all"
+                          onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                        >
+                          <option value="" className="bg-slate-900">Select service</option>
+                          <option className="bg-slate-900">Business Registration</option>
+                          <option className="bg-slate-900">Government Schemes</option>
+                          <option className="bg-slate-900">Loan Products</option>
+                          <option className="bg-slate-900">Certifications</option>
+                          <option className="bg-slate-900">GST & Tax</option>
+                          <option className="bg-slate-900">NGO Services</option>
+                          <option className="bg-slate-900">Digital Marketing</option>
+                          <option className="bg-slate-900">DPR & Pitch Deck</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-slate-200 block mb-1.5">Tell Us About Your Business</label>
+                        <textarea
+                          rows={4}
+                          placeholder="Tell us what you need help with — business stage, industry, funding requirements..."
+                          className="w-full px-4 py-3 rounded-xl bg-slate-800 text-white placeholder-slate-400 border border-slate-600 text-sm font-medium focus:outline-none focus:border-teal-500 transition-all resize-none"
+>>>>>>> origin/main
                           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         />
                       </div>
                       {error && (
+<<<<<<< HEAD
                         <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm font-semibold">
+=======
+                        <div className="flex items-center gap-2 bg-red-950/80 border border-red-700 text-red-200 rounded-xl px-4 py-3 text-sm font-semibold">
+>>>>>>> origin/main
                           <span className="shrink-0">⚠️</span>
                           <span>{error}</span>
                         </div>
@@ -319,7 +502,11 @@ export default function Contact() {
                       <button
                         type="submit"
                         disabled={loading}
+<<<<<<< HEAD
                         className="btn-primary-3d w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed shadow-md cursor-pointer"
+=======
+                        className="btn-primary-3d w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-teal-500/25"
+>>>>>>> origin/main
                       >
                         {loading ? (
                           <>
@@ -333,7 +520,11 @@ export default function Contact() {
                           </>
                         )}
                       </button>
+<<<<<<< HEAD
                       <p className="text-center text-xs font-medium text-slate-500">
+=======
+                      <p className="text-center text-xs font-medium text-slate-300">
+>>>>>>> origin/main
                         Your information is secure · No hidden fees · 100% Confidential
                       </p>
                     </form>
@@ -346,6 +537,7 @@ export default function Contact() {
       </section>
 
       {/* ====== MAP + ADDRESS ====== */}
+<<<<<<< HEAD
       <section className="py-14 px-6 border-t border-slate-200 bg-white/60">
         <div className="max-w-6xl mx-auto">
           <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md">
@@ -354,6 +546,16 @@ export default function Contact() {
                 <div className="eyebrow">Our Location</div>
                 <h3 className="section-title text-3xl mb-4">Visit Our Office</h3>
                 <p className="text-slate-600 text-sm font-normal mb-6">
+=======
+      <section className="py-14 px-6 border-t border-slate-800/40">
+        <div className="max-w-6xl mx-auto">
+          <div className="glass-card-dark rounded-2xl overflow-hidden border border-slate-700/60">
+            <div className="grid md:grid-cols-2">
+              <div className="p-8">
+                <div className="eyebrow">Our Location</div>
+                <h3 className="section-title text-white text-3xl mb-4">Visit Our Office</h3>
+                <p className="text-slate-100 text-sm font-medium mb-6">
+>>>>>>> origin/main
                   We'd love to meet you in person and discuss your business growth strategy.
                 </p>
                 <div className="space-y-4">
@@ -363,8 +565,13 @@ export default function Contact() {
                     { icon: Mail, text: "support@arthovista.com" },
                     { icon: Clock, text: "Mon-Sat, 9:30 AM - 6:00 PM IST" },
                   ].map(({ icon: Icon, text }) => (
+<<<<<<< HEAD
                     <div key={text} className="flex items-start gap-3 text-sm text-slate-700 font-medium">
                       <Icon size={16} className="text-teal-600 mt-0.5 shrink-0" />
+=======
+                    <div key={text} className="flex items-start gap-3 text-sm text-slate-100 font-medium">
+                      <Icon size={16} className="text-orange-400 mt-0.5 shrink-0" />
+>>>>>>> origin/main
                       <span>{text}</span>
                     </div>
                   ))}
@@ -384,6 +591,7 @@ export default function Contact() {
                 </div>
               </div>
               <div
+<<<<<<< HEAD
                 className="min-h-[300px] flex items-center justify-center relative overflow-hidden text-white"
                 style={{ background: "linear-gradient(135deg, #0f766e, #0d9488)" }}
               >
@@ -393,11 +601,27 @@ export default function Contact() {
                   </div>
                   <p className="text-white font-bold text-lg">Logix Cyber Park</p>
                   <p className="text-teal-100 text-sm font-medium mt-1">Noida Sector 62, UP</p>
+=======
+                className="min-h-[300px] flex items-center justify-center relative overflow-hidden"
+                style={{ background: "linear-gradient(135deg, rgba(10,22,40,0.85), rgba(26,48,96,0.85))" }}
+              >
+                <div className="grid-bg" />
+                <div className="relative z-10 text-center p-6">
+                  <div className="w-16 h-16 bg-orange-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+                    <MapPin size={28} className="text-orange-400" />
+                  </div>
+                  <p className="text-white font-bold text-lg">Logix Cyber Park</p>
+                  <p className="text-slate-200 text-sm font-medium mt-1">Noida Sector 62, UP</p>
+>>>>>>> origin/main
                   <a
                     href="https://maps.google.com/?q=Logix+Cyber+Park+Noida+Sector+62"
                     target="_blank"
                     rel="noreferrer"
+<<<<<<< HEAD
                     className="inline-flex items-center gap-2 mt-4 text-white bg-white/20 hover:bg-white/30 px-4 py-2 rounded-xl text-sm transition-colors font-bold border border-white/20"
+=======
+                    className="inline-flex items-center gap-2 mt-4 text-orange-400 text-sm hover:text-orange-300 transition-colors font-bold"
+>>>>>>> origin/main
                   >
                     Open in Google Maps <ArrowRight size={13} />
                   </a>

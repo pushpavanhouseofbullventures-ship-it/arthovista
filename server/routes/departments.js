@@ -5,7 +5,11 @@ const { protect, authorize } = require('../middleware/auth');
 
 router.get('/', protect, async (req, res, next) => {
   try {
+<<<<<<< HEAD
     const departments = await Department.find().sort({ name: 1 }).lean();
+=======
+    const departments = await Department.find();
+>>>>>>> origin/main
     res.status(200).json({
       success: true,
       count: departments.length,

@@ -3,13 +3,20 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Shield, Lock, User, AlertCircle, Eye, EyeOff, ArrowLeft, Globe, CheckCircle2 } from 'lucide-react';
 import StarfieldBackground from '../../components/StarfieldBackground';
+<<<<<<< HEAD
 import Logo from '../../components/Logo';
+=======
+>>>>>>> origin/main
 
 const Login = () => {
   const { login, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> origin/main
   // Standard Login state
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -21,6 +28,7 @@ const Login = () => {
   // Determine where to redirect after success
   const from = location.state?.from?.pathname || '';
 
+<<<<<<< HEAD
   // Handle messages from redirect state or sessionStorage session expiration
   useEffect(() => {
     const sessionAuthError = sessionStorage.getItem('authErrorMessage');
@@ -33,6 +41,11 @@ const Login = () => {
       setError(location.state.errorMessage);
       navigate(location.pathname, { replace: true, state: {} });
     } else if (location.state?.successMessage) {
+=======
+  // Handle success message from redirect state (e.g., after password reset)
+  useEffect(() => {
+    if (location.state?.successMessage) {
+>>>>>>> origin/main
       setSuccess(location.state.successMessage);
       // Clear the state so it doesn't show again on refresh
       navigate(location.pathname, { replace: true, state: {} });
@@ -72,14 +85,22 @@ const Login = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#07192f] text-slate-100 px-4 relative overflow-hidden">
       <StarfieldBackground />
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> origin/main
       {/* Background radial gradient decoration */}
       <div className="absolute top-0 left-0 right-0 bottom-0 bg-[radial-gradient(circle_at_top_right,rgba(79,115,255,0.08),transparent_45%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(79,115,255,0.03),transparent_45%)] pointer-events-none" />
       <div className="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_at_bottom_left,rgba(99,102,241,0.08),transparent_45%)] dark:bg-[radial-gradient(circle_at_bottom_left,rgba(99,102,241,0.03),transparent_45%)] pointer-events-none" />
 
       {/* Main glass card container */}
       <div className="w-full max-w-md bg-slate-900/95 backdrop-blur-2xl p-8 rounded-3xl relative z-10 border border-slate-700/80 shadow-2xl text-white">
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> origin/main
         {/* Back to main website button */}
         <div className="mb-6 flex items-center justify-between border-b border-slate-800 pb-4">
           <Link
@@ -93,9 +114,15 @@ const Login = () => {
         </div>
 
         {/* Brand Banner */}
+<<<<<<< HEAD
         <div className="flex flex-col items-center mb-6">
           <div className="mb-4">
             <Logo variant="dark" size="lg" />
+=======
+        <div className="flex flex-col items-center mb-8">
+          <div className="w-12 h-12 bg-gradient-to-tr from-teal-500 to-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-teal-500/20 mb-3 animate-pulse-ring">
+            <Shield className="w-6 h-6" />
+>>>>>>> origin/main
           </div>
           <h2 className="text-2xl font-display font-black tracking-tight text-white">
             Welcome Back
@@ -134,7 +161,11 @@ const Login = () => {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+<<<<<<< HEAD
                 placeholder="EMAIL_ADDRESS or Employee ID"
+=======
+                placeholder="admin@attendance.com or ADMIN001"
+>>>>>>> origin/main
                 className="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-700 bg-slate-950/90 text-white font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500 placeholder:text-slate-500 transition-all shadow-inner"
                 disabled={submitting}
                 required

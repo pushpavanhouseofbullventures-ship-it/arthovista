@@ -14,18 +14,29 @@ export default function TermsOfService() {
 
   return (
     <div className="relative pt-8 pb-24 overflow-hidden">
+<<<<<<< HEAD
+=======
+      {/* Background Lighting */}
+      <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-amber-500/10 blur-[150px] rounded-full pointer-events-none" />
+
+>>>>>>> origin/main
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Navigation back */}
         <div className="mb-6">
           <Link
             to="/"
+<<<<<<< HEAD
             className="inline-flex items-center gap-2 text-xs font-bold text-amber-700 hover:text-amber-800 transition-colors"
+=======
+            className="inline-flex items-center gap-2 text-xs font-semibold text-teal-400 hover:text-teal-300 transition-colors"
+>>>>>>> origin/main
           >
             <ArrowLeft size={14} /> Back to Home
           </Link>
         </div>
 
         {/* Header */}
+<<<<<<< HEAD
         <div className="text-center max-w-3xl mx-auto mb-10 p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-md">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-xs font-bold uppercase tracking-wider mb-4">
             <ShieldAlert size={14} /> Terms & User Agreement
@@ -35,11 +46,26 @@ export default function TermsOfService() {
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-3 font-medium">
             Effective Date: <span className="text-amber-700 font-bold">{termsOfService.effectiveDate}</span> &nbsp;|&nbsp; Last Updated: <span className="text-amber-700 font-bold">{termsOfService.lastUpdated}</span>
+=======
+        <div className="text-center max-w-3xl mx-auto mb-10 p-6 sm:p-8 rounded-3xl bg-slate-900/80 border border-slate-800 backdrop-blur-md shadow-xl">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold uppercase tracking-wider mb-4">
+            <ShieldAlert size={14} /> Terms & User Agreement
+          </div>
+          <h1 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white">
+            {termsOfService.title}
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-400 mt-3">
+            Effective Date: <span className="text-amber-400 font-semibold">{termsOfService.effectiveDate}</span> &nbsp;|&nbsp; Last Updated: <span className="text-amber-400 font-semibold">{termsOfService.lastUpdated}</span>
+>>>>>>> origin/main
           </p>
         </div>
 
         {/* Lead Banner */}
+<<<<<<< HEAD
         <div className="p-6 sm:p-8 rounded-3xl bg-white border border-amber-200 text-slate-700 text-sm sm:text-base leading-relaxed mb-10 shadow-sm font-normal">
+=======
+        <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-amber-500/30 text-slate-200 text-sm sm:text-base leading-relaxed mb-10 shadow-2xl backdrop-blur-md">
+>>>>>>> origin/main
           {termsOfService.lead}
         </div>
 
@@ -49,24 +75,42 @@ export default function TermsOfService() {
             <div
               key={sec.id}
               id={sec.id}
+<<<<<<< HEAD
               className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-xs"
             >
               <h2 className="font-display font-bold text-xl text-slate-900 mb-4 flex items-center gap-2 border-b border-slate-100 pb-3">
                 <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+=======
+              className="p-6 sm:p-8 rounded-2xl bg-slate-900/80 border border-slate-800 backdrop-blur-sm"
+            >
+              <h2 className="font-display font-bold text-xl text-white mb-4 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+>>>>>>> origin/main
                 {sec.title}
               </h2>
 
               {sec.content && (
+<<<<<<< HEAD
                 <p className="text-slate-700 text-sm leading-relaxed whitespace-pre-line font-normal">
+=======
+                <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-line">
+>>>>>>> origin/main
                   {sec.content}
                 </p>
               )}
 
               {sec.items && (
+<<<<<<< HEAD
                 <ul className="mt-4 space-y-2.5 text-xs sm:text-sm text-slate-700 font-normal">
                   {sec.items.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2.5">
                       <span className="text-amber-600 mt-1 font-bold">•</span>
+=======
+                <ul className="mt-4 space-y-2.5 text-xs sm:text-sm text-slate-300">
+                  {sec.items.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <span className="text-amber-400 mt-1 font-bold">•</span>
+>>>>>>> origin/main
                       <span>{item}</span>
                     </li>
                   ))}
@@ -77,6 +121,7 @@ export default function TermsOfService() {
         </div>
 
         {/* Legal Contact Card */}
+<<<<<<< HEAD
         <div className="mt-12 p-8 rounded-3xl bg-white border border-amber-200 shadow-md">
           <h3 className="font-display font-bold text-xl text-slate-900 mb-4 flex items-center gap-2 border-b border-slate-100 pb-3">
             <FileCheck size={20} className="text-amber-700" />
@@ -100,6 +145,31 @@ export default function TermsOfService() {
               <p className="flex items-center gap-2 mt-2">
                 <Phone size={16} className="text-amber-700 shrink-0" />
                 <a href={`tel:${company.phone}`} className="text-amber-700 font-bold hover:underline">{company.phone}</a>
+=======
+        <div className="mt-12 p-8 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-850 to-amber-950/40 border border-amber-500/30">
+          <h3 className="font-display font-bold text-xl text-white mb-4 flex items-center gap-2">
+            <FileCheck size={20} className="text-amber-400" />
+            Contact for Legal Questions
+          </h3>
+
+          <div className="grid sm:grid-cols-2 gap-6 text-xs sm:text-sm text-slate-300 mt-4">
+            <div>
+              <p><strong className="text-white">Brand:</strong> {company.brand}</p>
+              <p className="mt-1.5"><strong className="text-white">Legal Entity:</strong> {company.legalEntity}</p>
+            </div>
+            <div>
+              <p className="flex items-start gap-2">
+                <MapPin size={16} className="text-amber-400 shrink-0 mt-0.5" />
+                <span>{company.communicationOffice}</span>
+              </p>
+              <p className="flex items-center gap-2 mt-2">
+                <Mail size={16} className="text-amber-400 shrink-0" />
+                <a href={`mailto:${company.email}`} className="text-amber-400 hover:underline">{company.email}</a>
+              </p>
+              <p className="flex items-center gap-2 mt-2">
+                <Phone size={16} className="text-amber-400 shrink-0" />
+                <a href={`tel:${company.phone}`} className="text-amber-400 hover:underline">{company.phone}</a>
+>>>>>>> origin/main
               </p>
             </div>
           </div>

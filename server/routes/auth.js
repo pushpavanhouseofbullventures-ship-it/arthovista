@@ -29,11 +29,18 @@ router.post('/login', async (req, res, next) => {
   }
 
   try {
+<<<<<<< HEAD
     const cleanUsername = username.trim();
     const user = await User.findOne({
       $or: [
         { email: cleanUsername.toLowerCase() },
         { employeeId: cleanUsername.toUpperCase() }
+=======
+    const user = await User.findOne({
+      $or: [
+        { email: username.toLowerCase() },
+        { employeeId: username.toUpperCase() }
+>>>>>>> origin/main
       ]
     }).select('+password');
 
@@ -66,7 +73,11 @@ router.post('/login', async (req, res, next) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
+<<<<<<< HEAD
       maxAge: 24 * 60 * 60 * 1000 // 24 hours (1 day)
+=======
+      maxAge: 7 * 24 * 60 * 60 * 1000
+>>>>>>> origin/main
     });
 
     const populatedUser = await User.findById(user._id).populate('department', 'name code');
@@ -112,7 +123,11 @@ router.post('/refresh', async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> origin/main
     const user = await User.findById(decoded.id);
     if (!user) {
       return res.status(401).json({
@@ -145,6 +160,7 @@ router.post('/refresh', async (req, res, next) => {
 router.get('/me', protect, async (req, res, next) => {
   try {
     const user = req.user;
+<<<<<<< HEAD
     let dept = user.department;
     if (dept && typeof dept === 'object' && dept._id) {
       // already populated object
@@ -157,19 +173,38 @@ router.get('/me', protect, async (req, res, next) => {
       success: true,
       user: {
         id: user._id || user.id,
+=======
+    if (user.department && typeof user.populate === 'function') {
+      await user.populate('department', 'name code');
+    }
+      
+    res.status(200).json({
+      success: true,
+      user: {
+        id: user._id,
+>>>>>>> origin/main
         fullName: user.fullName,
         employeeId: user.employeeId,
         email: user.email,
         phone: user.phone,
         role: user.role,
+<<<<<<< HEAD
         department: dept || user.department,
+=======
+        department: user.department,
+>>>>>>> origin/main
         designation: user.designation,
         joiningDate: user.joiningDate,
         status: user.status,
         address: user.address || '',
         profilePhoto: user.profilePhoto,
+<<<<<<< HEAD
         hasBiometrics: Boolean(user.hasBiometrics || (user.faceEmbeddings && user.faceEmbeddings.length > 0)),
         faceEmbeddingsCount: user.faceEmbeddingsCount !== undefined ? user.faceEmbeddingsCount : (user.faceEmbeddings ? user.faceEmbeddings.length : 0)
+=======
+        hasBiometrics: user.faceEmbeddings && user.faceEmbeddings.length > 0,
+        faceEmbeddingsCount: user.faceEmbeddings ? user.faceEmbeddings.length : 0
+>>>>>>> origin/main
       }
     });
   } catch (error) {
@@ -199,9 +234,14 @@ router.post('/forgot-password', async (req, res, next) => {
   }
 
   try {
+<<<<<<< HEAD
     const cleanEmail = email.trim().toLowerCase();
     const user = await User.findOne({
       email: cleanEmail
+=======
+    const user = await User.findOne({
+      email: email.toLowerCase()
+>>>>>>> origin/main
     }).select('+resetPasswordOTP +resetPasswordOTPExpires');
 
     if (!user) {
@@ -276,10 +316,15 @@ router.post('/verify-otp', async (req, res, next) => {
   }
 
   try {
+<<<<<<< HEAD
     const cleanEmail = email.trim().toLowerCase();
     const cleanOtp = otp.trim();
     const user = await User.findOne({
       email: cleanEmail
+=======
+    const user = await User.findOne({
+      email: email.toLowerCase()
+>>>>>>> origin/main
     }).select('+resetPasswordOTP +resetPasswordOTPExpires');
 
     if (!user || !user.resetPasswordOTP || !user.resetPasswordOTPExpires) {
@@ -298,7 +343,11 @@ router.post('/verify-otp', async (req, res, next) => {
     }
 
     // Compare hashed OTP
+<<<<<<< HEAD
     const isMatch = await bcrypt.compare(cleanOtp, user.resetPasswordOTP);
+=======
+    const isMatch = await bcrypt.compare(otp, user.resetPasswordOTP);
+>>>>>>> origin/main
     if (!isMatch) {
       return res.status(400).json({
         success: false,
@@ -336,10 +385,15 @@ router.post('/reset-password', async (req, res, next) => {
   }
 
   try {
+<<<<<<< HEAD
     const cleanEmail = email.trim().toLowerCase();
     const cleanOtp = otp.trim();
     const user = await User.findOne({
       email: cleanEmail
+=======
+    const user = await User.findOne({
+      email: email.toLowerCase()
+>>>>>>> origin/main
     }).select('+password +resetPasswordOTP +resetPasswordOTPExpires');
 
     if (!user || !user.resetPasswordOTP || !user.resetPasswordOTPExpires) {
@@ -358,7 +412,11 @@ router.post('/reset-password', async (req, res, next) => {
     }
 
     // Compare hashed OTP
+<<<<<<< HEAD
     const isMatch = await bcrypt.compare(cleanOtp, user.resetPasswordOTP);
+=======
+    const isMatch = await bcrypt.compare(otp, user.resetPasswordOTP);
+>>>>>>> origin/main
     if (!isMatch) {
       return res.status(400).json({
         success: false,

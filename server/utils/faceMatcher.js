@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * Biometric Face Descriptor Matcher (ResNet-34 Deep Neural Embeddings)
  * 
@@ -36,12 +37,22 @@ const calculateEuclideanDistance = (vec1, vec2) => {
 
   let sum = 0;
   for (let i = 0; i < len; i++) {
+=======
+const calculateEuclideanDistance = (vec1, vec2) => {
+  if (vec1.length !== vec2.length) {
+    throw new Error('Vectors must be of the same length to calculate distance.');
+  }
+
+  let sum = 0;
+  for (let i = 0; i < vec1.length; i++) {
+>>>>>>> origin/main
     sum += Math.pow(vec1[i] - vec2[i], 2);
   }
   
   return Math.sqrt(sum);
 };
 
+<<<<<<< HEAD
 /**
  * Computes Cosine Similarity between two normalized vectors
  */
@@ -63,10 +74,14 @@ const calculateCosineSimilarity = (vec1, vec2) => {
  * @param {number} threshold Match distance cutoff (default: 0.35)
  */
 const verifyFace = (liveDescriptor, registeredEmbeddings, threshold = 0.35) => {
+=======
+const verifyFace = (liveDescriptor, registeredEmbeddings, threshold = 0.45) => {
+>>>>>>> origin/main
   if (!registeredEmbeddings || registeredEmbeddings.length === 0) {
     return { verified: false, minDistance: 1.0, medianDistance: 1.0, matchCount: 0, message: 'No registered biometrics' };
   }
 
+<<<<<<< HEAD
   const normLive = normalizeVector(liveDescriptor);
   if (normLive.length < 128) {
     return { verified: false, minDistance: 1.0, medianDistance: 1.0, matchCount: 0, message: 'Invalid live face descriptor' };
@@ -84,6 +99,14 @@ const verifyFace = (liveDescriptor, registeredEmbeddings, threshold = 0.35) => {
         distances.push(dist);
         similarities.push(sim);
       }
+=======
+  const distances = [];
+
+  for (const registered of registeredEmbeddings) {
+    try {
+      const dist = calculateEuclideanDistance(liveDescriptor, registered);
+      distances.push(dist);
+>>>>>>> origin/main
     } catch (err) {
       console.error('Error matching descriptor vector:', err.message);
     }
@@ -96,15 +119,19 @@ const verifyFace = (liveDescriptor, registeredEmbeddings, threshold = 0.35) => {
   const sorted = [...distances].sort((a, b) => a - b);
   const minDistance = sorted[0];
 
+<<<<<<< HEAD
   // Top-3 closest frames average
   const topK = sorted.slice(0, Math.min(3, sorted.length));
   const topKAvg = topK.reduce((a, b) => a + b, 0) / topK.length;
 
+=======
+>>>>>>> origin/main
   const mid = Math.floor(sorted.length / 2);
   const medianDistance = sorted.length % 2 !== 0
     ? sorted[mid]
     : (sorted[mid - 1] + sorted[mid]) / 2;
 
+<<<<<<< HEAD
   const matchCount = distances.filter(d => d <= threshold).length;
   const matchRatio = matchCount / distances.length;
 
@@ -115,22 +142,41 @@ const verifyFace = (liveDescriptor, registeredEmbeddings, threshold = 0.35) => {
   const verified = (minDistance <= threshold && topKAvg <= 0.38) || (minDistance <= 0.30);
 
   console.log(`[FaceVerify] dims=${normLive.length} min=${minDistance.toFixed(4)} topKAvg=${topKAvg.toFixed(4)} median=${medianDistance.toFixed(4)} matchCount=${matchCount}/${distances.length} ratio=${(matchRatio*100).toFixed(1)}% threshold=${threshold} → ${verified ? 'PASS' : 'FAIL'}`);
+=======
+  const matchCount = distances.filter(d => d < threshold).length;
+  const matchRatio = matchCount / distances.length;
+
+  const verified = medianDistance < threshold && matchRatio >= 0.40;
+
+  console.log(`[FaceVerify] min=${minDistance.toFixed(4)} median=${medianDistance.toFixed(4)} matchCount=${matchCount}/${distances.length} ratio=${(matchRatio*100).toFixed(1)}% threshold=${threshold} → ${verified ? 'PASS' : 'FAIL'}`);
+>>>>>>> origin/main
 
   return {
     verified,
     minDistance,
+<<<<<<< HEAD
     topKAvg,
     medianDistance,
     matchCount,
     totalEmbeddings: distances.length,
     threshold,
     dimensions: normLive.length
+=======
+    medianDistance,
+    matchCount,
+    totalEmbeddings: distances.length,
+    threshold
+>>>>>>> origin/main
   };
 };
 
 module.exports = {
+<<<<<<< HEAD
   normalizeVector,
   calculateEuclideanDistance,
   calculateCosineSimilarity,
+=======
+  calculateEuclideanDistance,
+>>>>>>> origin/main
   verifyFace
 };

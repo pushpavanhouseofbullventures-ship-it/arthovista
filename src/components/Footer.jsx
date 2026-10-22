@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { Mail, Clock, MapPin, Phone, MessageCircle, ArrowRight, Shield } from "lucide-react";
 import { useConsultation } from "../context/ConsultationContext";
+<<<<<<< HEAD
 import Logo from "./Logo";
+=======
+>>>>>>> origin/main
 
 const SocialIcon = ({ path }) => (
   <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
@@ -19,14 +22,18 @@ const navigation = [
   { to: "/services", label: "Services" },
   { to: "/government-schemes", label: "Government Schemes" },
   { to: "/loans", label: "Loans" },
+<<<<<<< HEAD
   { to: "/blogs", label: "Blogs" },
   { to: "/newsletter", label: "Newsletter" },
+=======
+>>>>>>> origin/main
   { to: "/about", label: "About Us" },
   { to: "/contact", label: "Contact" },
   { to: "/employee", label: "Employee" },
 ];
 
 const services = [
+<<<<<<< HEAD
   { label: "Business Registration", to: "/services#registration" },
   { label: "Legal & Protection", to: "/services#legal" },
   { label: "Certifications", to: "/services#certifications" },
@@ -34,6 +41,15 @@ const services = [
   { label: "Business Finance", to: "/services#finance" },
   { label: "Digital Services", to: "/services#digital" },
   { label: "GST Compliance", to: "/services#compliance" },
+=======
+  "Business Registration",
+  "Legal & Protection",
+  "Certifications",
+  "Grants & Funding",
+  "Business Finance",
+  "Digital Services",
+  "GST Compliance",
+>>>>>>> origin/main
 ];
 
 const schemes = [
@@ -49,6 +65,7 @@ export default function Footer() {
   const { openConsultationModal } = useConsultation();
 
   return (
+<<<<<<< HEAD
     <footer className="footer-dark bg-gradient-to-b from-[#0b1e3f] via-[#07152e] to-[#040d1c] text-slate-200">
       {/* ====== PRE-FOOTER CTA ====== */}
       <div
@@ -67,28 +84,62 @@ export default function Footer() {
               Ready to Accelerate Your Business Growth?
             </h3>
             <p className="text-slate-200 mt-3 text-sm md:text-base leading-relaxed font-normal">
+=======
+    <footer className="footer-dark">
+      {/* ====== PRE-FOOTER CTA ====== */}
+      <div
+        className="relative py-16 px-6 overflow-hidden border-t border-b border-white/10"
+        style={{ background: "linear-gradient(135deg, #060b18 0%, #0d172e 40%, #042f2c 100%)" }}
+      >
+        <div className="absolute top-0 right-0 w-[500px] h-[300px] bg-teal-500/10 blur-[130px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[250px] bg-emerald-600/15 blur-[100px] rounded-full pointer-events-none" />
+        
+        <div className="relative z-10 max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-xs font-semibold uppercase tracking-wider mb-3">
+              Fast Track Your MSME Funding
+            </div>
+            <h3 className="font-display font-black text-white text-3xl md:text-4xl leading-tight">
+              Ready to Accelerate Your Business Growth?
+            </h3>
+            <p className="text-slate-300 mt-3 text-sm md:text-base leading-relaxed">
+>>>>>>> origin/main
               Book a 1-on-1 strategy session with our empanelled MSME advisors. Discover applicable government grants, subsidies, and credit options with zero upfront commitment.
             </p>
           </div>
           <div className="flex flex-wrap gap-4 md:justify-end">
             <button
               onClick={() => openConsultationModal("Strategy Session")}
+<<<<<<< HEAD
               className="btn-3d inline-flex items-center gap-2.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:opacity-95 text-white font-bold px-7 py-4 rounded-xl shadow-lg shadow-emerald-500/25 transition-all cursor-pointer"
+=======
+              className="btn-3d inline-flex items-center gap-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold px-7 py-4 rounded-xl shadow-lg shadow-teal-500/25 transition-all cursor-pointer"
+>>>>>>> origin/main
             >
               <span>Book Free Session</span> <ArrowRight size={16} />
             </button>
             <a
               href="tel:+919899902568"
+<<<<<<< HEAD
               className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-6 py-4 rounded-xl border border-white/20 transition-all hover:scale-105 backdrop-blur-md"
             >
               <Phone size={16} className="text-amber-400" /> +91 98999 02568
+=======
+              className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white font-semibold px-6 py-4 rounded-xl border border-white/20 transition-all hover:scale-105 backdrop-blur-md"
+            >
+              <Phone size={16} className="text-orange-400" /> +91 98999 02568
+>>>>>>> origin/main
             </a>
           </div>
         </div>
       </div>
 
       {/* ====== STATS STRIP ====== */}
+<<<<<<< HEAD
       <div className="border-b border-blue-900/40" style={{ background: "rgba(10, 27, 58, 0.65)" }}>
+=======
+      <div className="border-b border-white/06" style={{ background: "rgba(255,255,255,0.03)" }}>
+>>>>>>> origin/main
         <div className="max-w-6xl mx-auto px-6 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
             { v: "500+", l: "Businesses Served" },
@@ -98,13 +149,18 @@ export default function Footer() {
           ].map((s) => (
             <div key={s.l}>
               <div className="font-display font-black text-orange-400 text-2xl">{s.v}</div>
+<<<<<<< HEAD
               <div className="text-slate-300 text-xs mt-1">{s.l}</div>
+=======
+              <div className="text-white/40 text-xs mt-1">{s.l}</div>
+>>>>>>> origin/main
             </div>
           ))}
         </div>
       </div>
 
       {/* ====== MAIN FOOTER GRID ====== */}
+<<<<<<< HEAD
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 md:py-14 grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
         {/* Brand */}
         <div>
@@ -112,6 +168,15 @@ export default function Footer() {
             <Logo variant="dark" size="lg" />
           </div>
           <p className="text-sm text-slate-300 leading-relaxed mb-5">
+=======
+      <div className="max-w-6xl mx-auto px-6 py-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        {/* Brand */}
+        <div>
+          <div className="font-display font-black text-xl text-white mb-3">
+            Artho<span className="text-orange-500">Vista</span>
+          </div>
+          <p className="text-sm text-white/40 leading-relaxed mb-5">
+>>>>>>> origin/main
             India's trusted MSME & startup support platform. End-to-end business support from registration and certifications to government funding and digital growth.
           </p>
           <div className="flex gap-3 mb-5">
@@ -119,14 +184,23 @@ export default function Footer() {
               <a
                 key={i}
                 href="#"
+<<<<<<< HEAD
                 className="w-9 h-9 rounded-lg bg-blue-950/60 border border-blue-800/40 flex items-center justify-center text-slate-300 hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-all"
+=======
+                className="w-9 h-9 rounded-lg bg-white/08 border border-white/08 flex items-center justify-center text-white/50 hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-all"
+>>>>>>> origin/main
               >
                 <SocialIcon path={path} />
               </a>
             ))}
           </div>
+<<<<<<< HEAD
           <div className="flex items-center gap-2 text-xs text-slate-400">
             <Shield size={12} className="text-emerald-400" />
+=======
+          <div className="flex items-center gap-2 text-xs text-white/30">
+            <Shield size={12} className="text-green-400" />
+>>>>>>> origin/main
             KVIC Empanelled · MSME Certified
           </div>
         </div>
@@ -139,7 +213,11 @@ export default function Footer() {
               <li key={n.to}>
                 <Link
                   to={n.to}
+<<<<<<< HEAD
                   className="text-slate-300 hover:text-orange-400 text-sm transition-colors flex items-center gap-2 group"
+=======
+                  className="text-white/50 hover:text-orange-400 text-sm transition-colors flex items-center gap-2 group"
+>>>>>>> origin/main
                 >
                   <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                   {n.label}
@@ -154,6 +232,7 @@ export default function Footer() {
           <h4 className="font-semibold text-orange-400 text-xs uppercase tracking-widest mb-5">Our Services</h4>
           <ul className="space-y-3">
             {services.map((s) => (
+<<<<<<< HEAD
               <li key={s.to}>
                 <Link
                   to={s.to}
@@ -161,6 +240,15 @@ export default function Footer() {
                 >
                   <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                   {s.label}
+=======
+              <li key={s}>
+                <Link
+                  to="/services"
+                  className="text-white/50 hover:text-orange-400 text-sm transition-colors flex items-center gap-2 group"
+                >
+                  <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                  {s}
+>>>>>>> origin/main
                 </Link>
               </li>
             ))}
@@ -170,7 +258,11 @@ export default function Footer() {
         {/* Contact */}
         <div>
           <h4 className="font-semibold text-orange-400 text-xs uppercase tracking-widest mb-5">Contact Us</h4>
+<<<<<<< HEAD
           <ul className="space-y-4 text-sm text-slate-300">
+=======
+          <ul className="space-y-4 text-sm text-white/50">
+>>>>>>> origin/main
             <li className="flex gap-3">
               <MapPin size={16} className="shrink-0 mt-0.5 text-orange-500" />
               <span>Logix Cyber Park, Sector 62, Noida, Uttar Pradesh - 201309</span>
@@ -196,7 +288,11 @@ export default function Footer() {
             href="https://wa.me/919899902568"
             target="_blank"
             rel="noreferrer"
+<<<<<<< HEAD
             className="mt-5 inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500 hover:text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-all"
+=======
+            className="mt-5 inline-flex items-center gap-2 bg-green-500/15 border border-green-500/25 text-green-400 hover:bg-green-500 hover:text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-all"
+>>>>>>> origin/main
           >
             <MessageCircle size={14} /> Chat on WhatsApp
           </a>
@@ -204,6 +300,7 @@ export default function Footer() {
       </div>
 
       {/* ====== DISCLAIMER ====== */}
+<<<<<<< HEAD
       <div className="border-t border-blue-900/40 max-w-6xl mx-auto px-6 py-6">
         <div className="grid md:grid-cols-2 gap-4 text-xs text-slate-400 leading-relaxed">
           <p>
@@ -211,16 +308,33 @@ export default function Footer() {
           </p>
           <p>
             <span className="font-semibold text-slate-300">PAYMENT NOTE:</span> All payments must be made exclusively to the official ArthoVista bank accounts. We do not accept payments to personal accounts.
+=======
+      <div className="border-t border-white/06 max-w-6xl mx-auto px-6 py-6">
+        <div className="grid md:grid-cols-2 gap-4 text-xs text-white/25 leading-relaxed">
+          <p>
+            <span className="font-semibold text-white/40">DISCLAIMER:</span> ArthoVista is a consulting firm providing advisory and execution support services. We do not guarantee loan or scheme approval outcomes.
+          </p>
+          <p>
+            <span className="font-semibold text-white/40">PAYMENT NOTE:</span> All payments must be made exclusively to the official ArthoVista bank accounts. We do not accept payments to personal accounts.
+>>>>>>> origin/main
           </p>
         </div>
       </div>
 
       {/* ====== BOTTOM BAR ====== */}
+<<<<<<< HEAD
       <div className="border-t border-blue-900/40 py-5 px-6 text-center text-xs text-slate-400">
         © {new Date().getFullYear()} ArthoVista. All rights reserved. &nbsp;·&nbsp;
         <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
         &nbsp;·&nbsp;
         <Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
+=======
+      <div className="border-t border-white/06 py-5 px-6 text-center text-xs text-white/25">
+        © {new Date().getFullYear()} ArthoVista. All rights reserved. &nbsp;·&nbsp;
+        <Link to="/privacy-policy" className="hover:text-white/60 transition-colors">Privacy Policy</Link>
+        &nbsp;·&nbsp;
+        <Link to="/terms-of-service" className="hover:text-white/60 transition-colors">Terms of Service</Link>
+>>>>>>> origin/main
         &nbsp;·&nbsp; 🇮🇳 Made in India
       </div>
 
@@ -230,14 +344,23 @@ export default function Footer() {
           href="https://wa.me/919899902568"
           target="_blank"
           rel="noreferrer"
+<<<<<<< HEAD
           className="fixed bottom-6 right-6 z-40 bg-emerald-500 hover:bg-emerald-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all"
           style={{ boxShadow: "0 8px 30px rgba(16,185,129,0.4)" }}
+=======
+          className="fixed bottom-6 right-6 z-40 bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all"
+          style={{ boxShadow: "0 8px 30px rgba(34,197,94,0.4)" }}
+>>>>>>> origin/main
           aria-label="Chat on WhatsApp"
         >
           <MessageCircle size={26} />
         </a>
         <span className="absolute right-14 top-1/2 -translate-y-1/2 whitespace-nowrap bg-gray-900 text-white text-xs px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300 pointer-events-none">
+<<<<<<< HEAD
           Chat on WhatsApp
+=======
+            Chat on WhatsApp
+>>>>>>> origin/main
         </span>
       </div>
     </footer>

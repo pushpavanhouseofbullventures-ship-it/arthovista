@@ -51,7 +51,11 @@ const USER_LOCATION = { lat: 28.6126546, lng: 77.3660593 };
 
 const EXAMPLE_USAGE = () => {
   const officeCoords = { lat: 28.5921, lng: 77.5297 };
+<<<<<<< HEAD
   const radiusMeters = 60;
+=======
+  const radiusMeters = 50;
+>>>>>>> origin/main
 
   return checkGeofence(
     USER_LOCATION.lat,

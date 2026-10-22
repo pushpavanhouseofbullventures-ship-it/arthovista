@@ -33,7 +33,11 @@ const calculateCurrentMonthAttendance = async (employeeId, holidayDates, leaveRe
     const empLogs = await Attendance.find({
       employee: employeeId,
       date: { $in: monthDates }
+<<<<<<< HEAD
     }).lean();
+=======
+    });
+>>>>>>> origin/main
     logs = {};
     empLogs.forEach(log => {
       logs[log.date] = log;
@@ -48,8 +52,13 @@ const calculateCurrentMonthAttendance = async (employeeId, holidayDates, leaveRe
     const d = new Date(dateStr);
     return leaveRequests.some(leave => {
       return leave.employee.toString() === employeeId.toString() &&
+<<<<<<< HEAD
         new Date(leave.startDate) <= d &&
         new Date(leave.endDate) >= d;
+=======
+             new Date(leave.startDate) <= d &&
+             new Date(leave.endDate) >= d;
+>>>>>>> origin/main
     });
   };
 
@@ -85,8 +94,13 @@ const calculateCurrentMonthAttendance = async (employeeId, holidayDates, leaveRe
   });
 
   const totalWorkingDays = presentDays + absentDays;
+<<<<<<< HEAD
   const attendancePercentage = totalWorkingDays > 0
     ? Math.round((presentDays / totalWorkingDays) * 100)
+=======
+  const attendancePercentage = totalWorkingDays > 0 
+    ? Math.round((presentDays / totalWorkingDays) * 100) 
+>>>>>>> origin/main
     : 100;
 
   return {
@@ -127,6 +141,7 @@ const getTodayDateString = () => {
 router.get('/admin', protect, authorize('Admin', 'Manager'), async (req, res, next) => {
   try {
     const today = getTodayDateString();
+<<<<<<< HEAD
     const weekDates = getCurrentWeekDateStrings();
     const monthDates = getMonthDateStrings();
     const startRange = new Date(monthDates[0]);
@@ -183,6 +198,38 @@ router.get('/admin', protect, authorize('Admin', 'Manager'), async (req, res, ne
     const lateTodayCount = todayLogs.filter(log => log.status === 'Late').length;
     const absentTodayCount = Math.max(0, totalEmployees - presentTodayCount - leavesTodayCount);
 
+=======
+
+    const totalEmployees = await User.countDocuments({ role: { $in: ['Employee', 'Manager'] }, status: 'Active' });
+    const totalDepartments = await Department.countDocuments();
+
+    const todayLogs = await Attendance.find({ date: today }).populate('employee', 'fullName employeeId department');
+    const presentTodayCount = todayLogs.filter(log => log.status === 'Present' || log.status === 'Late').length;
+    const lateTodayCount = todayLogs.filter(log => log.status === 'Late').length;
+    
+    const dToday = new Date();
+    dToday.setHours(0,0,0,0);
+    const leavesTodayCount = await LeaveRequest.countDocuments({
+      status: 'Approved',
+      startDate: { $lte: dToday },
+      endDate: { $gte: dToday }
+    });
+
+    const absentTodayCount = Math.max(0, totalEmployees - presentTodayCount - leavesTodayCount);
+
+    const recentLogs = await Attendance.find()
+      .populate({
+        path: 'employee',
+        select: 'fullName employeeId profilePhoto department designation',
+        populate: { path: 'department', select: 'name code' }
+      })
+      .sort({ updatedAt: -1 })
+      .limit(8);
+
+    const weekDates = getCurrentWeekDateStrings();
+    const allWeekLogs = await Attendance.find({ date: { $in: weekDates } });
+
+>>>>>>> origin/main
     // Group week logs by date
     const logsByDateMap = {};
     weekDates.forEach(dStr => {
@@ -199,8 +246,14 @@ router.get('/admin', protect, authorize('Admin', 'Manager'), async (req, res, ne
       const dayLogs = logsByDateMap[dStr] || [];
       const presentCount = dayLogs.filter(log => log.status === 'Present' || log.status === 'Late').length;
       const lateCount = dayLogs.filter(log => log.status === 'Late').length;
+<<<<<<< HEAD
       const dayName = new Date(dStr).toLocaleDateString('en-US', { weekday: 'short' });
 
+=======
+      
+      const dayName = new Date(dStr).toLocaleDateString('en-US', { weekday: 'short' });
+      
+>>>>>>> origin/main
       weeklyChartData.push({
         day: dayName,
         date: dStr,
@@ -210,26 +263,70 @@ router.get('/admin', protect, authorize('Admin', 'Manager'), async (req, res, ne
       });
     }
 
+<<<<<<< HEAD
     const departmentChartData = departments.map(dept => {
       const employeeCount = activeStaff.filter(emp => emp.department && emp.department.toString() === dept._id.toString()).length;
       const presentCount = todayLogs.filter(log => log.employee && log.employee.department && log.employee.department.toString() === dept._id.toString()).length;
 
       return {
+=======
+    const departments = await Department.find();
+    const departmentChartData = [];
+
+    for (const dept of departments) {
+      const employeeCount = await User.countDocuments({ department: dept._id, role: { $in: ['Employee', 'Manager'] }, status: 'Active' });
+      // Re-use todayLogs instead of re-querying inside the loop!
+      const presentCount = todayLogs.filter(log => log.employee && log.employee.department && log.employee.department.toString() === dept._id.toString()).length;
+
+      departmentChartData.push({
+>>>>>>> origin/main
         department: dept.code,
         name: dept.name,
         Total: employeeCount,
         Present: presentCount
+<<<<<<< HEAD
       };
     });
 
     // Calculate short attendance for the current month in batch
     const holidayDates = new Set(holidays.map(h => h.date));
+=======
+      });
+    }
+
+    // Calculate short attendance for the current month in batch
+    const monthDates = getMonthDateStrings();
+    const holidays = await Holiday.find({
+      date: { $in: monthDates }
+    });
+    const holidayDates = new Set(holidays.map(h => h.date));
+    
+    const activeStaff = await User.find({
+      role: { $in: ['Employee', 'Manager'] },
+      status: 'Active'
+    });
+    
+    const startRange = new Date(monthDates[0]);
+    const endRange = new Date(monthDates[monthDates.length - 1]);
+    const leaveRequests = await LeaveRequest.find({
+      status: 'Approved',
+      startDate: { $lte: endRange },
+      endDate: { $gte: startRange }
+    });
+
+>>>>>>> origin/main
     const activeStaffIds = activeStaff.map(emp => emp._id);
     const allMonthLogs = await Attendance.find({
       employee: { $in: activeStaffIds },
       date: { $in: monthDates }
+<<<<<<< HEAD
     }).lean();
 
+=======
+    });
+
+    // Group logs by employee and date
+>>>>>>> origin/main
     const logsByEmployee = {};
     activeStaffIds.forEach(id => {
       logsByEmployee[id.toString()] = {};
@@ -239,7 +336,11 @@ router.get('/admin', protect, authorize('Admin', 'Manager'), async (req, res, ne
         logsByEmployee[log.employee.toString()][log.date] = log;
       }
     });
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> origin/main
     const shortAttendanceEmployees = [];
     for (const emp of activeStaff) {
       const employeeLogsMap = logsByEmployee[emp._id.toString()] || {};
@@ -281,12 +382,17 @@ router.get('/admin', protect, authorize('Admin', 'Manager'), async (req, res, ne
 
 router.get('/employee', protect, async (req, res, next) => {
   try {
+<<<<<<< HEAD
     const userId = req.user.id || req.user._id;
+=======
+    const userId = req.user.id;
+>>>>>>> origin/main
     const today = getTodayDateString();
 
     const monthAgo = new Date();
     monthAgo.setDate(monthAgo.getDate() - 30);
 
+<<<<<<< HEAD
     const weekDates = getCurrentWeekDateStrings();
     const monthDates = getMonthDateStrings();
     const startRange = new Date(monthDates[0]);
@@ -344,17 +450,44 @@ router.get('/employee', protect, async (req, res, next) => {
     const presentCount = monthLogs.filter(log => log.status === 'Present' || log.status === 'Late').length;
     const lateCount = monthLogs.filter(log => log.status === 'Late').length;
 
+=======
+    const monthLogs = await Attendance.find({
+      employee: userId,
+      checkIn: { $ne: null },
+      createdAt: { $gte: monthAgo }
+    });
+
+    const presentCount = monthLogs.filter(log => log.status === 'Present' || log.status === 'Late').length;
+    const lateCount = monthLogs.filter(log => log.status === 'Late').length;
+    
+    const approvedLeavesCount = await LeaveRequest.countDocuments({
+      employee: userId,
+      status: 'Approved',
+      startDate: { $gte: monthAgo }
+    });
+
+    const weekDates = getCurrentWeekDateStrings();
+    const weekLogs = await Attendance.find({ employee: userId, date: { $in: weekDates } });
+    
+>>>>>>> origin/main
     const weekLogsByDate = {};
     weekLogs.forEach(log => {
       weekLogsByDate[log.date] = log;
     });
 
+<<<<<<< HEAD
     const now = new Date();
+=======
+>>>>>>> origin/main
     const weeklyLogs = [];
     for (const dStr of weekDates) {
       const log = weekLogsByDate[dStr];
       const dayName = new Date(dStr).toLocaleDateString('en-US', { weekday: 'short' });
+<<<<<<< HEAD
       const isPastOrToday = new Date(dStr) <= now;
+=======
+      const isPastOrToday = new Date(dStr) <= new Date();
+>>>>>>> origin/main
 
       weeklyLogs.push({
         day: dayName,
@@ -366,12 +499,45 @@ router.get('/employee', protect, async (req, res, next) => {
       });
     }
 
+<<<<<<< HEAD
     const holidayDates = new Set(holidays.map(h => h.date));
+=======
+    const announcements = await Announcement.find()
+      .populate('author', 'fullName designation')
+      .sort({ createdAt: -1 })
+      .limit(3);
+
+    // Calculate current month attendance percentage for alert warning in batch
+    const monthDates = getMonthDateStrings();
+    const holidays = await Holiday.find({
+      date: { $in: monthDates }
+    });
+    const holidayDates = new Set(holidays.map(h => h.date));
+    
+    const startRange = new Date(monthDates[0]);
+    const endRange = new Date(monthDates[monthDates.length - 1]);
+    const leaveRequests = await LeaveRequest.find({
+      employee: userId,
+      status: 'Approved',
+      startDate: { $lte: endRange },
+      endDate: { $gte: startRange }
+    });
+
+    const employeeMonthLogs = await Attendance.find({
+      employee: userId,
+      date: { $in: monthDates }
+    });
+    
+>>>>>>> origin/main
     const monthLogsByDate = {};
     employeeMonthLogs.forEach(log => {
       monthLogsByDate[log.date] = log;
     });
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> origin/main
     const details = await calculateCurrentMonthAttendance(userId, holidayDates, leaveRequests, monthDates, monthLogsByDate);
     const shortAttendanceAlert = details.attendancePercentage < 75;
 
@@ -385,7 +551,11 @@ router.get('/employee', protect, async (req, res, next) => {
         },
         weeklyGrid: weeklyLogs,
         announcements,
+<<<<<<< HEAD
         todayLog,
+=======
+        todayLog: await Attendance.findOne({ employee: userId, date: today }),
+>>>>>>> origin/main
         shortAttendanceAlert,
         attendancePercentage: details.attendancePercentage
       }
@@ -410,9 +580,15 @@ router.get('/attendance-report', protect, authorize('Admin', 'Manager'), async (
 
   try {
     // 1. Get all active employees (Employee or Manager)
+<<<<<<< HEAD
     const employees = await User.find({
       role: { $in: ['Employee', 'Manager'] },
       status: 'Active'
+=======
+    const employees = await User.find({ 
+      role: { $in: ['Employee', 'Manager'] }, 
+      status: 'Active' 
+>>>>>>> origin/main
     }).populate('department', 'name code');
 
     // 2. Fetch all holidays
@@ -429,7 +605,11 @@ router.get('/attendance-report', protect, authorize('Admin', 'Manager'), async (
     // 4. Fetch all approved leave requests that might overlap this range
     const startRange = new Date(startDate);
     const endRange = new Date(endDate);
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> origin/main
     const leaveRequests = await LeaveRequest.find({
       status: 'Approved',
       startDate: { $lte: endRange },
@@ -440,8 +620,13 @@ router.get('/attendance-report', protect, authorize('Admin', 'Manager'), async (
       const d = new Date(dateStr);
       return leaveRequests.some(leave => {
         return leave.employee.toString() === employeeId.toString() &&
+<<<<<<< HEAD
           new Date(leave.startDate) <= d &&
           new Date(leave.endDate) >= d;
+=======
+               new Date(leave.startDate) <= d &&
+               new Date(leave.endDate) >= d;
+>>>>>>> origin/main
       });
     };
 
@@ -462,7 +647,10 @@ router.get('/attendance-report', protect, authorize('Admin', 'Manager'), async (
       let lateDays = 0;
       let halfDays = 0;
       let leaveDays = 0;
+<<<<<<< HEAD
       let totalWorkHours = 0;
+=======
+>>>>>>> origin/main
 
       const empLogs = attendanceLogs.filter(log => log.employee.toString() === emp._id.toString());
       const logsByDate = {};
@@ -470,6 +658,7 @@ router.get('/attendance-report', protect, authorize('Admin', 'Manager'), async (
         logsByDate[log.date] = log;
       });
 
+<<<<<<< HEAD
       // Sort logs by date ascending
       const sortedLogs = [...empLogs].sort((a, b) => a.date.localeCompare(b.date));
       const punchDetails = [];
@@ -552,6 +741,8 @@ router.get('/attendance-report', protect, authorize('Admin', 'Manager'), async (
         }
       }
 
+=======
+>>>>>>> origin/main
       datesInRange.forEach(dateStr => {
         const log = logsByDate[dateStr];
         const dateObj = new Date(dateStr);
@@ -586,8 +777,13 @@ router.get('/attendance-report', protect, authorize('Admin', 'Manager'), async (
       });
 
       const totalWorkingDays = presentDays + absentDays;
+<<<<<<< HEAD
       const attendancePercentage = totalWorkingDays > 0
         ? Math.round((presentDays / totalWorkingDays) * 100)
+=======
+      const attendancePercentage = totalWorkingDays > 0 
+        ? Math.round((presentDays / totalWorkingDays) * 100) 
+>>>>>>> origin/main
         : 100;
 
       return {
@@ -604,11 +800,15 @@ router.get('/attendance-report', protect, authorize('Admin', 'Manager'), async (
         lateDays,
         halfDays,
         leaveDays,
+<<<<<<< HEAD
         attendancePercentage,
         punchInTime,
         punchOutTime,
         totalWorkHours: Math.round(totalWorkHours * 100) / 100,
         punchDetails: punchDetails.join(' | ')
+=======
+        attendancePercentage
+>>>>>>> origin/main
       };
     });
 

@@ -5,10 +5,13 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
+<<<<<<< HEAD
     watch: {
       usePolling: true,
       interval: 1000,
     },
+=======
+>>>>>>> origin/main
     proxy: {
       '/api/contact': {
         target: 'http://localhost:3000',

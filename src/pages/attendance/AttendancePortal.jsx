@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import * as faceapi from '@vladmandic/face-api';
@@ -8,10 +9,22 @@ import {
   MapPin,
   Loader2,
   CheckCircle2,
+=======
+import React, { useRef, useState, useEffect } from 'react';
+import * as faceapi from '@vladmandic/face-api';
+import confetti from 'canvas-confetti';
+import { api, useAuth } from '../../context/AuthContext';
+import { 
+  Camera, 
+  MapPin, 
+  Loader2, 
+  CheckCircle2, 
+>>>>>>> origin/main
   AlertTriangle,
   Play,
   UserCheck,
   Building,
+<<<<<<< HEAD
   Navigation,
   ShieldCheck,
   Sparkles
@@ -90,10 +103,24 @@ const AttendancePortal = () => {
 
   const [todayStatus, setTodayStatus] = useState(null);
   const [modelsLoaded, setModelsLoaded] = useState(areFaceModelsLoaded());
+=======
+  Navigation
+} from 'lucide-react';
+
+const AttendancePortal = () => {
+  const { user } = useAuth();
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const streamRef = useRef(null);
+
+  const [todayStatus, setTodayStatus] = useState(null);
+  const [modelsLoaded, setModelsLoaded] = useState(false);
+>>>>>>> origin/main
   const [cameraActive, setCameraActive] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(true);
   const [processing, setProcessing] = useState(false);
 
+<<<<<<< HEAD
   // GPS & Geofencing
   const [gpsLoading, setGpsLoading] = useState(false);
   const [coords, setCoords] = useState(null);
@@ -107,10 +134,17 @@ const AttendancePortal = () => {
   const [faceInView, setFaceInView] = useState(false);
   const [livenessMessage, setLivenessMessage] = useState('Position your face in the oval frame');
 
+=======
+  const [gpsLoading, setGpsLoading] = useState(false);
+  const [coords, setCoords] = useState(null);
+  const [address, setAddress] = useState('');
+  
+>>>>>>> origin/main
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [systemFeedback, setSystemFeedback] = useState('Standby - Please fetch GPS coordinates first.');
 
+<<<<<<< HEAD
   useEffect(() => {
     if (isAdmin) {
       setLoadingStatus(false);
@@ -120,11 +154,22 @@ const AttendancePortal = () => {
     fetchTodayStatus();
     loadFaceModels();
     resolveGPS();
+=======
+  const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/';
+
+  useEffect(() => {
+    fetchTodayStatus();
+    loadFaceModels();
+>>>>>>> origin/main
 
     return () => {
       stopCamera();
     };
+<<<<<<< HEAD
   }, [isAdmin]);
+=======
+  }, []);
+>>>>>>> origin/main
 
   const fetchTodayStatus = async () => {
     try {
@@ -140,12 +185,19 @@ const AttendancePortal = () => {
   };
 
   const loadFaceModels = async () => {
+<<<<<<< HEAD
     if (areFaceModelsLoaded()) {
       setModelsLoaded(true);
       return;
     }
     try {
       await loadEssentialFaceModels();
+=======
+    try {
+      await faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL);
+      await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+      await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+>>>>>>> origin/main
       setModelsLoaded(true);
     } catch (err) {
       console.error('Error loading face-api models:', err);
@@ -158,7 +210,11 @@ const AttendancePortal = () => {
     setError('');
     setSuccess('');
     setAddress('');
+<<<<<<< HEAD
     setSystemFeedback('Locating device position with high accuracy...');
+=======
+    setSystemFeedback('Locating device position...');
+>>>>>>> origin/main
 
     if (!navigator.geolocation) {
       setError('Geolocation is not supported by your browser.');
@@ -167,6 +223,7 @@ const AttendancePortal = () => {
     }
 
     navigator.geolocation.getCurrentPosition(
+<<<<<<< HEAD
       (position) => {
         const { latitude, longitude } = position.coords;
         setCoords({ lat: latitude, lng: longitude });
@@ -206,19 +263,53 @@ const AttendancePortal = () => {
             clearTimeout(timeoutId);
             setAddress(`Office Geofenced Zone (${latitude.toFixed(4)}, ${longitude.toFixed(4)})`);
           });
+=======
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        setCoords({ lat: latitude, lng: longitude });
+
+        try {
+          const res = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`,
+            { headers: { 'User-Agent': 'AttendanceHubSystem/1.0' } }
+          );
+          if (res.ok) {
+            const data = await res.json();
+            setAddress(data.display_name || `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`);
+          } else {
+            setAddress(`Coords: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`);
+          }
+          setSystemFeedback('GPS Coordinates resolved. Activate webcam to verify attendance.');
+        } catch (err) {
+          console.warn('Geocoding rate limit/failure, falling back:', err);
+          setAddress(`Coords: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`);
+          setSystemFeedback('GPS coordinates resolved (offline address fallback).');
+        } finally {
+          setGpsLoading(false);
+        }
+>>>>>>> origin/main
       },
       (err) => {
         console.error('GPS Geolocation error:', err);
         let msg = 'Failed to retrieve location.';
+<<<<<<< HEAD
         if (err.code === 1) msg = 'Location access denied. Please enable location permissions in browser settings.';
         setError(msg);
         setGpsLoading(false);
       },
       { enableHighAccuracy: true, timeout: 5000, maximumAge: 30000 }
+=======
+        if (err.code === 1) msg = 'Location access denied. Please enable location permissions.';
+        setError(msg);
+        setGpsLoading(false);
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+>>>>>>> origin/main
     );
   };
 
   const startCamera = async () => {
+<<<<<<< HEAD
     if (!isWithinRange) {
       setError(`Cannot start camera: You must be within ${OFFICE_RADIUS} meters of the office (Current: ${distanceMeters || 'unknown'}m).`);
       return;
@@ -244,12 +335,38 @@ const AttendancePortal = () => {
       try {
         stream = await navigator.mediaDevices.getUserMedia({
           video: { width: 640, height: 480, facingMode: 'user' },
+=======
+    setError('');
+    setSuccess('');
+
+    const wireStream = async (stream) => {
+      streamRef.current = stream;
+      const video = videoRef.current;
+      video.srcObject = stream;
+
+      await new Promise((resolve, reject) => {
+        video.onloadedmetadata = () => {
+          video.play().then(resolve).catch(reject);
+        };
+        video.onerror = reject;
+        if (video.readyState >= 2) resolve();
+        setTimeout(resolve, 3000);
+      });
+    };
+
+    try {
+      let stream;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' },
+>>>>>>> origin/main
           audio: false,
         });
       } catch (_constraintErr) {
         stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
       }
 
+<<<<<<< HEAD
       streamRef.current = stream;
       setCameraActive(true);
       setSystemFeedback('Webcam active. Look into camera to verify face.');
@@ -262,6 +379,11 @@ const AttendancePortal = () => {
       }
 
       startRealtimeFaceLoop();
+=======
+      await wireStream(stream);
+      setCameraActive(true);
+      setSystemFeedback('Webcam ready. Keep face inside frame and click verify.');
+>>>>>>> origin/main
     } catch (err) {
       console.error('Webcam error:', err.name, err.message);
       if (streamRef.current) {
@@ -269,7 +391,11 @@ const AttendancePortal = () => {
         streamRef.current = null;
       }
       if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+<<<<<<< HEAD
         setError('Camera permission denied. Please allow camera access in your browser settings.');
+=======
+        setError('Camera permission denied. Please allow camera access in browser settings.');
+>>>>>>> origin/main
       } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
         setError('No webcam detected. Please connect a camera and try again.');
       } else {
@@ -278,16 +404,21 @@ const AttendancePortal = () => {
     }
   };
 
+<<<<<<< HEAD
   const stopCamera = useCallback(() => {
     isLoopRunningRef.current = false;
     if (animFrameRef.current) {
       cancelAnimationFrame(animFrameRef.current);
       animFrameRef.current = null;
     }
+=======
+  const stopCamera = () => {
+>>>>>>> origin/main
     if (streamRef.current) {
       streamRef.current.getTracks().forEach(track => track.stop());
       streamRef.current = null;
     }
+<<<<<<< HEAD
     if (videoRef.current) {
       videoRef.current.srcObject = null;
     }
@@ -488,18 +619,37 @@ const AttendancePortal = () => {
     if (!antiSpoofDetectorRef.current.livenessPassed) {
       setError('Live verification required. Please smile or turn head slightly.');
       isAutoVerifyingRef.current = false;
+=======
+    setCameraActive(false);
+  };
+
+  const handleMarkAttendance = async (actionType) => {
+    if (!coords) {
+      setError('Please resolve your GPS coordinates first.');
+      return;
+    }
+    if (!cameraActive) {
+      setError('Please start the camera before verifying biometrics.');
+>>>>>>> origin/main
       return;
     }
 
     const video = videoRef.current;
+<<<<<<< HEAD
     if (!video || video.readyState < 2) {
       isAutoVerifyingRef.current = false;
+=======
+
+    if (!video || video.readyState < 2 || video.videoWidth === 0 || video.videoHeight === 0) {
+      setError('Camera feed not ready yet. Please wait a moment and try again.');
+>>>>>>> origin/main
       return;
     }
 
     setProcessing(true);
     setError('');
     setSuccess('');
+<<<<<<< HEAD
     setSystemFeedback('Authenticating face signature...');
 
     try {
@@ -524,26 +674,72 @@ const AttendancePortal = () => {
         return;
       }
 
+=======
+    setSystemFeedback('Scanning face and matching biometrics...');
+
+    try {
+      const canvas = canvasRef.current;
+      const displaySize = { width: video.videoWidth, height: video.videoHeight };
+
+      canvas.width = displaySize.width;
+      canvas.height = displaySize.height;
+      faceapi.matchDimensions(canvas, displaySize);
+
+      const detectionPromise = faceapi
+        .detectSingleFace(video, new faceapi.SsdMobilenetv1Options({ minConfidence: 0.60 }))
+        .withFaceLandmarks()
+        .withFaceDescriptor();
+
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('FACE_DETECTION_TIMEOUT')), 15000)
+      );
+
+      const detection = await Promise.race([detectionPromise, timeoutPromise]);
+
+      if (!detection) {
+        setError('No face detected. Align your face inside the webcam bounds and look at the camera.');
+        setSystemFeedback('Face not detected. Please retry.');
+        setProcessing(false);
+        return;
+      }
+
+      const resizedDetections = faceapi.resizeResults(detection, displaySize);
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      faceapi.draw.drawDetections(canvas, resizedDetections);
+      faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
+
+>>>>>>> origin/main
       const userAgent = navigator.userAgent;
       const platform = navigator.platform;
 
       const endpoint = actionType === 'check-in' ? '/attendance/check-in' : '/attendance/check-out';
+<<<<<<< HEAD
       const descriptor128 = Array.from(fullDetection.descriptor);
 
       const res = await api.post(endpoint, {
         faceDescriptor: descriptor128,
+=======
+      const res = await api.post(endpoint, {
+        faceDescriptor: Array.from(detection.descriptor),
+>>>>>>> origin/main
         gps: {
           lat: coords.lat,
           lng: coords.lng,
           address: address
         },
         deviceInfo: platform,
+<<<<<<< HEAD
         browser: userAgent,
         livenessVerified: true
+=======
+        browser: userAgent
+>>>>>>> origin/main
       });
 
       if (res.data.success) {
         setSuccess(res.data.message);
+<<<<<<< HEAD
         setSystemFeedback('✅ Biometrics verified! Attendance successfully recorded.');
         triggerSuccessCelebration();
         setTimeout(() => {
@@ -560,6 +756,22 @@ const AttendancePortal = () => {
       setTimeout(() => {
         isAutoVerifyingRef.current = false;
       }, 2000);
+=======
+        setSystemFeedback('Verified! Attendance recorded successfully.');
+        triggerSuccessCelebration();
+        stopCamera();
+        fetchTodayStatus();
+      }
+    } catch (err) {
+      console.error(err);
+      if (err.message === 'FACE_DETECTION_TIMEOUT') {
+        setError('Face detection timed out. Ensure good lighting and try again.');
+        setSystemFeedback('Detection timeout. Please retry.');
+      } else {
+        setError(err.response?.data?.message || 'Biometric verification or geofencing failure.');
+        setSystemFeedback('Access Denied. Check coordinates and alignment.');
+      }
+>>>>>>> origin/main
     } finally {
       setProcessing(false);
     }
@@ -567,8 +779,13 @@ const AttendancePortal = () => {
 
   const triggerSuccessCelebration = () => {
     confetti({
+<<<<<<< HEAD
       particleCount: 120,
       spread: 80,
+=======
+      particleCount: 100,
+      spread: 70,
+>>>>>>> origin/main
       origin: { y: 0.6 }
     });
   };
@@ -577,6 +794,7 @@ const AttendancePortal = () => {
     return new Date(dateStr).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   };
 
+<<<<<<< HEAD
   if (isAdmin) {
     return (
       <div className="max-w-4xl mx-auto py-8 px-4 space-y-6 animate-fadeIn">
@@ -632,10 +850,18 @@ const AttendancePortal = () => {
             </Link>
           </div>
         </div>
+=======
+  if (loadingStatus || !modelsLoaded) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] text-slate-400">
+        <Loader2 className="w-8 h-8 animate-spin text-primary-500 mb-2" />
+        <p className="text-sm font-medium">Booting biometric engines & loading maps...</p>
+>>>>>>> origin/main
       </div>
     );
   }
 
+<<<<<<< HEAD
   if (loadingStatus && !todayStatus) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-slate-500 dark:text-slate-400 space-y-4 animate-fadeIn">
@@ -658,6 +884,9 @@ const AttendancePortal = () => {
   }
 
   const hasBiometrics = Boolean(user?.hasBiometrics || (user?.faceEmbeddingsCount && user?.faceEmbeddingsCount > 0) || (user?.faceEmbeddings && user?.faceEmbeddings.length > 0));
+=======
+  const hasBiometrics = user?.hasBiometrics;
+>>>>>>> origin/main
   if (!hasBiometrics) {
     return (
       <div className="max-w-2xl mx-auto glass-panel p-8 rounded-3xl border border-amber-200/50 dark:border-amber-900/30 bg-amber-50/20 text-center space-y-4">
@@ -670,6 +899,7 @@ const AttendancePortal = () => {
     );
   }
 
+<<<<<<< HEAD
   const isCheckedIn = Boolean(todayStatus?.checkIn?.time);
   const isCheckedOut = Boolean(todayStatus?.checkOut?.time);
 
@@ -678,6 +908,13 @@ const AttendancePortal = () => {
 
       <div className="lg:col-span-7 space-y-6">
 
+=======
+  return (
+    <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+      
+      <div className="lg:col-span-7 space-y-6">
+        
+>>>>>>> origin/main
         {/* Office Shift Information Header */}
         <div className="flex flex-wrap items-center justify-between gap-2 p-3.5 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200/60 dark:border-indigo-900/40 text-xs text-indigo-900 dark:text-indigo-200">
           <div className="flex items-center gap-2">
@@ -688,7 +925,11 @@ const AttendancePortal = () => {
             Mon – Sat Active • Check-ins after 10:00 AM marked Late
           </span>
         </div>
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> origin/main
         {error && (
           <div className="flex items-start gap-3 p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 text-red-600 dark:text-red-400 text-sm font-medium rounded-2xl animate-fade-in">
             <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
@@ -711,6 +952,7 @@ const AttendancePortal = () => {
               autoPlay
               muted
               playsInline
+<<<<<<< HEAD
               className={`w-full h-full object-cover scale-x-[-1] transition-opacity duration-150 ${cameraActive ? 'opacity-100' : 'opacity-0 absolute pointer-events-none'}`}
             />
             <canvas
@@ -761,11 +1003,25 @@ const AttendancePortal = () => {
                       <span>{livenessMessage}</span>
                     </>
                   )}
+=======
+              className={`w-full h-full object-cover scale-x-[-1] ${cameraActive ? 'block' : 'hidden'}`}
+            />
+            <canvas
+              ref={canvasRef}
+              className={`absolute inset-0 w-full h-full object-cover scale-x-[-1] ${cameraActive ? 'block' : 'hidden'}`}
+            />
+
+            {cameraActive && (
+              <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+                <div className="w-56 h-56 md:w-64 md:h-64 rounded-full border-2 border-dashed border-primary-500/40 flex items-center justify-center">
+                  <UserCheck className="w-6 h-6 text-primary-500/30" />
+>>>>>>> origin/main
                 </div>
               </div>
             )}
 
             {!cameraActive && (
+<<<<<<< HEAD
               <div className="flex flex-col items-center gap-3 text-slate-600 py-16 text-center px-4">
                 <Camera className="w-16 h-16 stroke-[1.2] opacity-40 text-slate-400" />
                 <div>
@@ -773,15 +1029,29 @@ const AttendancePortal = () => {
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm font-medium">
                     Activate camera & position your face — attendance will be verified and recorded automatically.
                   </p>
+=======
+              <div className="flex flex-col items-center gap-3 text-slate-500 py-16 text-center">
+                <Camera className="w-16 h-16 stroke-[1.2] opacity-40" />
+                <div>
+                  <p className="text-sm font-semibold">Webcam Feed Inactive</p>
+                  <p className="text-xs">GPS + Face Verification are required to unlock attendance access.</p>
+>>>>>>> origin/main
                 </div>
               </div>
             )}
 
             {processing && (
+<<<<<<< HEAD
               <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center text-white">
                 <div className="flex items-center gap-3 bg-slate-800/95 border border-slate-700 px-6 py-4 rounded-2xl shadow-xl">
                   <Loader2 className="w-5 h-5 animate-spin text-primary-500" />
                   <span className="text-sm font-semibold">Authenticating Live Face Biometrics...</span>
+=======
+              <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center text-white">
+                <div className="flex items-center gap-3 bg-slate-800/90 border border-slate-700 px-6 py-4 rounded-2xl shadow-xl">
+                  <Loader2 className="w-5 h-5 animate-spin text-primary-500" />
+                  <span className="text-sm font-semibold">Authenticating Biometrics...</span>
+>>>>>>> origin/main
                 </div>
               </div>
             )}
@@ -790,14 +1060,20 @@ const AttendancePortal = () => {
           <div className="p-6 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 space-y-4">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
               <div>
+<<<<<<< HEAD
                 <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Terminal Status</p>
                 <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-0.5">{systemFeedback}</p>
+=======
+                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Terminal Status</p>
+                <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mt-0.5">{systemFeedback}</p>
+>>>>>>> origin/main
               </div>
 
               <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto justify-end">
                 <button
                   onClick={resolveGPS}
                   disabled={gpsLoading || processing}
+<<<<<<< HEAD
                   className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-bold disabled:opacity-50 transition-colors shadow-2xs cursor-pointer"
                 >
                   {gpsLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Navigation className="w-3.5 h-3.5" />}
@@ -822,11 +1098,28 @@ const AttendancePortal = () => {
                     className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer shadow-2xs"
                   >
                     Close Camera
+=======
+                  className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold disabled:opacity-50 transition-colors"
+                >
+                  {gpsLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Navigation className="w-3.5 h-3.5" />}
+                  {coords ? 'Refresh Location' : 'Fetch GPS'}
+                </button>
+
+                {coords && !cameraActive && (
+                  <button
+                    onClick={startCamera}
+                    disabled={processing}
+                    className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold transition-colors"
+                  >
+                    <Play className="w-3.5 h-3.5" />
+                    Activate Camera
+>>>>>>> origin/main
                   </button>
                 )}
               </div>
             </div>
 
+<<<<<<< HEAD
             {/* Status Information Badge */}
             <div className="pt-1">
               {isCheckedIn && isCheckedOut ? (
@@ -849,12 +1142,36 @@ const AttendancePortal = () => {
                 </div>
               ) : null}
             </div>
+=======
+            {cameraActive && !processing && (
+              <div className="grid grid-cols-2 gap-4 pt-2">
+                {(!todayStatus || !todayStatus.checkIn) && (
+                  <button
+                    onClick={() => handleMarkAttendance('check-in')}
+                    className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-primary-500 to-indigo-600 text-white text-sm font-bold shadow-lg shadow-primary-500/10 hover:shadow-primary-500/20 active:scale-[0.98] transition-all"
+                  >
+                    Verify Check-In
+                  </button>
+                )}
+
+                {todayStatus && todayStatus.checkIn && (!todayStatus.checkOut) && (
+                  <button
+                    onClick={() => handleMarkAttendance('check-out')}
+                    className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-500 to-primary-600 text-white text-sm font-bold shadow-lg shadow-indigo-500/10 hover:shadow-indigo-500/20 active:scale-[0.98] transition-all col-start-2"
+                  >
+                    Verify Check-Out
+                  </button>
+                )}
+              </div>
+            )}
+>>>>>>> origin/main
           </div>
         </div>
 
       </div>
 
       <div className="lg:col-span-5 space-y-6">
+<<<<<<< HEAD
 
         <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
           <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wide border-b border-slate-100 dark:border-slate-800 pb-3 flex items-center justify-between">
@@ -868,6 +1185,22 @@ const AttendancePortal = () => {
                     ? 'bg-orange-100 text-orange-800 dark:bg-orange-950/30 dark:text-orange-400'
                     : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400'
                 }`}>
+=======
+        
+        <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-4">
+          <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide border-b border-slate-100 dark:border-slate-800 pb-3 flex items-center justify-between">
+            Today's Log details
+            {todayStatus?.status && (
+              <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ${
+                todayStatus.status === 'Present'
+                  ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400'
+                  : todayStatus.status === 'Late'
+                  ? 'bg-amber-100 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400'
+                  : todayStatus.status === 'Half Day'
+                  ? 'bg-orange-100 text-orange-700 dark:bg-orange-950/30 dark:text-orange-400'
+                  : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
+              }`}>
+>>>>>>> origin/main
                 {todayStatus.status}
               </span>
             )}
@@ -875,6 +1208,7 @@ const AttendancePortal = () => {
 
           <div className="space-y-4">
             <div className="flex items-start gap-3">
+<<<<<<< HEAD
               <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${todayStatus && todayStatus.checkIn
                 ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/20 dark:text-emerald-400'
                 : 'bg-slate-100 text-slate-500 dark:bg-slate-800'
@@ -889,16 +1223,38 @@ const AttendancePortal = () => {
                       {formatTimeString(todayStatus.checkIn.time)}
                     </p>
                     <p className="text-[11px] text-slate-600 dark:text-slate-400 truncate mt-0.5 font-medium">
+=======
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                todayStatus && todayStatus.checkIn 
+                  ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/20 dark:text-emerald-400' 
+                  : 'bg-slate-100 text-slate-400 dark:bg-slate-800'
+              }`}>
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-semibold text-slate-400">Check-In</p>
+                {todayStatus?.checkIn?.time ? (
+                  <div className="mt-1">
+                    <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
+                      {formatTimeString(todayStatus.checkIn.time)}
+                    </p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
+>>>>>>> origin/main
                       {todayStatus.checkIn.gps?.address || 'GPS Address'}
                     </p>
                   </div>
                 ) : (
+<<<<<<< HEAD
                   <p className="text-xs text-slate-500 font-medium mt-1">Pending Check-In</p>
+=======
+                  <p className="text-xs text-slate-400 mt-1">Pending Check-In</p>
+>>>>>>> origin/main
                 )}
               </div>
             </div>
 
             <div className="flex items-start gap-3">
+<<<<<<< HEAD
               <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${todayStatus && todayStatus.checkOut
                 ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/20 dark:text-emerald-400'
                 : 'bg-slate-100 text-slate-500 dark:bg-slate-800'
@@ -913,11 +1269,32 @@ const AttendancePortal = () => {
                       {formatTimeString(todayStatus.checkOut.time)}
                     </p>
                     <p className="text-[11px] text-slate-600 dark:text-slate-400 truncate mt-0.5 font-medium">
+=======
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                todayStatus && todayStatus.checkOut 
+                  ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/20 dark:text-emerald-400' 
+                  : 'bg-slate-100 text-slate-400 dark:bg-slate-800'
+              }`}>
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-semibold text-slate-400">Check-Out</p>
+                {todayStatus?.checkOut?.time ? (
+                  <div className="mt-1">
+                    <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
+                      {formatTimeString(todayStatus.checkOut.time)}
+                    </p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
+>>>>>>> origin/main
                       {todayStatus.checkOut.gps?.address || 'GPS Address'}
                     </p>
                   </div>
                 ) : (
+<<<<<<< HEAD
                   <p className="text-xs text-slate-500 font-medium mt-1">Pending Check-Out</p>
+=======
+                  <p className="text-xs text-slate-400 mt-1">Pending Check-Out</p>
+>>>>>>> origin/main
                 )}
               </div>
             </div>
@@ -929,8 +1306,13 @@ const AttendancePortal = () => {
                   <div className="flex items-start gap-2.5 p-3 bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-900/40 rounded-2xl">
                     <span className="text-orange-500 text-base leading-none mt-0.5">⚠️</span>
                     <div>
+<<<<<<< HEAD
                       <p className="text-xs font-bold text-orange-800 dark:text-orange-400">Half Day Recorded</p>
                       <p className="text-[11px] text-orange-700 dark:text-orange-400 mt-0.5 font-medium">
+=======
+                      <p className="text-xs font-bold text-orange-700 dark:text-orange-400">Half Day Recorded</p>
+                      <p className="text-[11px] text-orange-600 dark:text-orange-500 mt-0.5">
+>>>>>>> origin/main
                         You worked <span className="font-bold">{todayStatus.workHours} hrs</span> — less than the required 8 hrs full shift.
                       </p>
                     </div>
@@ -939,17 +1321,31 @@ const AttendancePortal = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
+<<<<<<< HEAD
                     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Work Hours</span>
                     <p className={`text-lg font-bold ${todayStatus.status === 'Half Day'
                       ? 'text-orange-600'
                       : 'text-slate-900 dark:text-slate-100'
                       }`}>
+=======
+                    <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Work Hours</span>
+                    <p className={`text-lg font-bold ${
+                      todayStatus.status === 'Half Day'
+                        ? 'text-orange-500'
+                        : 'text-slate-800 dark:text-slate-200'
+                    }`}>
+>>>>>>> origin/main
                       {todayStatus.workHours} hrs
                     </p>
                   </div>
                   <div>
+<<<<<<< HEAD
                     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Overtime</span>
                     <p className="text-lg font-bold text-teal-600">{todayStatus.overtime || 0} hrs</p>
+=======
+                    <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Overtime</span>
+                    <p className="text-lg font-bold text-primary-500">{todayStatus.overtime || 0} hrs</p>
+>>>>>>> origin/main
                   </div>
                 </div>
               </div>
@@ -957,8 +1353,13 @@ const AttendancePortal = () => {
           </div>
         </div>
 
+<<<<<<< HEAD
         <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
           <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wide border-b border-slate-100 dark:border-slate-800 pb-3">
+=======
+        <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-4">
+          <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide border-b border-slate-100 dark:border-slate-800 pb-3">
+>>>>>>> origin/main
             Location geofencing
           </h3>
 
@@ -966,14 +1367,22 @@ const AttendancePortal = () => {
             {coords ? (
               <>
                 <div className="flex gap-2 text-xs">
+<<<<<<< HEAD
                   <MapPin className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold text-slate-800 dark:text-slate-200">Resolved Coordinates</span>
                     <p className="font-mono text-slate-600 dark:text-slate-400 mt-0.5 font-medium">{coords.lat.toFixed(6)}, {coords.lng.toFixed(6)}</p>
+=======
+                  <MapPin className="w-4 h-4 text-primary-500 shrink-0" />
+                  <div>
+                    <span className="font-semibold text-slate-700 dark:text-slate-300">Resolved Coordinates</span>
+                    <p className="font-mono text-slate-500 dark:text-slate-400 mt-0.5">{coords.lat.toFixed(6)}, {coords.lng.toFixed(6)}</p>
+>>>>>>> origin/main
                   </div>
                 </div>
 
                 <div className="flex gap-2 text-xs">
+<<<<<<< HEAD
                   <Building className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold text-slate-800 dark:text-slate-200">Resolved Location Address</span>
@@ -1004,6 +1413,25 @@ const AttendancePortal = () => {
                 <Navigation className="w-8 h-8 mx-auto stroke-[1.5] mb-2 animate-bounce text-slate-400" />
                 <p className="text-xs font-bold text-slate-700">Location verification required.</p>
                 <p className="text-[11px] text-slate-500 mt-0.5 font-medium">Please click "Fetch GPS" to begin check-in.</p>
+=======
+                  <Building className="w-4 h-4 text-indigo-500 shrink-0" />
+                  <div>
+                    <span className="font-semibold text-slate-700 dark:text-slate-300">Resolved Location Address</span>
+                    <p className="text-slate-550 dark:text-slate-400 mt-0.5 leading-relaxed">{address}</p>
+                  </div>
+                </div>
+
+                <div className="p-3 bg-primary-50/50 dark:bg-primary-950/20 border border-primary-100 dark:border-primary-900/30 rounded-2xl flex items-center justify-between text-xs text-primary-700 dark:text-primary-400">
+                  <span className="font-medium">Office Geofencing check:</span>
+                  <span className="font-bold">Active Radius 500m</span>
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-6 text-slate-400">
+                <Navigation className="w-8 h-8 mx-auto stroke-[1.5] mb-2 animate-bounce" />
+                <p className="text-xs">Location verification required.</p>
+                <p className="text-[10px] text-slate-500 mt-0.5">Please click "Fetch GPS" to begin check-in.</p>
+>>>>>>> origin/main
               </div>
             )}
           </div>

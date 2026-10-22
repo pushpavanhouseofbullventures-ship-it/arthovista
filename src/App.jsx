@@ -21,7 +21,10 @@ const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Blogs = lazy(() => import("./pages/Blogs"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
+<<<<<<< HEAD
 const Newsletter = lazy(() => import("./pages/Newsletter"));
+=======
+>>>>>>> origin/main
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 
@@ -41,8 +44,11 @@ const AttendancePortal = lazy(() => import("./pages/attendance/AttendancePortal"
 const LeaveRequests = lazy(() => import("./pages/attendance/LeaveRequests"));
 const HolidaysEvents = lazy(() => import("./pages/attendance/HolidaysEvents"));
 const Announcements = lazy(() => import("./pages/attendance/Announcements"));
+<<<<<<< HEAD
 const AdminBlogs = lazy(() => import("./pages/attendance/AdminBlogs"));
 const AdminNewsletters = lazy(() => import("./pages/attendance/AdminNewsletters"));
+=======
+>>>>>>> origin/main
 const Reports = lazy(() => import("./pages/attendance/Reports"));
 const Profile = lazy(() => import("./pages/attendance/Profile"));
 
@@ -53,6 +59,7 @@ const PageLoader = () => (
 );
 
 function ScrollToTop() {
+<<<<<<< HEAD
   const { pathname, hash } = useLocation();
   useEffect(() => {
     if (!hash) {
@@ -69,6 +76,16 @@ const AttendanceDashboardLayout = () => {
     preloadFaceModelsInBackground();
   }, []);
 
+=======
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
+const AttendanceDashboardLayout = () => {
+>>>>>>> origin/main
   return (
     <Layout>
       <Outlet />
@@ -78,6 +95,7 @@ const AttendanceDashboardLayout = () => {
 
 function MainLayoutWrapper() {
   const location = useLocation();
+<<<<<<< HEAD
   const isAttendanceRoute =
     location.pathname === '/login' ||
     location.pathname === '/forgot-password' ||
@@ -95,6 +113,19 @@ function MainLayoutWrapper() {
   if (isAttendanceRoute) {
     return (
       <div className="min-h-screen flex flex-col bg-[#f1f5f9] text-slate-700 font-sans relative overflow-x-hidden">
+=======
+  const isAttendanceRoute = 
+    location.pathname === '/login' || 
+    location.pathname === '/forgot-password' || 
+    location.pathname === '/verify-otp' || 
+    location.pathname === '/reset-password' || 
+    location.pathname.startsWith('/admin') || 
+    location.pathname.startsWith('/employee');
+
+  if (isAttendanceRoute) {
+    return (
+      <div className="min-h-screen flex flex-col bg-[#07192f] text-slate-100 font-sans relative overflow-x-hidden">
+>>>>>>> origin/main
         <StarfieldBackground />
         <div className="relative z-10 flex flex-col min-h-screen">
           <Suspense fallback={<PageLoader />}>
@@ -117,15 +148,22 @@ function MainLayoutWrapper() {
                 <Route path="/admin/leaves" element={<LeaveRequests />} />
                 <Route path="/admin/holidays" element={<HolidaysEvents />} />
                 <Route path="/admin/announcements" element={<Announcements />} />
+<<<<<<< HEAD
                 <Route path="/admin/blogs" element={<AdminBlogs />} />
                 <Route path="/admin/newsletters" element={<AdminNewsletters />} />
+=======
+>>>>>>> origin/main
                 <Route path="/admin/reports" element={<Reports />} />
                 <Route path="/admin/profile" element={<Profile />} />
               </Route>
 
               {/* Employee Protected Routes */}
               <Route element={
+<<<<<<< HEAD
                 <ProtectedRoute allowedRoles={['Employee', 'Admin', 'Manager']}>
+=======
+                <ProtectedRoute allowedRoles={['Employee']}>
+>>>>>>> origin/main
                   <AttendanceDashboardLayout />
                 </ProtectedRoute>
               }>
@@ -147,12 +185,20 @@ function MainLayoutWrapper() {
   }
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen flex flex-col bg-[#f1f5f9] text-slate-700 font-sans relative overflow-x-clip">
+=======
+    <div className="min-h-screen flex flex-col bg-[#07192f] text-slate-100 font-sans relative overflow-x-hidden">
+>>>>>>> origin/main
       <StarfieldBackground />
       <div className="relative z-10 flex flex-col min-h-screen">
         <StickyBar />
         <Navbar />
+<<<<<<< HEAD
         <main className="flex-1 w-full max-w-[100vw] overflow-x-clip">
+=======
+        <main className="flex-1 w-full max-w-[100vw] overflow-x-hidden">
+>>>>>>> origin/main
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -161,10 +207,13 @@ function MainLayoutWrapper() {
               <Route path="/loans" element={<Loans />} />
               <Route path="/blogs" element={<Blogs />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
+<<<<<<< HEAD
               <Route path="/newsletter" element={<Newsletter />} />
               <Route path="/resources" element={<Navigate to="/blogs" replace />} />
               <Route path="/resources/blogs" element={<Navigate to="/blogs" replace />} />
               <Route path="/resources/newsletter" element={<Navigate to="/newsletter" replace />} />
+=======
+>>>>>>> origin/main
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />

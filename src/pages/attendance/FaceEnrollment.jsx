@@ -3,10 +3,17 @@ import { useParams, useNavigate } from 'react-router-dom';
 import * as faceapi from '@vladmandic/face-api';
 import confetti from 'canvas-confetti';
 import { api } from '../../context/AuthContext';
+<<<<<<< HEAD
 import {
   ArrowLeft,
   Loader2,
   CheckCircle,
+=======
+import { 
+  ArrowLeft, 
+  Loader2, 
+  CheckCircle, 
+>>>>>>> origin/main
   Scan,
   AlertCircle,
   Video,
@@ -14,10 +21,13 @@ import {
   RotateCcw
 } from 'lucide-react';
 
+<<<<<<< HEAD
 import { loadEssentialFaceModels, areFaceModelsLoaded } from '../../utils/faceModelLoader';
 import { generate256dEmbedding } from '../../utils/faceEmbedding256';
 import { AntiSpoofDetector } from '../../utils/antiSpoofing';
 
+=======
+>>>>>>> origin/main
 const FaceEnrollment = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -26,20 +36,35 @@ const FaceEnrollment = () => {
   const streamRef = useRef(null);
   const intervalRef = useRef(null);
   const videoReadyRef = useRef(false);
+<<<<<<< HEAD
   const antiSpoofRef = useRef(new AntiSpoofDetector());
 
   const [employee, setEmployee] = useState(null);
   const [modelsLoaded, setModelsLoaded] = useState(areFaceModelsLoaded());
+=======
+
+  const [employee, setEmployee] = useState(null);
+  const [modelsLoaded, setModelsLoaded] = useState(false);
+>>>>>>> origin/main
   const [cameraActive, setCameraActive] = useState(false);
   const [capturing, setCapturing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [capturedEmbeddings, setCapturedEmbeddings] = useState([]);
+<<<<<<< HEAD
   const [loading, setLoading] = useState(!areFaceModelsLoaded());
+=======
+  const [loading, setLoading] = useState(true);
+>>>>>>> origin/main
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [feedback, setFeedback] = useState('Initialize camera to start face enrollment');
 
+<<<<<<< HEAD
   const TARGET_FRAME_COUNT = 8;
+=======
+  const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/';
+  const TARGET_FRAME_COUNT = 15;
+>>>>>>> origin/main
 
   useEffect(() => {
     const fetchEmployee = async () => {
@@ -58,6 +83,7 @@ const FaceEnrollment = () => {
 
   useEffect(() => {
     const loadModels = async () => {
+<<<<<<< HEAD
       if (areFaceModelsLoaded()) {
         setModelsLoaded(true);
         setLoading(false);
@@ -69,6 +95,15 @@ const FaceEnrollment = () => {
         await loadEssentialFaceModels();
         setModelsLoaded(true);
         setFeedback('Biometric models loaded. Click "Start Camera" to begin.');
+=======
+      setFeedback('Downloading face recognition models...');
+      try {
+        await faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL);
+        await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+        await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+        setModelsLoaded(true);
+        setFeedback('Models loaded. Click "Start Camera" to begin.');
+>>>>>>> origin/main
       } catch (err) {
         console.error('Error loading face-api models:', err);
         setError('Failed to load face detection models. Check internet connection.');
@@ -79,12 +114,18 @@ const FaceEnrollment = () => {
     loadModels();
 
     return () => { stopCamera(); };
+<<<<<<< HEAD
   }, [id]);
 
   const isAdminEmployee = employee?.role === 'Admin' || employee?.email?.toLowerCase() === 'shivamthakur12012@gmail.com' || employee?.employeeId === 'ADMIN001';
 
   const startCamera = async () => {
     if (isAdminEmployee) return;
+=======
+  }, []);
+
+  const startCamera = async () => {
+>>>>>>> origin/main
     setError('');
     videoReadyRef.current = false;
 
@@ -92,14 +133,22 @@ const FaceEnrollment = () => {
       let stream;
       try {
         stream = await navigator.mediaDevices.getUserMedia({
+<<<<<<< HEAD
           video: { width: 640, height: 480, facingMode: 'user' },
           audio: false
         });
       } catch (_e) {
+=======
+          video: { width: { ideal: 640 }, height: { ideal: 480 } },
+          audio: false
+        });
+      } catch (constraintErr) {
+>>>>>>> origin/main
         stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
       }
 
       streamRef.current = stream;
+<<<<<<< HEAD
       setCameraActive(true);
       setFeedback('Camera active. Align your face in the circle, then click "Capture Face".');
 
@@ -111,6 +160,28 @@ const FaceEnrollment = () => {
       }
     } catch (err) {
       console.error('Camera access error:', err);
+=======
+      const video = videoRef.current;
+      video.srcObject = stream;
+
+      await new Promise((resolve, reject) => {
+        video.onloadedmetadata = () => {
+          video.play()
+            .then(() => {
+              videoReadyRef.current = true;
+              resolve();
+            })
+            .catch(reject);
+        };
+        video.onerror = reject;
+        setTimeout(resolve, 3000);
+      });
+
+      setCameraActive(true);
+      setFeedback('Camera active. Align your face in the circle, then click "Capture Face".');
+    } catch (err) {
+      console.error('Webcam start error:', err.name, err.message);
+>>>>>>> origin/main
       if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
         setError('Camera permission denied. Click the 🔒 icon in the address bar → Camera → Allow, then refresh.');
       } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
@@ -118,7 +189,15 @@ const FaceEnrollment = () => {
       } else if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
         setError('Camera is in use by another app (Teams, Zoom, etc.). Close it and try again.');
       } else {
+<<<<<<< HEAD
         setError(`Unable to access camera (${err.message}). Check permissions.`);
+=======
+        setError(`Webcam error: ${err.message || err.name}`);
+      }
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(t => t.stop());
+        streamRef.current = null;
+>>>>>>> origin/main
       }
     }
   };
@@ -129,7 +208,11 @@ const FaceEnrollment = () => {
       intervalRef.current = null;
     }
     if (streamRef.current) {
+<<<<<<< HEAD
       streamRef.current.getTracks().forEach((track) => track.stop());
+=======
+      streamRef.current.getTracks().forEach(track => track.stop());
+>>>>>>> origin/main
       streamRef.current = null;
     }
     if (videoRef.current) {
@@ -140,6 +223,7 @@ const FaceEnrollment = () => {
     setCapturing(false);
   }, []);
 
+<<<<<<< HEAD
   const resetCapture = () => {
     stopCamera();
     setProgress(0);
@@ -152,11 +236,32 @@ const FaceEnrollment = () => {
     if (isAdminEmployee) return;
     if (!cameraActive || !modelsLoaded) return;
     if (!videoRef.current || !videoReadyRef.current) {
+=======
+  const resetEnrollment = () => {
+    setCapturedEmbeddings([]);
+    setProgress(0);
+    setCapturing(false);
+    setFeedback('Reset. Start camera and capture again.');
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
+
+  const startEnrollmentCapture = () => {
+    if (!cameraActive || !modelsLoaded) return;
+
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+
+    if (!video || video.videoWidth === 0 || video.videoHeight === 0) {
+>>>>>>> origin/main
       setError('Camera feed not ready yet. Please wait a moment and try again.');
       return;
     }
 
     setCapturing(true);
+<<<<<<< HEAD
     setError('');
     setProgress(0);
     setCapturedEmbeddings([]);
@@ -223,6 +328,65 @@ const FaceEnrollment = () => {
       setError('Insufficient facial frames. Please complete the full capture scan.');
       return;
     }
+=======
+    setFeedback('Scanning... Keep still and look directly at the camera.');
+
+    const embeddingsList = [];
+
+    intervalRef.current = setInterval(async () => {
+      if (!videoRef.current || !canvasRef.current) return;
+
+      const vid = videoRef.current;
+      const cvs = canvasRef.current;
+
+      if (vid.readyState < 2 || vid.videoWidth === 0) return;
+
+      const displaySize = { width: vid.videoWidth, height: vid.videoHeight };
+
+      if (cvs.width !== displaySize.width || cvs.height !== displaySize.height) {
+        cvs.width = displaySize.width;
+        cvs.height = displaySize.height;
+        faceapi.matchDimensions(cvs, displaySize);
+      }
+
+      const detection = await faceapi
+        .detectSingleFace(vid, new faceapi.SsdMobilenetv1Options({ minConfidence: 0.5 }))
+        .withFaceLandmarks()
+        .withFaceDescriptor();
+
+      const ctx = cvs.getContext('2d');
+      ctx.clearRect(0, 0, cvs.width, cvs.height);
+
+      if (detection) {
+        const resized = faceapi.resizeResults(detection, displaySize);
+        faceapi.draw.drawDetections(cvs, resized);
+        faceapi.draw.drawFaceLandmarks(cvs, resized);
+
+        const descriptorArray = Array.from(detection.descriptor);
+        embeddingsList.push(descriptorArray);
+
+        const count = embeddingsList.length;
+        setProgress((count / TARGET_FRAME_COUNT) * 100);
+        setFeedback(`Captured ${count} / ${TARGET_FRAME_COUNT} frames...`);
+
+        if (count >= TARGET_FRAME_COUNT) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+          setCapturedEmbeddings(embeddingsList);
+          setCapturing(false);
+          setFeedback('✅ Biometric capture complete! Click "Save Biometrics" to enroll.');
+          stopCamera();
+          confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        }
+      } else {
+        setFeedback('No face detected — position your face in the circle and ensure good lighting.');
+      }
+    }, 700);
+  };
+
+  const handleSaveEmbeddings = async () => {
+    if (capturedEmbeddings.length < TARGET_FRAME_COUNT) return;
+>>>>>>> origin/main
 
     setSubmitting(true);
     setError('');
@@ -231,6 +395,7 @@ const FaceEnrollment = () => {
       const res = await api.post(`/employees/${id}/face-embeddings`, {
         embeddings: capturedEmbeddings
       });
+<<<<<<< HEAD
 
       if (res.data.success) {
         stopCamera();
@@ -245,6 +410,15 @@ const FaceEnrollment = () => {
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to save face embeddings to server.');
+=======
+      if (res.data.success) {
+        alert('Biometric credentials saved successfully!');
+        navigate('/admin/employees');
+      }
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.message || 'Failed to save biometric profile.');
+>>>>>>> origin/main
     } finally {
       setSubmitting(false);
     }
@@ -259,6 +433,7 @@ const FaceEnrollment = () => {
     );
   }
 
+<<<<<<< HEAD
   if (isAdminEmployee) {
     return (
       <div className="max-w-2xl mx-auto space-y-6 animate-fadeIn py-6">
@@ -295,6 +470,8 @@ const FaceEnrollment = () => {
     );
   }
 
+=======
+>>>>>>> origin/main
   return (
     <div className="max-w-3xl mx-auto space-y-6">
 
@@ -320,10 +497,18 @@ const FaceEnrollment = () => {
             <p className="text-xs text-slate-400 font-mono mt-0.5">ID: {employee.employeeId} • {employee.designation || 'Staff'}</p>
           </div>
           <div className="ml-auto">
+<<<<<<< HEAD
             <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${employee.faceEmbeddings && employee.faceEmbeddings.length > 0
               ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/20 dark:text-emerald-400'
               : 'bg-amber-50 text-amber-700 dark:bg-amber-950/20 dark:text-amber-400'
               }`}>
+=======
+            <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
+              employee.faceEmbeddings && employee.faceEmbeddings.length > 0
+                ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/20 dark:text-emerald-400'
+                : 'bg-amber-50 text-amber-700 dark:bg-amber-950/20 dark:text-amber-400'
+            }`}>
+>>>>>>> origin/main
               {employee.faceEmbeddings && employee.faceEmbeddings.length > 0 ? 'Face Enrolled' : 'Pending Enrollment'}
             </span>
           </div>
@@ -346,17 +531,33 @@ const FaceEnrollment = () => {
             autoPlay
             muted
             playsInline
+<<<<<<< HEAD
             className={`w-full h-full object-cover scale-x-[-1] transition-opacity duration-150 ${cameraActive ? 'opacity-100' : 'opacity-0 absolute pointer-events-none'}`}
           />
           <canvas
             ref={canvasRef}
             className={`absolute inset-0 w-full h-full object-cover scale-x-[-1] transition-opacity duration-150 ${cameraActive ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+=======
+            style={{ transform: 'scaleX(-1)' }}
+            className={`w-full h-full object-cover ${cameraActive ? 'block' : 'hidden'}`}
+          />
+          <canvas
+            ref={canvasRef}
+            style={{ transform: 'scaleX(-1)', position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+            className={cameraActive ? 'block' : 'hidden'}
+>>>>>>> origin/main
           />
 
           {cameraActive && (
             <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+<<<<<<< HEAD
               <div className={`w-64 h-64 md:w-72 md:h-72 rounded-full border-2 border-dashed flex items-center justify-center transition-colors ${capturing ? 'border-emerald-400/80 animate-pulse' : 'border-primary-400/60'
                 }`}>
+=======
+              <div className={`w-64 h-64 md:w-72 md:h-72 rounded-full border-2 border-dashed flex items-center justify-center transition-colors ${
+                capturing ? 'border-emerald-400/80 animate-pulse' : 'border-primary-400/60'
+              }`}>
+>>>>>>> origin/main
                 <Scan className={`w-8 h-8 ${capturing ? 'text-emerald-400/60' : 'text-primary-400/40'} animate-pulse`} />
               </div>
             </div>
@@ -414,8 +615,13 @@ const FaceEnrollment = () => {
 
             {cameraActive && !capturing && capturedEmbeddings.length < TARGET_FRAME_COUNT && (
               <button
+<<<<<<< HEAD
                 onClick={captureFrames}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-primary-500 to-indigo-600 text-white font-semibold text-sm shadow-md shadow-primary-500/20 hover:shadow-primary-500/30 transition-all cursor-pointer"
+=======
+                onClick={startEnrollmentCapture}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-primary-500 to-indigo-600 text-white font-semibold text-sm shadow-md shadow-primary-500/20 hover:shadow-primary-500/30 transition-all"
+>>>>>>> origin/main
               >
                 <Scan className="w-4 h-4" />
                 Capture Face
@@ -424,8 +630,13 @@ const FaceEnrollment = () => {
 
             {capturedEmbeddings.length > 0 && !capturing && (
               <button
+<<<<<<< HEAD
                 onClick={resetCapture}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-sm transition-all cursor-pointer"
+=======
+                onClick={resetEnrollment}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-sm transition-all"
+>>>>>>> origin/main
               >
                 <RotateCcw className="w-4 h-4" />
                 Re-enroll
@@ -434,9 +645,15 @@ const FaceEnrollment = () => {
 
             {capturedEmbeddings.length >= TARGET_FRAME_COUNT && (
               <button
+<<<<<<< HEAD
                 onClick={handleSave}
                 disabled={submitting}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md shadow-emerald-500/20 transition-all disabled:opacity-70 cursor-pointer"
+=======
+                onClick={handleSaveEmbeddings}
+                disabled={submitting}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md shadow-emerald-500/20 transition-all disabled:opacity-70"
+>>>>>>> origin/main
               >
                 {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle className="w-4 h-4" />}
                 Save Biometrics

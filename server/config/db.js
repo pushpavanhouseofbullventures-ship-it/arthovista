@@ -9,10 +9,13 @@ try {
 }
 
 const connectDB = async () => {
+<<<<<<< HEAD
   if (mongoose.connection.readyState >= 1) {
     return;
   }
 
+=======
+>>>>>>> origin/main
   let uri = process.env.ATTENDANCE_MONGODB_URI || process.env.MONGODB_URI;
   console.log('Attempting MongoDB connection to Official_ArthoVista...');
 

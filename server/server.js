@@ -24,20 +24,32 @@ async function seedAdmin() {
     }
 
     // 1. Find if a user with shivamthakur12012@gmail.com exists
+<<<<<<< HEAD
     let shivam = await User.findOne({ email: 'shivamthakur12012@gmail.com' }).select('+password');
+=======
+    let shivam = await User.findOne({ email: 'shivamthakur12012@gmail.com' });
+>>>>>>> origin/main
     if (!shivam) {
       console.log('Seeding Shivam Kumar as the sole Admin user...');
       shivam = await User.create({
         fullName: 'Shivam Kumar',
         employeeId: 'ADMIN001',
         email: 'shivamthakur12012@gmail.com',
+<<<<<<< HEAD
         password: 'Shivam@123321',
+=======
+        password: 'adminpassword123',
+>>>>>>> origin/main
         role: 'Admin',
         status: 'Active',
         phone: '1234567890',
         designation: 'Managing Director'
       });
+<<<<<<< HEAD
       console.log('Sole Admin seeded successfully. Credentials: shivamthakur12012@gmail.com / Shivam@123321');
+=======
+      console.log('Sole Admin seeded successfully. Credentials: shivamthakur12012@gmail.com / adminpassword123');
+>>>>>>> origin/main
     } else {
       let modified = false;
       if (shivam.role !== 'Admin') {
@@ -48,6 +60,7 @@ async function seedAdmin() {
         shivam.employeeId = 'ADMIN001';
         modified = true;
       }
+<<<<<<< HEAD
       if (shivam.status !== 'Active') {
         shivam.status = 'Active';
         modified = true;
@@ -61,6 +74,11 @@ async function seedAdmin() {
       if (modified) {
         await shivam.save();
         console.log('Updated shivamthakur12012@gmail.com role/employeeId/credentials.');
+=======
+      if (modified) {
+        await shivam.save();
+        console.log('Updated shivamthakur12012@gmail.com role/employeeId to Admin/ADMIN001.');
+>>>>>>> origin/main
       }
     }
 
@@ -81,7 +99,11 @@ function scheduleHolidayCheck() {
   const checkHoliday = async () => {
     try {
       const todayStr = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> origin/main
       const Holiday = require('./models/Holiday');
       const holiday = await Holiday.findOne({ date: todayStr });
       if (holiday) {
@@ -132,6 +154,7 @@ function scheduleHolidayCheck() {
   }, getMsUntil9AM());
 }
 
+<<<<<<< HEAD
 async function recalculateExistingAttendanceWorkHours() {
   try {
     const Attendance = require('./models/Attendance');
@@ -264,6 +287,11 @@ mongoose.connection.on('connected', () => {
   scheduleHolidayCheck();
   recalculateExistingAttendanceWorkHours();
   seedBlogsAndNewsletters();
+=======
+mongoose.connection.on('connected', () => {
+  seedAdmin();
+  scheduleHolidayCheck();
+>>>>>>> origin/main
 });
 
 // Connect to Database (with auto-retry on failure)
@@ -300,8 +328,11 @@ app.use('/api/leaves', require('./routes/leaves'));
 app.use('/api/holidays', require('./routes/holidays'));
 app.use('/api/events', require('./routes/events'));
 app.use('/api/announcements', require('./routes/announcements'));
+<<<<<<< HEAD
 app.use('/api/blogs', require('./routes/blogs'));
 app.use('/api/newsletters', require('./routes/newsletters'));
+=======
+>>>>>>> origin/main
 
 // Base Route
 app.get('/', (req, res) => {

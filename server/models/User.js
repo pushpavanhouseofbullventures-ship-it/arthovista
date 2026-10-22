@@ -81,6 +81,7 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
+<<<<<<< HEAD
     if (typeof next === 'function') return next();
     return;
   }
@@ -92,13 +93,22 @@ UserSchema.pre('save', async function (next) {
     if (typeof next === 'function') return next(err);
     throw err;
   }
+=======
+    next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+>>>>>>> origin/main
 });
 
 UserSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
+<<<<<<< HEAD
 UserSchema.index({ role: 1, status: 1 });
 UserSchema.index({ department: 1 });
 
+=======
+>>>>>>> origin/main
 module.exports = mongoose.model('User', UserSchema, 'user');

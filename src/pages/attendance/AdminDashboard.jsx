@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { api, useAuth } from '../../context/AuthContext';
+<<<<<<< HEAD
 import {
   AreaChart,
   Area,
@@ -21,6 +22,28 @@ import {
   Calendar as CalendarIcon,
   UserMinus,
   Loader2,
+=======
+import { 
+  AreaChart, 
+  Area, 
+  BarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer,
+  Legend
+} from 'recharts';
+import { 
+  Users, 
+  Building, 
+  UserCheck, 
+  Clock, 
+  Calendar as CalendarIcon, 
+  UserMinus, 
+  Loader2, 
+>>>>>>> origin/main
   ShieldCheck,
   AlertCircle,
   ChevronLeft,
@@ -89,11 +112,15 @@ const AdminDashboard = () => {
     try {
       const res = await api.get('/employees');
       if (res.data.success) {
+<<<<<<< HEAD
         // Attendance is not for Admin - only list active employees & managers in calendar selector
         const nonAdminStaff = res.data.data.filter(
           emp => emp.role !== 'Admin' && emp.email?.toLowerCase() !== 'shivamthakur12012@gmail.com'
         );
         setEmployeesList(nonAdminStaff);
+=======
+        setEmployeesList(res.data.data);
+>>>>>>> origin/main
       }
     } catch (err) {
       console.error('Failed to load employee list:', err);
@@ -103,7 +130,11 @@ const AdminDashboard = () => {
   const fetchCalendar = async (year, month, empId) => {
     setCalendarLoading(true);
     try {
+<<<<<<< HEAD
       const url = empId
+=======
+      const url = empId 
+>>>>>>> origin/main
         ? `/attendance/calendar?year=${year}&month=${month}&employeeId=${empId}`
         : `/attendance/calendar?year=${year}&month=${month}`;
       const res = await api.get(url);
@@ -117,6 +148,7 @@ const AdminDashboard = () => {
     }
   };
 
+<<<<<<< HEAD
   const getTodayString = () => {
     const d = new Date();
     const year = d.getFullYear();
@@ -130,11 +162,21 @@ const AdminDashboard = () => {
     try {
       const today = getTodayString();
       const res = await api.get(`/attendance/history?date=${today}`);
+=======
+  const fetchLogs = async () => {
+    setLogsLoading(true);
+    try {
+      const res = await api.get('/attendance/history');
+>>>>>>> origin/main
       if (res.data.success) {
         setAllLogs(res.data.data);
       }
     } catch (err) {
+<<<<<<< HEAD
       console.error('Failed to fetch today logs:', err);
+=======
+      console.error('Failed to fetch all logs:', err);
+>>>>>>> origin/main
     } finally {
       setLogsLoading(false);
     }
@@ -172,7 +214,11 @@ const AdminDashboard = () => {
     const now = new Date();
     const diffTime = Math.abs(now - start);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> origin/main
     if (diffDays < 30) return `${diffDays} days`;
     const months = Math.floor(diffDays / 30);
     if (months < 12) return `${months} month${months > 1 ? 's' : ''}`;
@@ -291,6 +337,7 @@ const AdminDashboard = () => {
     { label: 'Absent Today', value: kpis.absentToday, icon: UserMinus, color: 'text-rose-500', bg: 'bg-rose-50 dark:bg-rose-950/20' },
   ];
 
+<<<<<<< HEAD
   // Filter logs to strictly today's attendance
   const todayStr = getTodayString();
   const filteredLogs = allLogs.filter(log => {
@@ -308,6 +355,19 @@ const AdminDashboard = () => {
 
     const matchesSearch = empName.toLowerCase().includes(searchLow) ||
       empId.toLowerCase().includes(searchLow);
+=======
+  // Filter logs
+  const filteredLogs = allLogs.filter(log => {
+    const empName = log.employee?.fullName || '';
+    const empId = log.employee?.employeeId || '';
+    const dateStr = log.date || '';
+    const searchLow = logsSearch.toLowerCase();
+
+    const matchesSearch = empName.toLowerCase().includes(searchLow) ||
+      empId.toLowerCase().includes(searchLow) ||
+      dateStr.includes(searchLow) ||
+      (log.checkIn?.gps?.address && log.checkIn.gps.address.toLowerCase().includes(searchLow));
+>>>>>>> origin/main
 
     const matchesStatus = logsStatusFilter === 'All' || log.status === logsStatusFilter;
     return matchesSearch && matchesStatus;
@@ -322,11 +382,19 @@ const AdminDashboard = () => {
 
   return (
     <div className="space-y-8 animate-fadeIn">
+<<<<<<< HEAD
 
       {/* Top Banner Card with 10:00 AM Shift & Quick Profile Access */}
       <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border border-slate-800 shadow-2xl p-6 md:p-8 text-white">
         <div className="absolute top-0 right-0 -mt-10 -mr-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
+=======
+      
+      {/* Top Banner Card with 10:00 AM Shift & Quick Profile Access */}
+      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border border-slate-800 shadow-2xl p-6 md:p-8 text-white">
+        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+        
+>>>>>>> origin/main
         <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2">
@@ -345,10 +413,17 @@ const AdminDashboard = () => {
             </p>
           </div>
 
+<<<<<<< HEAD
           <div className="flex items-center gap-3 shrink-0 text-white">
             <Link
               to="/admin/profile"
               className="flex items-center gap-2 px-5 py-2.5 bg-indigo-500/10 text-white hover:bg-blue-100 font-bold text-xs rounded-xl shadow-lg transition-all active:scale-[0.98]"
+=======
+          <div className="flex items-center gap-3 shrink-0">
+            <Link
+              to="/admin/profile"
+              className="flex items-center gap-2 px-5 py-2.5 bg-white text-slate-900 hover:bg-slate-100 font-bold text-xs rounded-xl shadow-lg transition-all active:scale-[0.98]"
+>>>>>>> origin/main
             >
               <User className="w-4 h-4 text-primary-600" />
               My Profile
@@ -437,8 +512,13 @@ const AdminDashboard = () => {
             const presentPercent = total > 0 ? Math.round((day.Present / total) * 100) : 0;
 
             return (
+<<<<<<< HEAD
               <div
                 key={idx}
+=======
+              <div 
+                key={idx} 
+>>>>>>> origin/main
                 className="p-4 rounded-2xl border border-slate-200/60 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/30 text-center flex flex-col justify-between min-h-[160px] hover:border-primary-500/40 hover:shadow-md transition-all"
               >
                 <div>
@@ -464,8 +544,13 @@ const AdminDashboard = () => {
                 </div>
 
                 <div className="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-1.5 overflow-hidden">
+<<<<<<< HEAD
                   <div
                     className="bg-emerald-500 h-full rounded-full transition-all"
+=======
+                  <div 
+                    className="bg-emerald-500 h-full rounded-full transition-all" 
+>>>>>>> origin/main
                     style={{ width: `${presentPercent}%` }}
                   />
                 </div>
@@ -477,7 +562,11 @@ const AdminDashboard = () => {
 
       {/* Interactive Monthly Attendance Calendar View */}
       <div className="bg-white dark:bg-slate-900 p-6 md:p-8 rounded-3xl border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-6">
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> origin/main
         {/* Calendar Header & Controls */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-6">
           <div className="flex flex-wrap items-center gap-3">
@@ -490,7 +579,11 @@ const AdminDashboard = () => {
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
+<<<<<<< HEAD
 
+=======
+              
+>>>>>>> origin/main
               <span className="px-4 text-sm font-extrabold text-slate-800 dark:text-slate-100 min-w-[140px] text-center">
                 {monthNames[calendarMonth - 1]} {calendarYear}
               </span>
@@ -558,7 +651,11 @@ const AdminDashboard = () => {
           </div>
         ) : (
           <div className="space-y-2">
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> origin/main
             {/* Headers */}
             <div className="grid grid-cols-7 gap-2 text-center text-[11px] font-bold text-slate-400 uppercase tracking-wider py-2">
               <div>Mon</div>
@@ -643,6 +740,7 @@ const AdminDashboard = () => {
 
       {/* Attendance Activity Logs History Table */}
       <div className="bg-white dark:bg-slate-900 p-6 md:p-8 rounded-3xl border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-6">
+<<<<<<< HEAD
 
         {/* Filter Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -658,6 +756,17 @@ const AdminDashboard = () => {
             </div>
             <p className="text-xs text-slate-400 mt-0.5">
               Live biometric logs, timestamps, and work hours for today's active shift.
+=======
+        
+        {/* Filter Bar */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h3 className="text-base font-bold text-slate-800 dark:text-slate-100">
+              Live Attendance Activity Logs
+            </h3>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Live biometric logs, timestamps, work hours, and geofence locations for all employees.
+>>>>>>> origin/main
             </p>
           </div>
 
@@ -667,7 +776,11 @@ const AdminDashboard = () => {
               <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-3" />
               <input
                 type="text"
+<<<<<<< HEAD
                 placeholder="Search employee, ID..."
+=======
+                placeholder="Search employee, ID, date..."
+>>>>>>> origin/main
                 value={logsSearch}
                 onChange={(e) => setLogsSearch(e.target.value)}
                 className="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 focus:outline-none focus:border-primary-500 text-slate-800 dark:text-slate-200"
@@ -693,12 +806,20 @@ const AdminDashboard = () => {
         {logsLoading ? (
           <div className="py-16 text-center text-slate-400 flex flex-col items-center justify-center">
             <Loader2 className="w-8 h-8 animate-spin text-primary-500 mb-2" />
+<<<<<<< HEAD
             <p className="text-xs font-medium">Loading today's attendance logs...</p>
+=======
+            <p className="text-xs font-medium">Loading attendance activity logs...</p>
+>>>>>>> origin/main
           </div>
         ) : filteredLogs.length === 0 ? (
           <div className="text-center py-16 text-slate-400 space-y-2">
             <CalendarIcon className="w-10 h-10 mx-auto opacity-30" />
+<<<<<<< HEAD
             <p className="text-sm font-semibold">No attendance log records found for today.</p>
+=======
+            <p className="text-sm font-semibold">No attendance log records matching criteria.</p>
+>>>>>>> origin/main
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -711,6 +832,11 @@ const AdminDashboard = () => {
                   <th className="py-3 px-4">Check-In</th>
                   <th className="py-3 px-4">Check-Out</th>
                   <th className="py-3 px-4">Work Hours</th>
+<<<<<<< HEAD
+=======
+                  <th className="py-3 px-4">Verification</th>
+                  <th className="py-3 px-4 text-right">Location</th>
+>>>>>>> origin/main
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
@@ -756,6 +882,18 @@ const AdminDashboard = () => {
                         <span className="text-[10px] text-emerald-500 ml-1">(+{log.overtime} OT)</span>
                       )}
                     </td>
+<<<<<<< HEAD
+=======
+                    <td className="py-3 px-4">
+                      <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                        <ShieldCheck className="w-3.5 h-3.5" />
+                        <span className="text-[11px] font-semibold">Face & GPS Verified</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 text-right text-slate-500 dark:text-slate-400 text-[11px] truncate max-w-[180px]" title={log.checkIn?.gps?.address}>
+                      {log.checkIn?.gps?.address || 'Office Geofenced Zone'}
+                    </td>
+>>>>>>> origin/main
                   </tr>
                 ))}
               </tbody>
@@ -767,7 +905,11 @@ const AdminDashboard = () => {
 
       {/* Analytics & Department Breakdown Split Section */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> origin/main
         {/* Weekly Trend Chart (7 Columns) */}
         <div className="lg:col-span-7 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-4">
           <div className="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-slate-800">
@@ -780,12 +922,21 @@ const AdminDashboard = () => {
               <AreaChart data={weeklyTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorPresent" x1="0" y1="0" x2="0" y2="1">
+<<<<<<< HEAD
                     <stop offset="5%" stopColor="#4f73ff" stopOpacity={0.2} />
                     <stop offset="95%" stopColor="#4f73ff" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="colorLate" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.2} />
                     <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
+=======
+                    <stop offset="5%" stopColor="#4f73ff" stopOpacity={0.2}/>
+                    <stop offset="95%" stopColor="#4f73ff" stopOpacity={0}/>
+                  </linearGradient>
+                  <linearGradient id="colorLate" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.2}/>
+                    <stop offset="95%" stopColor="#f59e0b" stopOpacity={0}/>
+>>>>>>> origin/main
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
@@ -827,7 +978,11 @@ const AdminDashboard = () => {
         const currentProfile = profileData || user;
         return (
           <div className="bg-white dark:bg-slate-900 p-6 md:p-8 rounded-3xl border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-6">
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> origin/main
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-2xl bg-primary-50 dark:bg-primary-950/40 text-primary-600 dark:text-primary-400 flex items-center justify-center shadow-sm">
@@ -857,7 +1012,11 @@ const AdminDashboard = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+<<<<<<< HEAD
 
+=======
+              
+>>>>>>> origin/main
               {/* Card 1: Avatar, Name, Employee ID & Security */}
               <div className="p-5 rounded-2xl bg-slate-50/70 dark:bg-slate-950/50 border border-slate-100 dark:border-slate-800/80 flex flex-col justify-between space-y-4">
                 <div className="flex items-center gap-4">
@@ -909,9 +1068,17 @@ const AdminDashboard = () => {
 
                   <div className="flex justify-between items-center">
                     <span className="text-slate-400 font-medium">Biometric Descriptor:</span>
+<<<<<<< HEAD
                     <span className="font-bold flex items-center gap-1 text-slate-500 dark:text-slate-400">
                       <ShieldCheck className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
                       Exempt (System Admin)
+=======
+                    <span className={`font-bold flex items-center gap-1 ${
+                      currentProfile?.hasBiometrics ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400'
+                    }`}>
+                      <Fingerprint className="w-3.5 h-3.5" />
+                      {currentProfile?.hasBiometrics ? 'Enrolled & Verified' : 'Master Account'}
+>>>>>>> origin/main
                     </span>
                   </div>
                 </div>
@@ -923,7 +1090,11 @@ const AdminDashboard = () => {
                   <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
                     Role & Operations
                   </span>
+<<<<<<< HEAD
 
+=======
+                  
+>>>>>>> origin/main
                   <div className="flex items-center gap-2 text-xs">
                     <Building2 className="w-4 h-4 text-slate-400 shrink-0" />
                     <div>
@@ -935,8 +1106,13 @@ const AdminDashboard = () => {
                   <div className="flex items-center gap-2 text-xs">
                     <Clock className="w-4 h-4 text-indigo-500 shrink-0" />
                     <div>
+<<<<<<< HEAD
                       <span className="text-slate-400 text-[10px] block">Operations:</span>
                       <strong className="text-indigo-600 dark:text-indigo-400">Executive System Administration</strong>
+=======
+                      <span className="text-slate-400 text-[10px] block">Shift Timings:</span>
+                      <strong className="text-indigo-600 dark:text-indigo-400">10:00 AM – 06:00 PM (Mon–Sat)</strong>
+>>>>>>> origin/main
                     </div>
                   </div>
                 </div>
@@ -1008,7 +1184,11 @@ const AdminDashboard = () => {
       {selectedDayDetails && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 max-w-md w-full shadow-2xl space-y-5 animate-scaleUp">
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> origin/main
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
               <div>
                 <h4 className="text-base font-bold text-slate-800 dark:text-slate-200">

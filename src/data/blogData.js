@@ -367,7 +367,11 @@ The ODOP approach seeks to promote:
       {
         id: "intro",
         type: "lead",
+<<<<<<< HEAD
         content: "Starting a small business often requires more capital than an entrepreneur can arrange personally.For eligible applicants, the Prime Minister's Employment Generation Programme (PMEGP) provides a structured route to finance a new micro-enterprise through a combination of beneficiary contribution, bank finance and government margin-money subsidy. PMEGP is implemented nationally through the Khadi and Village Industries Commission (KVIC), along with State KVIBs, District Industries Centres (DICs) and participating banks.",
+=======
+        content: `Starting a small business often requires more capital than an entrepreneur can arrange personally. For eligible applicants, the Prime Minister's Employment Generation Programme (PMEGP) provides a structured route to finance a new micro-enterprise through a combination of beneficiary contribution, bank finance and government margin-money subsidy. PMEGP is implemented nationally through the Khadi and Village Industries Commission (KVIC), along with State KVIBs, District Industries Centres (DICs) and participating banks.`,
+>>>>>>> origin/main
       },
       {
         id: "project-limits",
@@ -412,6 +416,7 @@ The ODOP approach seeks to promote:
         type: "content",
         content: `PMEGP covers eligible viable micro-enterprises in the non-farm sector.
 
+<<<<<<< HEAD
           *Eligible Sectors:*
           * Agro-based and food processing units
           * Forest-based and organic products
@@ -422,6 +427,18 @@ The ODOP approach seeks to promote:
 
           *Specific Trading Permissions:*
           While general trading is restricted, specific retail outlets are permitted: Khadi retail outlets, products procured from KVI institutions, PMEGP/SFURTI cluster products, and retail units in the North Eastern Region, LWE districts, and Andaman & Nicobar.`,
+=======
+**Eligible Sectors:**
+• Agro-based and food processing units
+• Forest-based and organic products
+• Hand-made paper and fiber products
+• Mineral and chemical-based products
+• Engineering and non-conventional energy units
+• Service activities (clinics, labs, salons, transport, catering, IT centres)
+
+**Specific Trading Permissions:**
+While general trading is restricted, specific retail outlets are permitted: Khadi retail outlets, products procured from KVI institutions, PMEGP/SFURTI cluster products, and retail units in the North Eastern Region, LWE districts, and Andaman & Nicobar.`,
+>>>>>>> origin/main
       },
       {
         id: "documents",
@@ -514,7 +531,11 @@ The ODOP approach seeks to promote:
       {
         id: "intro",
         type: "lead",
+<<<<<<< HEAD
         content: "Buying new machinery can change the economics of a business.A faster production line can increase capacity, modern equipment can improve quality, and specialised machinery can allow a business to take on work that was previously out of reach.For many MSMEs, paying the entire machinery cost from working capital puts severe pressure on liquidity.A machinery loan spreads that capital expenditure over 3 to 7 years.",
+=======
+        content: `Buying new machinery can change the economics of a business. A faster production line can increase capacity, modern equipment can improve quality, and specialised machinery can allow a business to take on work that was previously out of reach. For many MSMEs, paying the entire machinery cost from working capital puts severe pressure on liquidity. A machinery loan spreads that capital expenditure over 3 to 7 years.`,
+>>>>>>> origin/main
       },
       {
         id: "eligible-sectors",
@@ -539,11 +560,19 @@ The ODOP approach seeks to promote:
         type: "content",
         content: `Lenders (including Commercial Banks, NBFCs, and SIDBI) evaluate both the borrower's credit standing and the equipment being purchased.
 
+<<<<<<< HEAD
           *Key Assessment Factors:*
           * *Business Vintage:* Typically at least 2 to 3 years of profitable operations (though SIDBI & greenfield schemes have specific windows).
           * *Financial Health:* Turnover stability, EBITDA margins, and positive net cash flows.
           * *Credit Profile & FIT Rank:* Lenders use frameworks like SIDBI's FIT Rank (evaluating GST returns, ITR filings, and banking transaction velocity).
           * *Asset Quality:* OEM reputation, expected operational lifespan, and resale marketability.`,
+=======
+**Key Assessment Factors:**
+• **Business Vintage:** Typically at least 2 to 3 years of profitable operations (though SIDBI & greenfield schemes have specific windows).
+• **Financial Health:** Turnover stability, EBITDA margins, and positive net cash flows.
+• **Credit Profile & FIT Rank:** Lenders use frameworks like SIDBI's FIT Rank (evaluating GST returns, ITR filings, and banking transaction velocity).
+• **Asset Quality:** OEM reputation, expected operational lifespan, and resale marketability.`,
+>>>>>>> origin/main
       },
       {
         id: "documents",
@@ -611,6 +640,132 @@ The ODOP approach seeks to promote:
     ],
   },
   {
+<<<<<<< HEAD
+=======
+    id: 5,
+    slug: "opc-registration-india",
+    title: "One Person Company (OPC) Registration in India: Process, Documents, Cost & Benefits",
+    category: "Business Registration",
+    readTime: "7 min read",
+    date: "Aug 21, 2026",
+    author: "ArthoVista Advisory Team",
+    featured: false,
+    excerpt: "Complete guide to One Person Company (OPC) incorporation under Companies Act 2013. SPICe+ filing, nominee consent, 120-day residency, and 2021 amended conversion rules.",
+    metaDescription: "Step-by-step guide to OPC Registration in India. Learn about single-member ownership, nominee INC-3 rules, SPICe+ online incorporation, government fee concessions, and legal compliances.",
+    keywords: ["OPC registration India", "One Person Company incorporation", "SPICe plus OPC filing", "OPC nominee consent INC-3", "OPC benefits vs proprietorship"],
+    tableOfContents: [
+      { id: "what-is-opc", label: "What Is a One Person Company?" },
+      { id: "who-can-register", label: "Who Can Register an OPC?" },
+      { id: "benefits", label: "Why Choose OPC Registration?" },
+      { id: "nominee-rules", label: "The Mandatory Nominee Requirement" },
+      { id: "documents", label: "Documents Required" },
+      { id: "process", label: "8-Step SPICe+ Registration Process" },
+      { id: "cost", label: "How Much Does It Cost?" },
+      { id: "conversion-rules", label: "Conversion Rules & 2021 Amendments" },
+      { id: "mistakes", label: "Common Pitfalls to Avoid" },
+      { id: "faqs", label: "Frequently Asked Questions" },
+    ],
+    sections: [
+      {
+        id: "intro",
+        type: "lead",
+        content: `Not every entrepreneur starts a business with a co-founder. A freelancer, consultant, professional or solo business owner may want individual ownership while operating through a formal corporate structure. This is where a One Person Company (OPC) can be relevant. Introduced under the Companies Act, 2013, an OPC allows a single person to incorporate a company while retaining 100% ownership and enjoying limited liability.`,
+      },
+      {
+        id: "who-can-register",
+        title: "Who Can Register an OPC in India?",
+        type: "content",
+        content: `Under the amended Companies (Incorporation) Rules:
+• **Citizenship:** Any natural person who is an Indian citizen (whether resident in India or non-resident Indian / NRI) is eligible to incorporate an OPC.
+• **Residency Threshold:** The 2021 amendment reduced the residency period from 182 days to **120 days** in India during the immediately preceding financial year.
+• **Limit:** A person can incorporate only **one** OPC and cannot be a nominee in more than one OPC.
+• **Minor Restriction:** Minors cannot become members or nominees of an OPC.`,
+      },
+      {
+        id: "benefits",
+        title: "Why Choose One Person Company Registration?",
+        type: "cards",
+        cards: [
+          { title: "Separate Legal Entity", desc: "The OPC is a distinct legal person capable of owning assets, entering into contracts, and suing/being sued in its own name." },
+          { title: "Limited Liability Protection", desc: "Member's personal assets are protected; liability is strictly limited to the unpaid share capital." },
+          { title: "100% Solo Control", desc: "Retain complete decision-making authority without the need for a secondary co-founder or shareholder." },
+          { title: "Perpetual Succession", desc: "Through the mandatory nominee mechanism, the company continues seamlessly in the event of death or incapacity." },
+        ],
+      },
+      {
+        id: "nominee-rules",
+        title: "The Mandatory Nominee Requirement",
+        type: "callout",
+        calloutType: "info",
+        items: [
+          "Every OPC must designate a Nominee in its Memorandum of Association (MOA).",
+          "The nominee becomes the sole member in the event of death or incapacity of the original subscriber.",
+          "The nominee must provide written consent in **Form INC-3** along with identity and address proofs.",
+          "The member can change the nominee at any time by giving notice to the company and filing Form INC-4 with ROC.",
+        ],
+      },
+      {
+        id: "documents",
+        title: "Documents Required for OPC Registration",
+        type: "documents",
+        businessDocs: [
+          "PAN Card of the Member/Director and Nominee",
+          "Identity Proof (Voter ID, Passport, or Driving Licence) of Member and Nominee",
+          "Address Proof (Bank Statement, Electricity Bill, Mobile Bill not older than 2 months)",
+          "Passport-size photographs and contact details (Email & Mobile)",
+          "Digital Signature Certificate (DSC Class 3) for the director",
+        ],
+        systemDocs: [
+          "Nominee Consent in Form INC-3",
+          "Proof of Registered Office (Electricity/Gas bill or property tax receipt)",
+          "Rent Agreement and No-Objection Certificate (NOC) from the property owner",
+          "e-MOA (INC-33) and e-AOA (INC-34) with drafted business objects",
+        ],
+      },
+      {
+        id: "process",
+        title: "Step-by-Step OPC Incorporation Process (SPICe+)",
+        type: "steps",
+        steps: [
+          { step: "1", title: "Obtain Digital Signature (DSC)", desc: "Procure Class-3 Digital Signature Certificate for the sole subscriber/director." },
+          { step: "2", title: "Name Reservation (SPICe+ Part A)", desc: "Apply for company name ending with '(OPC) Private Limited' through MCA RUN or SPICe+ Part A." },
+          { step: "3", title: "Draft e-MOA & e-AOA", desc: "Draft primary objects in e-MOA and administrative rules in e-AOA along with INC-3 Nominee consent." },
+          { step: "4", title: "File SPICe+ Part B", desc: "Submit incorporation form covering DIN allocation, PAN, TAN, EPFO, ESIC, and Professional Tax integration." },
+          { step: "5", title: "ROC Scrutiny & Approval", desc: "Central Registration Centre (CRC) / ROC reviews filings and issues Certificate of Incorporation (COI)." },
+        ],
+      },
+      {
+        id: "conversion-rules",
+        title: "Conversion Rules (2021 Major Liberalization)",
+        type: "content",
+        content: `Under previous regulations, an OPC was forced to convert into a Private Limited Company if its paid-up capital exceeded ₹50 lakh or average annual turnover exceeded ₹2 crore.
+
+**The 2021 Amendment completely removed these mandatory thresholds.** 
+Today:
+• An OPC can grow to any turnover or capital size without mandatory conversion.
+• Voluntary conversion into a Private Limited or Public Limited company is permitted at any time by increasing the number of directors to 2 (or 3 for public) and amending the MOA/AOA.`,
+      },
+      {
+        id: "mistakes",
+        title: "Common OPC Registration Mistakes",
+        type: "callout",
+        calloutType: "warning",
+        items: [
+          "Choosing an OPC when planning to raise venture capital or angel investment (investors require shareholding, which requires a Pvt Ltd structure).",
+          "Neglecting post-incorporation compliances (Form INC-20A Commencement of Business, annual filings AOC-4 and MGT-7A).",
+          "Selecting a nominee without obtaining formal written consent in Form INC-3.",
+        ],
+      },
+    ],
+    faqs: [
+      { q: "Can an NRI incorporate an OPC in India?", a: "Yes. Under the amended rules, Indian citizens who are Non-Resident Indians (staying at least 120 days in India during the financial year) can incorporate an OPC." },
+      { q: "Is there any minimum capital requirement for an OPC?", a: "No, the statutory minimum capital requirement has been eliminated; you can start with nominal capital (e.g., ₹10,000 or ₹1,00,000)." },
+      { q: "Can one person incorporate multiple OPCs?", a: "No. A person is eligible to incorporate only one OPC and act as a nominee in only one OPC." },
+      { q: "Can an OPC convert into a Private Limited Company?", a: "Yes. An OPC can voluntarily convert into a Private Limited Company at any time by adding another director and shareholder." },
+    ],
+  },
+  {
+>>>>>>> origin/main
     id: 6,
     slug: "fssai-license-india",
     title: "FSSAI License in India: Registration, Eligibility, Documents, Fees & Process",
@@ -640,6 +795,7 @@ The ODOP approach seeks to promote:
         content: `Starting or operating a food business in India involves more than preparing and selling food. Food Business Operators (FBOs) are required to comply with India's food safety framework under the Food Safety and Standards Act, 2006. In 2026, FSSAI introduced historic regulatory reforms, including significantly revised turnover thresholds from 1 April 2026 and perpetual licence validity.`,
       },
       {
+<<<<<<< HEAD
         id: "what-is-fssai",
         title: "What Is an FSSAI Licence?",
         type: "content",
@@ -667,6 +823,8 @@ The ODOP approach seeks to promote:
         ],
       },
       {
+=======
+>>>>>>> origin/main
         id: "revised-thresholds",
         title: "2026 Revised Turnover Thresholds (Effective 1 April 2026)",
         type: "table",
@@ -786,6 +944,7 @@ The ODOP approach seeks to promote:
         content: `A business loan can help a company manage working capital, purchase machinery, open a new outlet, expand operations, invest in technology or meet other genuine business requirements. But getting business finance is not simply about submitting an application. Lenders assess the business vintage, debt-service capacity, credit history, and collateral before sanctioning credit.`,
       },
       {
+<<<<<<< HEAD
         id: "what-is-business-loan",
         title: "What Is a Business Loan?",
         type: "content",
@@ -799,6 +958,8 @@ The ODOP approach seeks to promote:
 • Upgrading digital technology and operational infrastructure`,
       },
       {
+=======
+>>>>>>> origin/main
         id: "msme-limits",
         title: "Revised MSME Classification Limits",
         type: "table",
@@ -824,6 +985,7 @@ The ODOP approach seeks to promote:
         ],
       },
       {
+<<<<<<< HEAD
         id: "eligibility",
         title: "Key Eligibility Criteria for Business Loans",
         type: "list",
@@ -845,6 +1007,16 @@ The ODOP approach seeks to promote:
 • Enables collateral-free lending without third-party guarantees.
 • The guarantee coverage ranges from **75% up to 90%** (for women, SC/ST, Agniveers, and ZED-certified units).
 • Crucial distinction: CGTMSE does not lend money directly; banks evaluate creditworthiness and obtain guarantee backing on the loan.`,
+=======
+        id: "cgtmse",
+        title: "Collateral-Free Credit: Understanding CGTMSE",
+        type: "content",
+        content: `Under the **Credit Guarantee Fund Trust for Micro and Small Enterprises (CGTMSE)**:
+• Member Lending Institutions (MLIs) receive credit guarantee cover up to **₹10 Crore** for eligible MSE borrowers.
+• Enables collateral-free lending without third-party guarantees.
+• The guarantee coverage ranges from **75% up to 90%** (for women, SC/ST, Agniveers, and ZED-certified units).
+• *Crucial distinction:* CGTMSE does not lend money directly; banks evaluate creditworthiness and obtain guarantee backing on the loan.`,
+>>>>>>> origin/main
       },
       {
         id: "documents",
@@ -882,6 +1054,7 @@ The ODOP approach seeks to promote:
         ],
       },
       {
+<<<<<<< HEAD
         id: "cost-factors",
         title: "What Determines Loan Pricing & Interest Rates?",
         type: "cards",
@@ -893,6 +1066,8 @@ The ODOP approach seeks to promote:
         ],
       },
       {
+=======
+>>>>>>> origin/main
         id: "mistakes",
         title: "Why Business Loan Applications Face Rejection",
         type: "callout",
@@ -940,6 +1115,7 @@ The ODOP approach seeks to promote:
         content: `Starting a business is exciting, but choosing the right legal structure can have a long-term impact on how the business operates, raises capital and manages compliance. For many startups and growing businesses in India, Private Limited Company registration is the gold standard because it creates a separate legal entity, facilitates equity fundraising, and provides limited liability.`,
       },
       {
+<<<<<<< HEAD
         id: "what-is-pvt-ltd",
         title: "What Is a Private Limited Company?",
         type: "content",
@@ -952,6 +1128,8 @@ The ODOP approach seeks to promote:
 • **Regulatory Body:** Governed by the Registrar of Companies (ROC) under the Ministry of Corporate Affairs (MCA).`,
       },
       {
+=======
+>>>>>>> origin/main
         id: "key-benefits",
         title: "Key Benefits of a Private Limited Company",
         type: "cards",
@@ -1064,6 +1242,7 @@ The ODOP approach seeks to promote:
         content: `Starting a business requires more than a strong idea. For many first-time entrepreneurs, access to formal institutional finance is the biggest hurdle. The Stand-Up India Scheme was launched by the Government of India to facilitate bank loans between ₹10 lakh and ₹1 crore for Scheduled Caste (SC), Scheduled Tribe (ST), and women entrepreneurs setting up greenfield enterprises.`,
       },
       {
+<<<<<<< HEAD
         id: "what-is-stand-up-india",
         title: "What Was Stand-Up India?",
         type: "content",
@@ -1076,6 +1255,8 @@ The ODOP approach seeks to promote:
 • Facilitate institutional credit access via dedicated handholding and JanSamarth portal integration`,
       },
       {
+=======
+>>>>>>> origin/main
         id: "latest-status-2026",
         title: "2026 Operational Status & New Budget Scheme Announcement",
         type: "callout",
@@ -1140,6 +1321,7 @@ The ODOP approach seeks to promote:
         ],
       },
       {
+<<<<<<< HEAD
         id: "process",
         title: "Application & Sanction Workflow",
         type: "steps",
@@ -1154,6 +1336,8 @@ The ODOP approach seeks to promote:
         ],
       },
       {
+=======
+>>>>>>> origin/main
         id: "mistakes",
         title: "Common Mistakes to Avoid",
         type: "callout",
@@ -1202,6 +1386,7 @@ The ODOP approach seeks to promote:
         content: `For a startup, raising capital is not simply about finding an investor willing to write a cheque. The funding source must align with the company's growth potential, unit economics, and long-term vision. A venture capital fund provides equity-based growth capital to scalable, high-growth startups in exchange for an ownership stake. In India, venture capital funds operate within the regulatory framework for Alternative Investment Funds (AIFs) overseen by SEBI (most recently amended in July 2026).`,
       },
       {
+<<<<<<< HEAD
         id: "what-is-vc",
         title: "What Is a Venture Capital (VC) Fund?",
         type: "content",
@@ -1213,6 +1398,8 @@ The ODOP approach seeks to promote:
 • **Investment Horizon:** Typically 7 to 10 years, aiming for high returns (3x-10x+) through strategic acquisitions, secondary sales, or Initial Public Offerings (IPOs).`,
       },
       {
+=======
+>>>>>>> origin/main
         id: "sebi-framework",
         title: "SEBI Alternative Investment Fund (AIF) Framework",
         type: "content",
@@ -1281,6 +1468,7 @@ The ODOP approach seeks to promote:
         ],
       },
       {
+<<<<<<< HEAD
         id: "benefits-challenges",
         title: "Benefits & Challenges of VC Funding",
         type: "table",
@@ -1295,6 +1483,8 @@ The ODOP approach seeks to promote:
         },
       },
       {
+=======
+>>>>>>> origin/main
         id: "mistakes",
         title: "Common Startup Fundraising Mistakes",
         type: "callout",
@@ -1332,7 +1522,11 @@ The ODOP approach seeks to promote:
       { id: "fee-schedule", label: "Official Government Fee Schedule" },
       { id: "documents", label: "Documents Required" },
       { id: "process", label: "8-Step Registration Workflow" },
+<<<<<<< HEAD
       { id: "tm-vs-r", label: "When Can You Use ™ vs ® Symbols?" },
+=======
+      { id: "tm-vs-r", label: "When Can You Use ™ vs ®?" },
+>>>>>>> origin/main
       { id: "mistakes", label: "Common Mistakes to Avoid" },
       { id: "faqs", label: "Frequently Asked Questions" },
     ],
@@ -1340,6 +1534,7 @@ The ODOP approach seeks to promote:
       {
         id: "intro",
         type: "lead",
+<<<<<<< HEAD
         content: `A distinctive brand name, logo, or slogan is often a company's most valuable asset. In India, trademark registration under the Trade Marks Act, 1999 provides legal protection against brand duplication, counterfeiting, and unauthorized commercial use. Registering a trademark grants exclusive nationwide rights to use the mark for specific goods or services, enabling businesses to build brand equity and take decisive legal action against infringers.`,
       },
       {
@@ -1366,21 +1561,42 @@ The ODOP approach seeks to promote:
             ["Classes 35 to 45", "Services & Intangibles", "Class 35 (Trading, Advertising, Retail), Class 36 (Finance & Real Estate), Class 41 (Education), Class 42 (IT & SaaS)"],
           ],
         },
+=======
+        content: `A brand name, logo, slogan or distinctive brand identifier is one of the most valuable intangible assets of any enterprise. However, simply using a brand in commerce does not provide statutory protection against infringement. In India, trademarks are administered by the Trade Marks Registry under the Trade Marks Act, 1999 and the Trade Marks Rules, 2017.`,
+      },
+      {
+        id: "nice-classes",
+        title: "Nice Classification System: 45 Trademark Classes",
+        type: "content",
+        content: `Trademark rights are strictly attached to specific goods and services categorized under the international Nice Classification:
+• **Classes 1 to 34 (Goods):** Raw materials, chemicals, paints, cosmetics, pharmaceuticals, machines, electronics, jewellery, textiles, food products, beverages.
+• **Classes 35 to 45 (Services):** Advertising & business management (Class 35), financial & real estate (Class 36), construction (Class 37), telecom (Class 38), transport (Class 39), education & entertainment (Class 41), software & IT services (Class 42), restaurant & hotels (Class 43), healthcare (Class 44), legal & security (Class 45).
+
+*Filing in the incorrect class leaves your core business unprotected.*`,
+>>>>>>> origin/main
       },
       {
         id: "benefits",
         title: "5 Key Benefits of Trademark Registration",
         type: "cards",
         cards: [
+<<<<<<< HEAD
           { title: "Exclusive Brand Ownership", desc: "Grants sole legal right to use the mark across India for registered goods/services, prohibiting competitors from using similar marks." },
           { title: "Legal Protection & Remedies", desc: "Enables filing trademark infringement lawsuits in District Courts, claiming statutory damages and obtaining interim injunctions." },
           { title: "Valuable Intangible Asset", desc: "Builds brand equity on the balance sheet; can be pledged for funding, franchised for royalties, or transferred." },
           { title: "Global Expansion Foundation", desc: "A domestic Indian trademark filing serves as the base for international filing across 130+ countries via the Madrid Protocol." },
           { title: "Trust & Market Credibility", desc: "The ® symbol signifies credibility, consumer trust, and official recognition by the Government of India." },
+=======
+          { title: "Exclusive Legal Monopoly", desc: "Gain nationwide exclusive rights to use the mark for your registered goods and services under Section 28." },
+          { title: "Statutory Infringement Remedies", desc: "File statutory infringement suits in District Courts with remedies for injunctions, damages, and seizure of counterfeit goods." },
+          { title: "Valuable Business Asset", desc: "A registered trademark can be franchised, licensed, assigned, or pledged for commercial financing." },
+          { title: "10-Year Perpetual Protection", desc: "Valid for 10 years from filing date and renewable indefinitely every 10 years." },
+>>>>>>> origin/main
         ],
       },
       {
         id: "fee-schedule",
+<<<<<<< HEAD
         title: "Official Government Fee Schedule (Form TM-A)",
         type: "table",
         tableData: {
@@ -1390,11 +1606,23 @@ The ODOP approach seeks to promote:
             ["Startup (DPIIT Recognized) / Micro & Small Enterprise (Udyam)", "₹4,500", "₹5,000"],
             ["Other Entities (Large Companies, Partnership Firms, LLPs, Trusts)", "₹9,000", "₹10,000"],
             ["Renewal (every 10 years)", "₹9,000 (E-filing)", "₹10,000"],
+=======
+        title: "Official IP India Trademark Fee Schedule",
+        type: "table",
+        tableData: {
+          headers: ["Applicant Category", "E-Filing Government Fee (Per Class / Mark)", "Physical Filing Government Fee"],
+          rows: [
+            ["Individual / Startup (DPIIT) / Small Enterprise (MSME)", "₹4,500", "₹5,000"],
+            ["Other Applicants (Pvt Ltd, LLP, Large Companies, Trusts)", "₹9,000", "₹10,000"],
+            ["Notice of Opposition (Form TM-O)", "₹2,700", "₹3,000"],
+            ["Renewal Fee (Form TM-R every 10 years)", "₹9,000", "₹10,000"],
+>>>>>>> origin/main
           ],
         },
       },
       {
         id: "documents",
+<<<<<<< HEAD
         title: "Documents Required for Trademark Registration",
         type: "documents",
         businessDocs: [
@@ -1408,10 +1636,25 @@ The ODOP approach seeks to promote:
           "User Affidavit with documentary proof of prior usage in India (invoices, marketing materials), if claiming prior use date",
           "Clear description of goods and services mapped to specific Nice Classification classes",
           "Startup / MSME certificate to claim 50% government fee concession",
+=======
+        title: "Documents Required for Trademark Filing",
+        type: "documents",
+        businessDocs: [
+          "Applicant name, legal status, and registered business address",
+          "PAN Card and Aadhaar / Passport of the applicant / authorized director",
+          "DPIIT Startup Recognition Certificate or Udyam MSME Certificate (for 50% fee concession)",
+          "Power of Attorney (Form TM-M) authorizing a trademark attorney/agent",
+        ],
+        systemDocs: [
+          "High-resolution representation of the logo / device mark in JPG/PNG format",
+          "Precise description of goods and services aligned with Nice Classification",
+          "User Affidavit with supporting evidence (invoices, domain receipts) if prior use date is claimed",
+>>>>>>> origin/main
         ],
       },
       {
         id: "process",
+<<<<<<< HEAD
         title: "8-Step Trademark Registration Process in India",
         type: "steps",
         steps: [
@@ -1423,10 +1666,24 @@ The ODOP approach seeks to promote:
           { step: "6", title: "Journal Publication", desc: "Upon acceptance, mark is published in the Trade Marks Journal for 4 months to allow third-party opposition." },
           { step: "7", title: "Opposition Handling (If Any)", desc: "If third parties file opposition (Form TM-O), counter-statements and evidence stages follow before the Registrar." },
           { step: "8", title: "Registration Certificate Issuance", desc: "If no opposition is filed within 4 months, the Registrar issues the official Registration Certificate with ® rights for 10 years." },
+=======
+        title: "8-Step Trademark Registration Process",
+        type: "steps",
+        steps: [
+          { step: "1", title: "Comprehensive Trademark Search", desc: "Conduct phonetic and visual search on IP India database to check conflicting marks." },
+          { step: "2", title: "Class Selection", desc: "Map your products/services to the appropriate Nice Class (1–45)." },
+          { step: "3", title: "File Form TM-A Online", desc: "Submit application on the IP India e-filing portal; obtain application number and timestamp." },
+          { step: "4", title: "Registry Examination", desc: "Trademark Examiner reviews mark for distinctiveness (Sec 9) and prior conflicts (Sec 11)." },
+          { step: "5", title: "Respond to Objections", desc: "If examination report raises objections, submit formal legal reply within 30 days." },
+          { step: "6", title: "Show-Cause Hearing", desc: "If written reply is insufficient, argue case before the Senior Examiner at a hearing." },
+          { step: "7", title: "Journal Publication", desc: "Mark is advertised in the official Trade Marks Journal for a 4-month public opposition window." },
+          { step: "8", title: "Registration Certificate", desc: "If no opposition is filed, the digital Certificate of Registration is issued with the ® symbol rights." },
+>>>>>>> origin/main
         ],
       },
       {
         id: "tm-vs-r",
+<<<<<<< HEAD
         title: "When Can You Use ™ vs ® Symbols?",
         type: "callout",
         calloutType: "info",
@@ -1434,10 +1691,20 @@ The ODOP approach seeks to promote:
           "TM Symbol (™): Can be used immediately upon filing Form TM-A and receiving the application number. It signals to competitors that you claim common-law rights over the brand.",
           "SM Symbol (℠): Used specifically for unregistered service marks (similar to TM for goods).",
           "R Symbol (®): Can ONLY be used once the official Trademark Registration Certificate has been issued by the Registry. Using the ® symbol before registration is an offence under Section 107 of the Trade Marks Act.",
+=======
+        title: "Legal Rules: Using ™ vs ® Symbols",
+        type: "callout",
+        calloutType: "info",
+        items: [
+          "**™ Symbol:** Can be used immediately upon filing Form TM-A to signal that you claim common-law trademark rights.",
+          "**® Symbol:** Can ONLY be used after the Certificate of Registration is officially issued by the Registry.",
+          "**Warning:** Section 107 of the Trade Marks Act 1999 makes falsely representing an unregistered mark as registered a punishable criminal offense.",
+>>>>>>> origin/main
         ],
       },
       {
         id: "mistakes",
+<<<<<<< HEAD
         title: "Common Trademark Registration Mistakes",
         type: "callout",
         calloutType: "warning",
@@ -1447,26 +1714,49 @@ The ODOP approach seeks to promote:
           "Selecting incorrect Nice classes, leaving actual core commercial products unprotected.",
           "Missing the strict 30-day deadline to reply to Trademark Examination Reports, leading to abandonment.",
           "Using the ® symbol before obtaining the final registration certificate.",
+=======
+        title: "Common Trademark Filing Mistakes",
+        type: "callout",
+        calloutType: "warning",
+        items: [
+          "Filing generic or descriptive words (e.g., 'Best Cotton' for shirts) that lack distinctiveness under Section 9.",
+          "Filing under the wrong class, rendering the protection useless against real competitors.",
+          "Failing to track examination reports and missing the mandatory 30-day response deadline.",
+>>>>>>> origin/main
         ],
       },
     ],
     faqs: [
+<<<<<<< HEAD
       { q: "How long does trademark registration take in India?", a: "If there are no objections or oppositions, trademark registration typically takes 6 to 12 months. If examination objections or third-party oppositions arise, it may take 12 to 18 months." },
       { q: "Can I use the ™ symbol immediately after applying?", a: "Yes. As soon as you file Form TM-A on the IP India portal and generate an application number, you can legally use the ™ symbol with your brand." },
       { q: "What is the difference between ™ and ®?", a: "™ indicates an applied-for or unregistered trademark claiming brand rights. ® indicates a fully registered and legally certified trademark issued by the Trademark Registry." },
       { q: "How long is a registered trademark valid?", a: "A registered trademark in India is valid for 10 years from the filing date and can be renewed indefinitely every 10 years." },
       { q: "Do MSMEs and Startups get a fee discount on trademark filing?", a: "Yes. DPIIT-recognized startups and Udyam-registered micro & small enterprises receive a 50% discount on government filing fees (₹4,500 vs ₹9,000 for standard entities)." },
+=======
+      { q: "Can an individual apply for a trademark in India?", a: "Yes. Any individual, proprietor, startup, company, or society can apply for a trademark." },
+      { q: "How long is a trademark valid in India?", a: "A registered trademark is valid for 10 years from the filing date and can be renewed indefinitely every 10 years." },
+      { q: "What is the fee concession for MSMEs and DPIIT startups?", a: "Startups and MSMEs pay a 50% reduced government filing fee of ₹4,500 per class (compared to ₹9,000 for standard corporate entities)." },
+      { q: "Can I register a trademark globally through the Indian application?", a: "Yes. Once you have filed an Indian trademark application, you can apply for international protection across 130+ countries via the Madrid Protocol." },
+>>>>>>> origin/main
     ],
   },
   {
     id: 12,
+<<<<<<< HEAD
     slug: "opc-registration-india",
     title: "One Person Company (OPC) Registration in India: Eligibility, Process, Documents & Benefits",
     category: "Business Registration",
+=======
+    slug: "loan-against-property-india",
+    title: "Loan Against Property in India: Eligibility, Documents, Process & Key Considerations",
+    category: "Secured Loans",
+>>>>>>> origin/main
     readTime: "8 min read",
     date: "Aug 21, 2026",
     author: "ArthoVista Advisory Team",
     featured: false,
+<<<<<<< HEAD
     excerpt: "Complete guide to One Person Company (OPC) incorporation under Companies Act 2013. Single-promoter limited liability, nominee director rules, SPICe+ filing, and conversion thresholds.",
     metaDescription: "Guide to One Person Company (OPC) Registration in India. Learn about single-founder limited liability, nominee director consent (INC-3), SPICe+ MCA filing, and tax implications.",
     keywords: ["One Person Company registration", "OPC incorporation India", "OPC vs Sole Proprietorship", "SPICe plus OPC filing", "nominee director INC 3"],
@@ -1478,6 +1768,19 @@ The ODOP approach seeks to promote:
       { id: "documents", label: "Documents Required for OPC Incorporation" },
       { id: "process", label: "7-Step MCA SPICe+ OPC Registration Process" },
       { id: "conversion-rules", label: "Conversion from OPC to Private Limited" },
+=======
+    excerpt: "A practical guide to unlocking liquidity through Loan Against Property (LAP). LTV ratios, property valuation, Section 24(b) tax rules, and repayment structuring.",
+    metaDescription: "Comprehensive guide to Loan Against Property (LAP) in India. Learn about residential/commercial collateral, LTV calculations, title search, Section 24b tax rules, and risks.",
+    keywords: ["Loan against property India", "LAP eligibility and documents", "property mortgage loan", "LTV loan against property", "Section 24b tax on LAP"],
+    tableOfContents: [
+      { id: "what-is-lap", label: "What Is a Loan Against Property?" },
+      { id: "who-can-apply", label: "Who Can Apply & Eligible Properties" },
+      { id: "ltv", label: "How Much Loan Can You Get? (LTV Ratios)" },
+      { id: "documents", label: "Documents Required" },
+      { id: "process", label: "7-Step LAP Workflow" },
+      { id: "tax-benefits", label: "Tax Treatment under Section 24(b)" },
+      { id: "risks", label: "Key Risks & Repayment Prudence" },
+>>>>>>> origin/main
       { id: "mistakes", label: "Common Mistakes to Avoid" },
       { id: "faqs", label: "Frequently Asked Questions" },
     ],
@@ -1485,6 +1788,7 @@ The ODOP approach seeks to promote:
       {
         id: "intro",
         type: "lead",
+<<<<<<< HEAD
         content: `For solo entrepreneurs who want the corporate prestige and legal protection of a corporate entity without the requirement of bringing in a second shareholder or co-founder, the One Person Company (OPC) structure is ideal. Introduced under the Companies Act, 2013, an OPC allows a single individual to own and manage a registered corporate entity with complete limited liability protection.`,
       },
       {
@@ -1555,10 +1859,41 @@ The ODOP approach seeks to promote:
           "Rent Agreement and No-Objection Certificate (NOC) from property owner",
           "Drafted e-MOA (INC-33) and e-AOA (INC-34) tailored for single promoter",
           "Digital Signature Certificate (DSC Class 3) of the founder",
+=======
+        content: `If you own a residential, commercial, or industrial property and require substantial funding for business expansion, working capital, debt consolidation, or major capital needs, a Loan Against Property (LAP) offers significantly lower interest rates and longer tenures than unsecured personal or business loans. However, because your property serves as mortgage collateral, understanding the legal, valuation, and repayment dynamics is critical.`,
+      },
+      {
+        id: "ltv",
+        title: "How Much Loan Can You Get? (Loan-to-Value Ratio)",
+        type: "content",
+        content: `The sanctioned loan amount depends on **Property Valuation** and the borrower's **Repayment Capacity**:
+• **Residential Properties:** Typically 60% to 75% of market valuation.
+• **Commercial Properties:** Typically 50% to 65% of market valuation.
+• **Industrial Units / Plots:** Typically 40% to 55% depending on location and municipal approvals.
+
+*Note: A property valued at ₹1 Crore does not automatically grant a ₹70 Lakh loan; the lender must verify your Net Monthly Income or Debt Service Coverage Ratio (DSCR) to support the EMI.*`,
+      },
+      {
+        id: "documents",
+        title: "Documents Required for Loan Against Property",
+        type: "documents",
+        businessDocs: [
+          "KYC documents: PAN Card, Aadhaar Card, Passport photographs",
+          "Salaried: Salary slips (3 months), Form 16, Bank statements (6 months)",
+          "Self-Employed / Business: ITR with computation of income (3 years), Audited Financials, Current Account statements (12 months)",
+          "Business Registration proof (GST, Udyam, Incorporation Certificate)",
+        ],
+        systemDocs: [
+          "Original Title Deed / Sale Deed / Conveyance Deed tracing chain of ownership for 30 years",
+          "Property Tax paid receipts and electricity connection bill",
+          "Sanctioned building plan and municipal occupancy certificate (OC)",
+          "Non-encumbrance certificate (EC) from the sub-registrar office",
+>>>>>>> origin/main
         ],
       },
       {
         id: "process",
+<<<<<<< HEAD
         title: "7-Step MCA SPICe+ OPC Registration Process",
         type: "steps",
         steps: [
@@ -1590,25 +1925,69 @@ The ODOP approach seeks to promote:
           "Appointing a nominee who is already a member or nominee in another OPC.",
           "Assuming an OPC is exempt from statutory annual audit by an independent Chartered Accountant.",
           "Attempting to engage in Non-Banking Financial Investment activities or Section 8 non-profit activities (prohibited for OPCs).",
+=======
+        title: "7-Step Loan Against Property Process",
+        type: "steps",
+        steps: [
+          { step: "1", title: "Financial Feasibility", desc: "Calculate your affordable EMI and assess cash flows before committing collateral." },
+          { step: "2", title: "Application Submission", desc: "Submit KYC, income proofs, and property paper copies to the selected lender." },
+          { step: "3", title: "Legal Title Verification", desc: "Lender's empanelled lawyer conducts title search and non-encumbrance verification." },
+          { step: "4", title: "Technical Valuation", desc: "Empanelled civil valuer inspects property to evaluate fair market value and realizable value." },
+          { step: "5", title: "Credit Assessment", desc: "Underwriter analyzes your income, existing EMIs, and CIBIL track record." },
+          { step: "6", title: "Sanction & Mortgage Execution", desc: "Lender issues sanction letter; borrower deposits original title deeds for Equitable / Registered Mortgage." },
+          { step: "7", title: "Disbursement", desc: "Loan amount is disbursed directly to your bank account." },
+        ],
+      },
+      {
+        id: "tax-benefits",
+        title: "Tax Treatment: Old vs New Tax Regime",
+        type: "content",
+        content: `A LAP is not automatically treated as a home loan for tax deductions:
+• **Business Use:** If the borrowed funds are deployed for genuine business expansion or working capital, the interest paid can be claimed as a deductible business expense under the Income Tax Act.
+• **House Construction/Renovation:** Under the **Old Tax Regime**, qualifying interest used for house renovation/construction may qualify for Section 24(b) deduction up to ₹2 Lakh.
+• **New Tax Regime Note:** Under the New Tax Regime, Section 24(b) deduction for self-occupied properties is not available.`,
+      },
+      {
+        id: "mistakes",
+        title: "Common Mistakes Borrowers Make",
+        type: "callout",
+        calloutType: "warning",
+        items: [
+          "Borrowing the maximum eligibility instead of the actual required and affordable sum.",
+          "Overlooking unencumbered title issues or missing link documents in the 30-year property history.",
+          "Ignoring processing charges, legal vetting fees, valuation fees, and stamp duty on mortgage deeds.",
+>>>>>>> origin/main
         ],
       },
     ],
     faqs: [
+<<<<<<< HEAD
       { q: "Can an NRI start a One Person Company in India?", a: "Yes. Under amended MCA rules, Non-Resident Indians (NRIs) who are Indian citizens can incorporate and hold an OPC in India." },
       { q: "Is a statutory audit mandatory for an OPC?", a: "Yes. Every OPC must maintain books of accounts and get them audited annually by an independent Chartered Accountant." },
       { q: "Can an OPC raise equity funding from venture capitalists?", a: "VCs require equity shares; therefore, an OPC must first convert into a standard multi-shareholder Private Limited Company before issuing equity to investors." },
       { q: "Can an OPC have more than one director?", a: "Yes. While an OPC can have only 1 shareholder, it can appoint up to 15 directors for managerial operations." },
+=======
+      { q: "Can self-employed professionals get a Loan Against Property?", a: "Yes. LAP is widely used by doctors, CAs, consultants, and business owners to fund enterprise growth." },
+      { q: "Can I take a LAP on a co-owned property?", a: "Yes, provided all co-owners of the property join as co-applicants in the loan application." },
+      { q: "What happens if I cannot repay a LAP?", a: "Because the property is mortgaged, sustained default can lead to recovery proceedings under the SARFAESI Act, 2002." },
+>>>>>>> origin/main
     ],
   },
   {
     id: 13,
+<<<<<<< HEAD
     slug: "llp-registration-india",
     title: "LLP Registration in India: Process, LLP Agreement, Documents, Cost & Compliance",
+=======
+    slug: "section-8-company-registration",
+    title: "Section 8 Company Registration in India: Process, Documents, Fees & Requirements",
+>>>>>>> origin/main
     category: "Business Registration",
     readTime: "8 min read",
     date: "Aug 21, 2026",
     author: "ArthoVista Advisory Team",
     featured: false,
+<<<<<<< HEAD
     excerpt: "Step-by-step guide to Limited Liability Partnership (LLP) registration under LLP Act 2008. FiLLiP portal filing, Form 3 LLP Agreement drafting, DPIN allotment, and annual compliances.",
     metaDescription: "Complete guide to LLP Registration in India. Explore FiLLiP MCA filing, Form 3 LLP agreement stamping, designated partner requirements, tax rates, and Form 8/11 compliance.",
     keywords: ["LLP registration India", "Limited Liability Partnership incorporation", "Form 3 LLP agreement", "FiLLiP MCA form", "LLP annual compliance Form 11"],
@@ -1621,6 +2000,462 @@ The ODOP approach seeks to promote:
       { id: "process", label: "6-Step FiLLiP MCA Registration Process" },
       { id: "llp-agreement", label: "Drafting & Stamping Form 3 LLP Agreement" },
       { id: "compliance", label: "Annual Compliance Requirements for LLPs" },
+=======
+    excerpt: "Step-by-step guide to incorporating a Section 8 Not-For-Profit Company under Companies Act 2013. SPICe+ filing, permitted objects, 3-year financial projections, and CSR readiness.",
+    metaDescription: "Comprehensive guide to Section 8 Company Registration in India. Explore non-profit incorporation, SPICe+ MCA filing, Form INC-14/15, Section 8 vs Trust vs Society, and 80G/12A notes.",
+    keywords: ["Section 8 company registration", "NGO incorporation India", "non profit company SPICe+", "Section 8 vs Trust vs Society", "80G 12A registration NGO"],
+    tableOfContents: [
+      { id: "what-is-section-8", label: "What Is a Section 8 Company?" },
+      { id: "permitted-objects", label: "Permitted Public-Benefit Objects" },
+      { id: "section-8-vs-trust", label: "Section 8 Company vs Trust vs Society" },
+      { id: "requirements", label: "Key Legal Requirements" },
+      { id: "documents", label: "Documents Required" },
+      { id: "process", label: "6-Step SPICe+ Registration Workflow" },
+      { id: "benefits", label: "Key Benefits of Section 8 Framework" },
+      { id: "mistakes", label: "Common Registration Pitfalls" },
+      { id: "faqs", label: "Frequently Asked Questions" },
+    ],
+    sections: [
+      {
+        id: "intro",
+        type: "lead",
+        content: `If you want to establish an organisation for social, charitable, educational, environmental or public-benefit purposes, choosing the right legal structure is paramount. A Section 8 Company is a not-for-profit company registered under the Companies Act, 2013. Its profits and income must be applied exclusively towards promoting its objects, and payment of dividends to members is strictly prohibited.`,
+      },
+      {
+        id: "permitted-objects",
+        title: "Permitted Objects under Section 8",
+        type: "list",
+        content: "Under Section 8(1) of the Companies Act 2013, an entity may be formed for promoting:",
+        items: [
+          "Commerce, Art, and Science",
+          "Sports, Education, and Research",
+          "Social welfare, Charity, and Religion",
+          "Protection of the environment and wildlife",
+          "Healthcare, poverty alleviation, and rural development",
+        ],
+      },
+      {
+        id: "section-8-vs-trust",
+        title: "Comparison: Section 8 Company vs Trust vs Society",
+        type: "table",
+        tableData: {
+          headers: ["Feature", "Section 8 Company", "Trust", "Society"],
+          rows: [
+            ["Governing Law", "Companies Act, 2013 (MCA / Central)", "Indian Trusts Act, 1882 / State Acts", "Societies Registration Act, 1860"],
+            ["Jurisdiction", "Nationwide operations across India", "State-level registration", "State-level registration"],
+            ["Legal Entity Status", "Distinct corporate body with CIN", "Not a separate corporate entity", "Separate legal entity under society rules"],
+            ["Transparency & Governance", "Highest (mandated MCA filings)", "Moderate", "Moderate"],
+            ["CSR & Institutional Grants", "Highly preferred by corporate donors", "Accepted", "Accepted"],
+          ],
+        },
+      },
+      {
+        id: "requirements",
+        title: "Core Statutory Requirements",
+        type: "content",
+        content: `• **Directors & Members:** Minimum 2 Directors and 2 Shareholders (no upper limit on members for private Section 8).
+• **Name Suffixes:** Section 8 companies do not need to use 'Limited' or 'Private Limited' in their name. They typically use words like *Foundation, Forum, Association, Council, Confederation, or Federation*.
+• **Zero Dividends:** All surplus income must be reinvested in promoting the company's non-profit mission.`,
+      },
+      {
+        id: "documents",
+        title: "Documents Required for Section 8 Incorporation",
+        type: "documents",
+        businessDocs: [
+          "PAN Card and Aadhaar / Passport of all Directors and Subscribers",
+          "Address proof of Directors (Bank Statement, Utility Bill not older than 2 months)",
+          "Passport photographs and Class-3 Digital Signatures (DSC)",
+          "Registered office proof (Utility bill, Rent Agreement, and Owner NOC)",
+        ],
+        systemDocs: [
+          "Declaration by Practicing Professional (CA/CS/CWA) in Form INC-14",
+          "Declaration by each subscriber/director in Form INC-15",
+          "Detailed 3-Year Future Annual Income & Expenditure Projection and work plan",
+          "Drafted e-MOA and e-AOA specifying non-profit clauses under Section 8",
+        ],
+      },
+      {
+        id: "process",
+        title: "6-Step Registration Process on SPICe+",
+        type: "steps",
+        steps: [
+          { step: "1", title: "Define Charitable Mission", desc: "Draft clear, unambiguous social objects aligned with Section 8(1)." },
+          { step: "2", title: "Reserve Suitable Name", desc: "Apply via SPICe+ Part A with permissible terms like Foundation or Association." },
+          { step: "3", title: "Draft MOA, AOA & Financial Estimates", desc: "Prepare non-profit MOA clauses, INC-14/15 declarations, and 3-year budget estimates." },
+          { step: "4", title: "Submit SPICe+ Part B", desc: "File integrated incorporation application on the MCA portal." },
+          { step: "5", title: "ROC Scrutiny & Licence Grant", desc: "Central Registration Centre scrutinizes filings and issues Section 8 Licence & COI." },
+          { step: "6", title: "Post-Setup Tax Filings (12A & 80G)", desc: "Apply for Income Tax 12A exemption and 80G donor tax deduction status on the e-filing portal." },
+        ],
+      },
+      {
+        id: "mistakes",
+        title: "Common Section 8 Registration Mistakes",
+        type: "callout",
+        calloutType: "warning",
+        items: [
+          "Assuming Section 8 incorporation automatically grants income tax exemption—12A and 80G must be filed separately with the Income Tax Department.",
+          "Drafting vague or overly commercial business objects that get rejected by the ROC.",
+          "Neglecting annual MCA compliance and statutory audit requirements.",
+        ],
+      },
+    ],
+    faqs: [
+      { q: "Can a Section 8 Company earn profits?", a: "Yes. A Section 8 company can generate operational surplus or profits, but all earnings must be reinvested in its mission and cannot be distributed as dividends." },
+      { q: "Can a Section 8 Company receive foreign donations?", a: "To receive foreign contributions, the organisation must separately obtain FCRA Registration or Prior Permission from the Ministry of Home Affairs." },
+      { q: "Is Form INC-12 still required for new Section 8 companies?", a: "No. Under the integrated SPICe+ framework, the Section 8 licence is processed directly inside SPICe+ without filing a separate Form INC-12." },
+    ],
+  },
+  {
+    id: 14,
+    slug: "education-loan-india",
+    title: "Education Loan in India: Eligibility, Documents, Interest Rates & Application Process",
+    category: "Personal & Education Loans",
+    readTime: "8 min read",
+    date: "Aug 21, 2026",
+    author: "ArthoVista Advisory Team",
+    featured: false,
+    excerpt: "Complete guide for students and families planning higher education in India or abroad. PM-Vidyalaxmi scheme, collateral-free credit guarantees, and Section 80E tax deductions.",
+    metaDescription: "Comprehensive guide to Education Loans in India. Learn about studies in India vs abroad, PM-Vidyalaxmi collateral-free loans for QHEIs, CGFSEL guarantee, and Section 80E tax rules.",
+    keywords: ["Education loan in India", "PM-Vidyalaxmi scheme loan", "education loan for study abroad", "Section 80E tax deduction", "collateral free education loan"],
+    tableOfContents: [
+      { id: "what-is-education-loan", label: "What Is an Education Loan?" },
+      { id: "india-vs-abroad", label: "Studies in India vs Studies Abroad" },
+      { id: "pm-vidyalaxmi", label: "PM-Vidyalaxmi Scheme & Subvention" },
+      { id: "documents", label: "Documents Required" },
+      { id: "process", label: "8-Step Application Process" },
+      { id: "tax-benefits", label: "Tax Deduction under Section 80E" },
+      { id: "comparison", label: "Key Comparison Factors" },
+      { id: "mistakes", label: "Common Mistakes Students Make" },
+      { id: "faqs", label: "Frequently Asked Questions" },
+    ],
+    sections: [
+      {
+        id: "intro",
+        type: "lead",
+        content: `Getting admission to a premier university or college is an extraordinary achievement. For many families, financing higher education requires careful planning. An education loan covers tuition fees, hostel accommodation, study materials, laptops, and travel expenses, allowing students to pursue their ambitions without depleting long-term family savings.`,
+      },
+      {
+        id: "pm-vidyalaxmi",
+        title: "PM-Vidyalaxmi Scheme (Government Higher Education Initiative)",
+        type: "cards",
+        cards: [
+          { title: "Collateral-Free for QHEIs", desc: "Provides collateral-free and guarantor-free education loans to meritorious students admitted to designated Quality Higher Education Institutions." },
+          { title: "3% Interest Subvention", desc: "Students with annual family income up to ₹8 Lakh are eligible for a 3% interest subvention on education loans up to ₹10 Lakh." },
+          { title: "Extended 15-Year Tenure", desc: "Repayment tenure extends up to 15 years, excluding the course duration plus moratorium period." },
+          { title: "CGFSEL Credit Guarantee", desc: "Central Government provides credit guarantee cover under CGFSEL for loans up to ₹7.5 Lakh without third-party security." },
+        ],
+      },
+      {
+        id: "india-vs-abroad",
+        title: "Education Loan: India vs Study Abroad",
+        type: "table",
+        tableData: {
+          headers: ["Parameter", "Studies in India", "Studies Abroad (USA, UK, Canada, Europe, etc.)"],
+          rows: [
+            ["Expenses Covered", "Tuition, hostel, exams, books, laptop", "Tuition, living expenses, health insurance, airfare, visa fees"],
+            ["Loan Quantum", "Typically up to ₹10 Lakh to ₹50 Lakh", "Up to ₹1 Crore to ₹1.5 Crore+"],
+            ["Margin Money", "0% for loans up to ₹4 Lakh; 5% for higher domestic loans", "Typically 15% margin money contribution"],
+            ["Collateral Requirement", "Collateral-free for premier institutes / <₹7.5L; property/FD for higher amounts", "Collateral (LAP/FD) required for high-quantum unsecured loans unless sponsored"],
+          ],
+        },
+      },
+      {
+        id: "documents",
+        title: "Documents Required for Education Loan",
+        type: "documents",
+        businessDocs: [
+          "Student KYC: Aadhaar Card, PAN Card, Passport photographs",
+          "Co-Applicant KYC: PAN, Aadhaar, Proof of Residence",
+          "Academic records: 10th, 12th, Graduation Marksheets & Degree Certificates",
+          "Entrance Exam Scorecards (JEE, NEET, CAT, GRE, GMAT, IELTS, TOEFL)",
+          "Confirmed Admission Letter / I-20 Form with official fee structure breakdown",
+        ],
+        systemDocs: [
+          "Co-Applicant Income Proof: Salary slips (3 months), Form 16, ITR (2 years)",
+          "Bank account statements of student and co-applicant for last 6 months",
+          "Collateral documents (if applicable): Sale deed, title chain, municipal tax receipts",
+          "Margin money source proof (bank balance / FD receipts)",
+        ],
+      },
+      {
+        id: "process",
+        title: "8-Step Education Loan Process",
+        type: "steps",
+        steps: [
+          { step: "1", title: "Calculate Total Cost", desc: "Estimate full tuition, living expenses, equipment, and travel costs." },
+          { step: "2", title: "Secure Confirmed Admission", desc: "Obtain official offer letter, fee schedule, and I-20/CAS statement." },
+          { step: "3", title: "Check Portal & Scheme Eligibility", desc: "Apply via Vidya Lakshmi or PM-Vidyalaxmi portal for participating banks." },
+          { step: "4", title: "Compile Documents", desc: "Organize academic transcripts, co-applicant financial papers, and collateral documents." },
+          { step: "5", title: "Bank Credit Appraisal", desc: "Bank assesses institute ranking, course employability, and co-applicant repayment ability." },
+          { step: "6", title: "Sanction Letter", desc: "Receive loan sanction letter specifying interest rate, margin, and moratorium terms." },
+          { step: "7", title: "Execute Loan Agreement", desc: "Complete loan agreement, co-applicant guarantees, and NACH auto-debit setup." },
+          { step: "8", title: "Direct University Disbursement", desc: "Tuition is wired directly to the university; living allowances credited to student account." },
+        ],
+      },
+      {
+        id: "tax-benefits",
+        title: "Section 80E Tax Deduction (Old vs New Regime)",
+        type: "content",
+        content: `Under **Section 80E of the Income Tax Act**:
+• Taxpayers can claim a deduction for the **entire interest paid** on an education loan taken for higher education of themselves, spouse, or children.
+• The deduction is available for up to **8 consecutive assessment years** (or until interest is fully paid).
+• **Tax Regime Rule:** Section 80E deduction is exclusively available under the **Old Tax Regime** and cannot be claimed under the New Tax Regime.`,
+      },
+      {
+        id: "mistakes",
+        title: "Common Student Mistakes",
+        type: "callout",
+        calloutType: "warning",
+        items: [
+          "Waiting until the university fee payment deadline before starting the loan application process.",
+          "Calculating loan requirements based on tuition fees only, neglecting foreign currency exchange fluctuations and living costs.",
+          "Ignoring the difference between Simple Interest during moratorium and compounded EMI repayments post-moratorium.",
+        ],
+      },
+    ],
+    faqs: [
+      { q: "Can I get an education loan without collateral?", a: "Yes. Under PM-Vidyalaxmi, CGFSEL guarantee, or for premier institutes (IITs, IIMs, top global universities), loans up to ₹7.5L to ₹40L are offered without collateral." },
+      { q: "What is a moratorium period in an education loan?", a: "The moratorium period covers the entire duration of the course plus an additional 6 to 12 months before regular principal EMIs begin." },
+      { q: "Who is responsible for repaying the education loan?", a: "The student is the primary borrower, but the parent or guardian is a co-borrower jointly responsible for repayment." },
+    ],
+  },
+  {
+    id: 15,
+    slug: "home-loan-india",
+    title: "Home Loan in India: Eligibility, Documents, Process, Costs & Tax Benefits",
+    category: "Secured Loans",
+    readTime: "9 min read",
+    date: "Aug 21, 2026",
+    author: "ArthoVista Advisory Team",
+    featured: false,
+    excerpt: "Complete guide to home loans in India. Fixed vs floating reset rules, LTV ratios, title verification, 2026 tax law notes (Section 24b & 80C), and step-by-step application.",
+    metaDescription: "Comprehensive guide to Home Loans in India. Learn about eligibility criteria, LTV ratios, RBI floating rate reset guidelines, 2026 tax provisions under Section 24b and 80C, and costs.",
+    keywords: ["Home loan in India", "home loan tax benefits Section 24b", "floating rate reset RBI rules", "home loan eligibility documents", "home loan process step by step"],
+    tableOfContents: [
+      { id: "what-is-home-loan", label: "What Is a Home Loan?" },
+      { id: "what-lenders-check", label: "What Do Lenders Look For?" },
+      { id: "documents", label: "Documents Required" },
+      { id: "process", label: "Step-by-Step Home Loan Process" },
+      { id: "costs", label: "Hidden Charges & Costs to Consider" },
+      { id: "interest-rates", label: "Fixed vs Floating Rates (RBI Reset Rules)" },
+      { id: "tax-benefits", label: "Home Loan Tax Benefits (2026 Tax Law Notes)" },
+      { id: "mistakes", label: "Common Home Loan Mistakes" },
+      { id: "faqs", label: "Frequently Asked Questions" },
+    ],
+    sections: [
+      {
+        id: "intro",
+        type: "lead",
+        content: `Buying a home is one of the most significant financial milestones in an individual's lifetime. A home loan makes property acquisition manageable by spreading repayment across 15 to 30 years. However, loan approval requires thorough evaluation of your net monthly income, credit score, debt-to-income ratio, and comprehensive legal and technical vetting of the property.`,
+      },
+      {
+        id: "what-lenders-check",
+        title: "Key Eligibility & Underwriting Parameters",
+        type: "cards",
+        cards: [
+          { title: "Income & FOIR (< 50%)", desc: "Fixed Obligation to Income Ratio (FOIR) must ensure all EMIs remain under 40%-50% of net monthly income." },
+          { title: "Credit Score (CIBIL 750+)", desc: "A clean credit history guarantees the lowest benchmark-linked interest rates and faster processing." },
+          { title: "Loan-to-Value (LTV Ratio)", desc: "Lenders finance 75% to 90% of property cost depending on ticket size (up to ₹30L: 90%; >₹75L: 75%)." },
+          { title: "Property Legal Clearances", desc: "Clear title, RERA registration, municipal occupancy certificate, and non-encumbrance records." },
+        ],
+      },
+      {
+        id: "documents",
+        title: "Documents Required for Home Loan",
+        type: "documents",
+        businessDocs: [
+          "PAN Card, Aadhaar Card, and Passport-size photographs",
+          "Salaried: Salary slips (3 months), Form 16 (last 2 years), Bank statements (6 months)",
+          "Self-Employed: ITR with computations (3 years), Audited Financials, Current Account statements (12 months)",
+          "Proof of Business continuity & professional vintage",
+        ],
+        systemDocs: [
+          "Agreement to Sell / Allotment Letter from the developer",
+          "Original Chain of Title Deeds, Mother Deed, and Sale Agreement",
+          "Sanctioned building layout plan and approved building permit",
+          "NOC from Society/Builder and Non-Encumbrance Certificate for 13–30 years",
+        ],
+      },
+      {
+        id: "process",
+        title: "Step-by-Step Home Loan Application Process",
+        type: "steps",
+        steps: [
+          { step: "1", title: "Budget & Down Payment Planning", desc: "Determine 10%-25% own contribution, stamp duty, and affordable monthly EMI." },
+          { step: "2", title: "Compare Lender Benchmark Rates", desc: "Compare Repo-Linked Lending Rate (RLLR) spreads, processing fees, and tenure." },
+          { step: "3", title: "File Application & In-Principle Sanction", desc: "Submit KYC and financial records to obtain pre-approved credit sanction." },
+          { step: "4", title: "Legal & Technical Property Vetting", desc: "Bank's lawyers and engineers inspect property titles and structural valuation." },
+          { step: "5", title: "Final Sanction & KFS", desc: "Review Key Fact Statement (KFS) containing interest rate spread, reset dates, and total charges." },
+          { step: "6", title: "Mortgage Execution & Title Deposit", desc: "Sign loan agreement and deposit original property deeds in bank safe custody." },
+          { step: "7", title: "Disbursement", desc: "Loan proceeds released to seller/builder (staged for under-construction properties)." },
+        ],
+      },
+      {
+        id: "interest-rates",
+        title: "Floating Rate Resets (RBI Consumer Protection Rules)",
+        type: "content",
+        content: `Under RBI guidelines on floating-rate personal/home loans:
+• **Transparent Reset Communication:** Regulated entities must clearly notify borrowers of benchmark rate changes and their impact on EMI or loan tenure.
+• **Borrower Flexibility:** Borrowers must be given the option to increase EMI, extend tenure, make partial prepayments, or switch to a fixed-rate structure at reset intervals.
+• **Zero Foreclosure Penalty:** No prepayment or foreclosure charges can be levied on individual floating-rate home loans.`,
+      },
+      {
+        id: "tax-benefits",
+        title: "Home Loan Tax Benefits (2026 Tax Law Update)",
+        type: "callout",
+        calloutType: "info",
+        items: [
+          "**2026 Tax-Law Note:** The Income-tax Act, 2025 came into force on 1 April 2026. Tax years prior continue under transitional rules.",
+          "**Section 24(b) (Interest Deduction):** Up to ₹2 Lakh deduction per year on interest paid for a self-occupied property (available under the Old Tax Regime; not deductible for self-occupied homes under the New Tax Regime).",
+          "**Section 80C (Principal Repayment):** Up to ₹1.5 Lakh deduction on principal repayment and stamp duty (available under Old Tax Regime).",
+        ],
+      },
+      {
+        id: "mistakes",
+        title: "Common Home Loan Mistakes",
+        type: "callout",
+        calloutType: "warning",
+        items: [
+          "Focusing solely on the teaser interest rate without checking administrative charges and spread resets.",
+          "Forgetting additional property acquisition expenses (6%-8% stamp duty, registration charges, society corpus funds).",
+          "Making credit card defaults or taking new consumer loans during the home loan processing period.",
+        ],
+      },
+    ],
+    faqs: [
+      { q: "How much home loan can I get on my salary?", a: "Lenders generally approve a loan amount where the monthly EMI does not exceed 40% to 50% of your net take-home salary." },
+      { q: "Can I get a 100% home loan without any down payment?", a: "No. Under RBI regulations, banks must maintain mandatory LTV margins (requiring minimum 10% to 20% down payment from the buyer)." },
+      { q: "Are there prepayment penalties on home loans?", a: "No, RBI prohibits banks and housing finance companies from charging prepayment penalties on floating-rate home loans for individual borrowers." },
+    ],
+  },
+  {
+    id: 16,
+    slug: "seo-and-digital-marketing-guide",
+    title: "SEO and Digital Marketing: How Businesses Can Build Online Visibility and Generate Growth",
+    category: "Digital Marketing & Growth",
+    readTime: "9 min read",
+    date: "Aug 21, 2026",
+    author: "ArthoVista Digital Advisory",
+    featured: true,
+    excerpt: "Practical roadmap for businesses to establish organic visibility. Technical SEO, On-Page SEO, Local Search (Google Business Profile), and 2026 AI Search Visibility.",
+    metaDescription: "Comprehensive SEO and Digital Marketing Guide. Explore Technical SEO, Content Strategy, Google Business Profile local SEO, 2026 Generative AI Overviews, and SEO vs PPC.",
+    keywords: ["SEO and digital marketing", "organic search visibility", "Google Business Profile local SEO", "2026 AI search visibility", "digital marketing strategy MSME"],
+    tableOfContents: [
+      { id: "what-is-seo-dm", label: "What Is SEO and Digital Marketing?" },
+      { id: "why-businesses-need-it", label: "Why Do Businesses Need Digital Visibility?" },
+      { id: "main-components", label: "4 Core Pillars of SEO" },
+      { id: "ai-search-2026", label: "SEO in 2026: AI Overviews & Generative Search" },
+      { id: "seo-vs-paid", label: "SEO vs Paid Digital Advertising" },
+      { id: "strategy-steps", label: "6-Step Digital Marketing Framework" },
+      { id: "mistakes", label: "Common Digital Marketing Mistakes" },
+      { id: "faqs", label: "Frequently Asked Questions" },
+      { id: "sources", label: "Official Verification Sources" },
+    ],
+    sections: [
+      {
+        id: "intro",
+        type: "lead",
+        content: `A business can have a top-tier product, exceptional services, and a sleek website, but still struggle to attract customers online. The problem is often not the quality of the business—it is discoverability. When prospective customers search for the services you offer, are you appearing on the first page? SEO and digital marketing connect businesses with customers actively searching for solutions.`,
+      },
+      {
+        id: "main-components",
+        title: "The 4 Core Pillars of Search Engine Optimization",
+        type: "cards",
+        cards: [
+          { title: "Technical SEO", desc: "Ensuring search engine bots can crawl, render, and index your website with fast loading speeds, mobile responsiveness, and clean architecture." },
+          { title: "On-Page SEO", desc: "Optimizing title tags, header hierarchies (H1-H3), meta descriptions, structured data schema, and keyword alignment." },
+          { title: "Content SEO", desc: "Creating authoritative, people-first, in-depth guides and resources that solve genuine user problems and answer search queries." },
+          { title: "Local SEO & Google Profile", desc: "Optimizing Google Business Profile (GBP), local citations, and geo-targeted landing pages to dominate local search." },
+        ],
+      },
+      {
+        id: "ai-search-2026",
+        title: "SEO in 2026: AI Overviews and Generative Search Visibility",
+        type: "content",
+        content: `Google Search now includes generative AI experiences such as **AI Overviews** and **AI Mode**. 
+
+**Key 2026 Realities:**
+• **Foundational SEO Still Wins:** Google explicitly confirms that there is no proprietary 'AI SEO markup'. Pages that are indexable, fast, structured, authoritative, and written for human beings are cited as supporting links in AI Overviews.
+• **Search Console Generative AI Reporting:** Search Console now provides dedicated Generative AI performance reporting alongside standard web metrics.
+• **High-Intent Informational Depth:** Content answering complex questions with structured tables, bullet points, and authoritative citations is prioritized by AI synthesis engines.`,
+      },
+      {
+        id: "seo-vs-paid",
+        title: "SEO vs Paid Digital Marketing (PPC / Ads)",
+        type: "table",
+        tableData: {
+          headers: ["Factor", "Organic SEO", "Paid Advertising (Google Ads / Meta)"],
+          rows: [
+            ["Visibility Channel", "Organic search rankings & AI summaries", "Sponsored search ads & social feeds"],
+            ["Payment Model", "Investment in content & technical optimization", "Cost per click (CPC) or cost per thousand impressions (CPM)"],
+            ["Traffic Speed", "Compounding long-term asset (3–6 months)", "Immediate traffic upon campaign activation"],
+            ["Cost Longevity", "Traffic continues even when marketing spend pauses", "Traffic ceases immediately when ad budget expires"],
+            ["Trust & CTR", "Higher organic click-through rates and consumer trust", "High conversion for commercial immediate purchase intent"],
+          ],
+        },
+      },
+      {
+        id: "strategy-steps",
+        title: "6-Step Strategic Digital Growth Framework",
+        type: "steps",
+        steps: [
+          { step: "1", title: "Business & Market Audit", desc: "Map core service offerings, geographic reach, and competitor digital strengths." },
+          { step: "2", title: "Customer Search Intent Mapping", desc: "Identify exact keywords, problem queries, and decision stages your audience uses." },
+          { step: "3", title: "Technical & Site Health Fixes", desc: "Eliminate 404 errors, fix page load speed, and structure mobile-friendly layouts." },
+          { step: "4", title: "Content Hub & Service Silos", desc: "Build comprehensive guides, pillar pages, comparison tables, and FAQ clusters." },
+          { step: "5", title: "Authority & Local Citations", desc: "Verify Google Business Profile, gain industry directory citations, and establish backlinks." },
+          { step: "6", title: "Track Conversions & Iteration", desc: "Analyze Google Search Console queries, conversion rates, and lead quality." },
+        ],
+      },
+      {
+        id: "mistakes",
+        title: "Common SEO & Digital Marketing Mistakes",
+        type: "callout",
+        calloutType: "warning",
+        items: [
+          "Keyword stuffing and publishing low-value repetitive content designed purely to game search algorithms.",
+          "Believing fraudulent agencies that promise 'Guaranteed #1 Ranking on Google in 7 Days'.",
+          "Ignoring technical website crawlability and mobile responsive performance.",
+          "Treating SEO as a one-time setup rather than an ongoing compounding digital asset.",
+        ],
+      },
+      {
+        id: "sources",
+        title: "Official Sources & Editorial Verification",
+        type: "content",
+        content: `Reviewed against Google Search Central guidelines:
+• Google Search Essentials: developers.google.com/search/docs/essentials
+• Google SEO Starter Guide: developers.google.com/search/docs/fundamentals/seo-starter-guide
+• Google Guidance for AI Features: developers.google.com/search/docs/appearance/ai-features`,
+      },
+    ],
+    faqs: [
+      { q: "Is SEO the same as digital marketing?", a: "No. SEO is a core pillar of digital marketing focused specifically on organic search visibility, while digital marketing also includes paid ads, social media, and email marketing." },
+      { q: "How long does SEO take to deliver measurable results?", a: "In most competitive business sectors, sustainable organic traffic and ranking improvements take between 3 to 6 months of consistent optimization." },
+      { q: "Can anyone guarantee Google's first-page ranking?", a: "No. Google explicitly states that no agency or individual can guarantee a specific ranking position due to algorithmic fluidity." },
+    ],
+  },
+  {
+    id: 17,
+    slug: "llp-registration-india",
+    title: "LLP Registration in India: Process, Documents, Fees & Requirements",
+    category: "Business Registration",
+    readTime: "8 min read",
+    date: "Aug 21, 2026",
+    author: "ArthoVista Advisory Team",
+    featured: false,
+    excerpt: "Complete guide to Limited Liability Partnership (LLP) registration under LLP Act 2008. Designated partners (120-day residency), RUN-LLP, FiLLiP forms, and fee slabs.",
+    metaDescription: "Step-by-step guide to LLP Registration in India. Explore FiLLiP MCA filing, Form 3 LLP agreement, contribution fee slabs, audit exemptions, and post-incorporation compliances.",
+    keywords: ["LLP registration India", "Limited Liability Partnership incorporation", "FiLLiP form MCA", "LLP agreement Form 3", "LLP audit exemption limits"],
+    tableOfContents: [
+      { id: "what-is-llp", label: "What Is an LLP?" },
+      { id: "who-can-register", label: "Who Can Register an LLP?" },
+      { id: "benefits", label: "Key Benefits of LLP Structure" },
+      { id: "fee-slabs", label: "MCA Incorporation Fee Slabs" },
+      { id: "documents", label: "Documents Required" },
+      { id: "process", label: "5-Step Registration Process" },
+      { id: "post-registration", label: "Post-Registration Compliance & Audits" },
+>>>>>>> origin/main
       { id: "mistakes", label: "Common Mistakes to Avoid" },
       { id: "faqs", label: "Frequently Asked Questions" },
     ],
@@ -1628,6 +2463,7 @@ The ODOP approach seeks to promote:
       {
         id: "intro",
         type: "lead",
+<<<<<<< HEAD
         content: `A Limited Liability Partnership (LLP) combines the operational flexibility and pass-through taxation simplicity of a partnership firm with the legal protection of limited liability found in private limited companies. Governed under the Limited Liability Partnership Act, 2008, it is a favored choice for professional services, consulting agencies, family businesses, and self-funded ventures.`,
       },
       {
@@ -1654,10 +2490,38 @@ The ODOP approach seeks to promote:
             ["Mandatory Statutory Audit", "Only if turnover > ₹40 Lakh or contribution > ₹25 Lakh", "Mandatory every year regardless of turnover/profit"],
             ["Dividend Distribution / Profit Share", "Profit share is completely exempt from income tax in partners' hands", "Dividends taxed in shareholders' hands at personal slab rates"],
             ["Equity Fundraising", "Cannot issue equity shares or stock options (ESOPs)", "Standard structure for VC, Angel & Private Equity funding"],
+=======
+        content: `Starting a business with one or more partners involves an important decision: choosing the right legal structure. For entrepreneurs and professional service firms who want the operational flexibility of a partnership combined with the limited liability protection of a corporate entity, a Limited Liability Partnership (LLP) registered under the Limited Liability Partnership Act, 2008 is an ideal choice.`,
+      },
+      {
+        id: "who-can-register",
+        title: "Who Can Register an LLP?",
+        type: "content",
+        content: `• **Minimum Partners:** At least 2 partners (no statutory upper limit on maximum partners).
+• **Designated Partners:** At least 2 individual designated partners who hold valid DPINs/DINs.
+• **Residency Requirement:** At least one designated partner must be a **Resident in India** (stayed in India for at least **120 days** during the financial year).
+• **Suitability:** Professional service firms, agencies, consultants, software houses, family businesses, and multi-founder service enterprises.`,
+      },
+      {
+        id: "fee-slabs",
+        title: "Official MCA Incorporation Fee Slabs for LLPs",
+        type: "table",
+        tableData: {
+          headers: ["Proposed Capital Contribution", "MCA Incorporation Government Fee"],
+          rows: [
+            ["Up to ₹1 Lakh", "₹500"],
+            ["More than ₹1 Lakh to ₹5 Lakh", "₹2,000"],
+            ["More than ₹5 Lakh to ₹10 Lakh", "₹4,000"],
+            ["More than ₹10 Lakh to ₹25 Lakh", "₹5,000"],
+            ["More than ₹25 Lakh to ₹1 Crore", "₹10,000"],
+            ["More than ₹1 Crore", "₹25,000"],
+            ["Name Reservation via RUN-LLP", "₹200"],
+>>>>>>> origin/main
           ],
         },
       },
       {
+<<<<<<< HEAD
         id: "key-benefits",
         title: "Key Advantages of Forming an LLP",
         type: "cards",
@@ -1678,6 +2542,16 @@ The ODOP approach seeks to promote:
           "Designated Partner Identification Number (DPIN / DIN) and Class-3 DSC for all designated partners.",
           "Registered office address situated within India.",
           "Filing of stamped LLP Agreement in Form 3 within 30 days of incorporation.",
+=======
+        id: "benefits",
+        title: "Key Advantages of an LLP",
+        type: "cards",
+        cards: [
+          { title: "Limited Liability Protection", desc: "Partners are protected from debts of the LLP; one partner is not liable for another partner's negligence or misconduct." },
+          { title: "No Mandatory Audit for Small LLPs", desc: "Audit is exempt if turnover is ≤ ₹40 Lakh and contribution is ≤ ₹25 Lakh." },
+          { title: "Flexible Internal Agreement", desc: "Profit-sharing, capital contribution, decision-making, and exit terms are fully customizable in the LLP Agreement." },
+          { title: "Lower Compliance Cost", desc: "No compulsory board meeting records or statutory reserve funds compared to Private Limited companies." },
+>>>>>>> origin/main
         ],
       },
       {
@@ -1685,6 +2559,7 @@ The ODOP approach seeks to promote:
         title: "Documents Required for LLP Registration",
         type: "documents",
         businessDocs: [
+<<<<<<< HEAD
           "PAN Card of all Partners and Designated Partners (mandatory)",
           "Identity Proof (Passport, Voter ID, or Driving License)",
           "Address Proof (Bank Statement, Electricity Bill, or Telephone Bill under 2 months old)",
@@ -1695,10 +2570,22 @@ The ODOP approach seeks to promote:
           "Rent Agreement and No-Objection Certificate (NOC) from landlord",
           "Consent to act as Designated Partner (Form 9)",
           "Drafted LLP Agreement drafted on applicable state Stamp Paper",
+=======
+          "PAN Card of all Partners (mandatory for Indian nationals)",
+          "Identity Proof: Voter ID, Passport, or Driving License",
+          "Address Proof: Bank Statement, Electricity Bill, or Mobile Bill (< 2 months old)",
+          "Passport-size photographs and Class-3 Digital Signatures (DSC)",
+        ],
+        systemDocs: [
+          "Proof of Registered Office (Electricity bill or municipal tax receipt)",
+          "Rent Agreement and No-Objection Certificate (NOC) from the landlord",
+          "Drafted LLP Agreement establishing profit-sharing ratios and partner rights",
+>>>>>>> origin/main
         ],
       },
       {
         id: "process",
+<<<<<<< HEAD
         title: "6-Step FiLLiP MCA Registration Process",
         type: "steps",
         steps: [
@@ -1742,10 +2629,41 @@ The ODOP approach seeks to promote:
           "Delaying the filing of Form 3 (LLP Agreement) beyond 30 days, resulting in compounding daily fines.",
           "Assuming LLPs are completely exempt from tax—LLPs are taxed at a flat 30% plus surcharge/cess.",
           "Failing to maintain proper minutes of partner meetings and books of accounts at the registered office.",
+=======
+        title: "5-Step LLP Incorporation Workflow",
+        type: "steps",
+        steps: [
+          { step: "1", title: "Obtain Digital Signatures (DSC)", desc: "Procure Class-3 DSCs for all proposed designated partners." },
+          { step: "2", title: "Reserve LLP Name", desc: "Apply for unique name using RUN-LLP web service (₹200 fee) or directly in FiLLiP." },
+          { step: "3", title: "File Form FiLLiP", desc: "Submit incorporation form on MCA portal along with subscriber sheets, consent letters, and registered office proofs." },
+          { step: "4", title: "Receive Certificate of Incorporation", desc: "ROC examines application and issues digital Certificate of Incorporation with LLPIN." },
+          { step: "5", title: "Draft & File LLP Agreement (Form 3)", desc: "Execute LLP Agreement on state-specific stamp paper and file Form 3 within 30 days of incorporation." },
+        ],
+      },
+      {
+        id: "post-registration",
+        title: "Post-Registration Compliance & Audit Rules",
+        type: "content",
+        content: `• **LLP Agreement Filing (Form 3):** Must be filed within **30 days** of incorporation; heavy daily late penalties apply thereafter.
+• **Annual Return (Form 11):** Mandatory annual return filed within **60 days** of FY closure (by May 30).
+• **Statement of Account & Solvency (Form 8):** Mandatory filing within **30 days** from 6 months of FY end (by October 30).
+• **Audit Exemption Thresholds:** An LLP is exempt from mandatory tax audit if its **turnover does not exceed ₹40 Lakh** or its **capital contribution does not exceed ₹25 Lakh**.`,
+      },
+      {
+        id: "mistakes",
+        title: "Common LLP Filing Mistakes",
+        type: "callout",
+        calloutType: "warning",
+        items: [
+          "Failing to file Form 3 (LLP Agreement) within 30 days of incorporation, attracting severe daily late fees.",
+          "Choosing an LLP when planning to raise venture capital equity (VCs require Pvt Ltd shareholding structures).",
+          "Inconsistencies between partner names in PAN records and bank statement proofs.",
+>>>>>>> origin/main
         ],
       },
     ],
     faqs: [
+<<<<<<< HEAD
       { q: "Is an audit compulsory for all LLPs?", a: "No. An LLP is exempt from mandatory audit unless its annual turnover exceeds ₹40 Lakh or its total partner capital contribution exceeds ₹25 Lakh." },
       { q: "What is the tax rate on LLPs in India?", a: "LLPs are taxed at a flat income tax rate of 30% (plus applicable surcharge and 4% Health and Education Cess)." },
       { q: "Can an existing partnership firm convert into an LLP?", a: "Yes. Traditional partnership firms can convert into an LLP under Schedule II of the LLP Act 2008 by filing Form 17." },
@@ -1757,10 +2675,23 @@ The ODOP approach seeks to promote:
     slug: "section-8-company-registration",
     title: "Section 8 Company & NGO Registration in India: Process, 12A/80G, CSR & Benefits",
     category: "Business Registration",
+=======
+      { q: "How many partners are required to start an LLP?", a: "A minimum of 2 partners are required. At least two must be designated partners, with at least one being an Indian resident." },
+      { q: "Is an LLP better than a Private Limited Company?", a: "LLPs are ideal for service businesses and consultancies seeking lower compliance and flexible profit sharing, whereas Pvt Ltd is preferred for startups raising equity funding." },
+      { q: "What is the penalty for late filing of LLP Form 3 or Form 11?", a: "Late filing of MCA forms attracts significant cumulative additional fees per day until regularized." },
+    ],
+  },
+  {
+    id: 18,
+    slug: "cgtmse-loan-scheme",
+    title: "CGTMSE Loan: Eligibility, Benefits, Documents, Process & Guarantee Coverage",
+    category: "Government Schemes",
+>>>>>>> origin/main
     readTime: "9 min read",
     date: "Aug 21, 2026",
     author: "ArthoVista Advisory Team",
     featured: false,
+<<<<<<< HEAD
     excerpt: "Complete roadmap to incorporating a Section 8 Non-Profit Company under Companies Act 2013. SPICe+ licensing, Section 12A & 80G tax exemptions, FCRA, and CSR funding eligibility.",
     metaDescription: "Guide to Section 8 Company Registration in India. Learn about non-profit incorporation, central government license, 12A and 80G tax exemption filings, and CSR funding eligibility.",
     keywords: ["Section 8 company registration", "NGO registration India", "Section 12A and 80G registration", "non-profit company MCA", "CSR grant eligibility NGO"],
@@ -1773,12 +2704,28 @@ The ODOP approach seeks to promote:
       { id: "process", label: "7-Step Section 8 Incorporation Process" },
       { id: "csr-eligibility", label: "CSR Funding (Form CSR-1) & Grants" },
       { id: "mistakes", label: "Common Pitfalls to Avoid" },
+=======
+    excerpt: "Complete guide to Credit Guarantee Scheme for Micro and Small Enterprises (CGTMSE). Maximum ₹10 Crore coverage ceiling, 75%-90% guarantee, and fee structures.",
+    metaDescription: "Comprehensive guide to CGTMSE Loan Scheme in 2026. Explore ₹10 Crore collateral-free credit ceiling, 75%-90% guarantee coverage, Annual Guarantee Fees, and MLI bank processes.",
+    keywords: ["CGTMSE loan scheme", "collateral free MSME loan", "CGTMSE coverage limit 10 crore", "CGTMSE guarantee fee", "Udyam loan without collateral"],
+    tableOfContents: [
+      { id: "what-is-cgtmse", label: "What Is a CGTMSE Loan?" },
+      { id: "who-can-benefit", label: "Who Can Benefit From CGTMSE?" },
+      { id: "coverage-limits", label: "Maximum Loan Coverage (₹10 Crore Ceiling)" },
+      { id: "guarantee-slabs", label: "Guarantee Coverage Percentages" },
+      { id: "fees", label: "Annual Guarantee Fee (AGF) Structure" },
+      { id: "documents", label: "Documents Required" },
+      { id: "process", label: "7-Step Bank Application Process" },
+      { id: "hybrid-security", label: "Hybrid Security Mechanism" },
+      { id: "mistakes", label: "Common Applicant Mistakes" },
+>>>>>>> origin/main
       { id: "faqs", label: "Frequently Asked Questions" },
     ],
     sections: [
       {
         id: "intro",
         type: "lead",
+<<<<<<< HEAD
         content: `When establishing a non-governmental organization (NGO), social enterprise, or charitable foundation in India, choosing the right legal vehicle determines your ability to secure corporate CSR grants, government funding, and foreign philanthropic capital. A Section 8 Company, registered under the Companies Act, 2013, is the most transparent, professionally governed, and internationally recognized non-profit structure in India.`,
       },
       {
@@ -1805,10 +2752,38 @@ The ODOP approach seeks to promote:
             ["Minimum Founders", "Minimum 2 Directors & Shareholders", "Minimum 7 Members", "Minimum 2 Trustees"],
             ["Transfer of Management", "Seamless through board resolution", "Complex election processes", "Governed by Trust Deed succession"],
             ["Annual Transparency", "Strict MCA filings, balance sheets public", "Varies widely across state acts", "Internal audit only"],
+=======
+        content: `For millions of micro and small business owners in India, securing business credit is often stalled by one hurdle: the requirement for collateral property or third-party guarantees. The Credit Guarantee Fund Trust for Micro and Small Enterprises (CGTMSE), established jointly by the Ministry of MSME and SIDBI, provides credit guarantee coverage to banks, enabling qualifying MSEs to access institutional loans without conventional collateral security.`,
+      },
+      {
+        id: "coverage-limits",
+        title: "Maximum Loan Coverage: ₹10 Crore Ceiling",
+        type: "callout",
+        calloutType: "info",
+        items: [
+          "Effective from 1 April 2025 under CGTMSE Scheme CGS-I, the maximum credit facility eligible for guarantee cover was increased to **₹10 Crore**.",
+          "The ₹10 Crore ceiling applies across eligible Public Sector Banks, Private Sector Banks, Foreign Banks, and select financial institutions.",
+          "CGTMSE covers both Term Loans (for machinery/capex) and Working Capital facilities (Cash Credit/Overdraft).",
+        ],
+      },
+      {
+        id: "guarantee-slabs",
+        title: "CGTMSE Guarantee Coverage Percentages",
+        type: "table",
+        tableData: {
+          headers: ["Borrower / Enterprise Category", "Maximum Guarantee Coverage %"],
+          rows: [
+            ["Women Entrepreneurs / MSEs Promoted by Agniveers", "Up to 90% coverage"],
+            ["SC / ST Entrepreneurs, Persons with Disabilities (PwD), Transgender", "Up to 85% coverage"],
+            ["ZED-Certified MSEs & Units in Aspirational Districts", "Up to 85% coverage"],
+            ["Micro Enterprises (for loans up to ₹5 Lakh)", "Up to 85% coverage"],
+            ["Other General Category MSE Borrowers", "75% standard coverage"],
+>>>>>>> origin/main
           ],
         },
       },
       {
+<<<<<<< HEAD
         id: "key-benefits",
         title: "Key Benefits & Institutional Advantages",
         type: "cards",
@@ -1844,10 +2819,44 @@ The ODOP approach seeks to promote:
           "Comprehensive Note on the proposed charitable activities and social vision",
           "Drafted Memorandum of Association (MOA - INC-13) and Articles of Association (AOA)",
           "Registered Office Proof (Utility Bill + Rent Agreement + Owner NOC)",
+=======
+        id: "fees",
+        title: "Annual Guarantee Fee (AGF) Structure",
+        type: "content",
+        content: `CGTMSE charges an **Annual Guarantee Fee (AGF)** on the guaranteed amount:
+• Standard annual fee rates range from **0.37% to 1.20% per annum**, depending on the loan slab (lowest for loans up to ₹10 Lakh).
+• Concessions apply for women entrepreneurs, SC/ST founders, and units in North Eastern regions.
+• *Note:* The lending bank decides whether to absorb the guarantee fee or pass it on to the borrower as part of the overall cost of credit.`,
+      },
+      {
+        id: "hybrid-security",
+        title: "Understanding Hybrid Security",
+        type: "content",
+        content: `Under the **Hybrid Security Mechanism**:
+• Lenders can obtain partial collateral security for a portion of the credit facility, while the remaining unsecured portion receives CGTMSE guarantee coverage.
+• This allows businesses with partial property collateral to obtain significantly higher credit limits.`,
+      },
+      {
+        id: "documents",
+        title: "Documents Required for CGTMSE Loan",
+        type: "documents",
+        businessDocs: [
+          "Udyam Registration Certificate (Mandatory for all CGTMSE guarantee claims)",
+          "PAN and Aadhaar cards of Proprietor / Partners / Directors",
+          "Business constitution documents (Partnership Deed, MOA/AOA, GST Certificate)",
+          "Income Tax Returns (ITR) for past 2–3 financial years",
+          "Current Account bank statements for the last 12 months",
+        ],
+        systemDocs: [
+          "Comprehensive Detailed Project Report (DPR) with cash-flow projections and DSCR",
+          "Machinery and equipment quotations from certified vendors",
+          "Financial statements: Audited Balance Sheet and P&L for existing units",
+>>>>>>> origin/main
         ],
       },
       {
         id: "process",
+<<<<<<< HEAD
         title: "7-Step Section 8 Incorporation Process",
         type: "steps",
         steps: [
@@ -1869,10 +2878,23 @@ The ODOP approach seeks to promote:
           { title: "3-Year Operational Track Record", desc: "Under Companies (CSR Policy) Rules, entities undertaking CSR activities typically require a 3-year established track record in charitable work." },
           { title: "FCRA Foreign Funding", desc: "To receive cross-border foreign donations or international philanthropic grants, separate registration under Foreign Contribution Regulation Act (FCRA) is mandatory." },
           { title: "NGO Darpan NITI Aayog", desc: "Registration on NITI Aayog's NGO Darpan portal generates a unique Darpan ID essential for applying to central ministry grants." },
+=======
+        title: "How to Apply for a CGTMSE Loan (7-Step Process)",
+        type: "steps",
+        steps: [
+          { step: "1", title: "Verify Udyam & MSE Status", desc: "Ensure your enterprise has valid Udyam Registration in an eligible manufacturing/service/trade activity." },
+          { step: "2", title: "Prepare Bankable DPR", desc: "Structure realistic financial projections demonstrating adequate cash flows for EMI servicing." },
+          { step: "3", title: "Approach Member Lending Institution (MLI)", desc: "Submit your credit proposal to a participating bank requesting CGTMSE scheme coverage." },
+          { step: "4", title: "Bank Credit Appraisal", desc: "Bank assesses project viability, promoter creditworthiness, and commercial viability." },
+          { step: "5", title: "Loan Sanction", desc: "Upon satisfactory appraisal, the bank sanctions the loan under the CGTMSE framework." },
+          { step: "6", title: "Bank Applies for Guarantee Cover", desc: "The bank submits the guarantee application directly on the CGTMSE electronic portal." },
+          { step: "7", title: "Fee Payment & Guarantee Activation", desc: "Upon payment of the Annual Guarantee Fee, the guarantee cover is activated and loan is disbursed." },
+>>>>>>> origin/main
         ],
       },
       {
         id: "mistakes",
+<<<<<<< HEAD
         title: "Common Pitfalls in Section 8 Governance",
         type: "callout",
         calloutType: "warning",
@@ -1880,10 +2902,20 @@ The ODOP approach seeks to promote:
           "Paying excessive director remuneration or personal dividends, leading to immediate cancellation of Section 8 license.",
           "Delaying 12A and 80G income tax registrations after incorporation, leading to taxable donation income.",
           "Accepting foreign donations into local accounts without prior FCRA registration or prior ministry permission.",
+=======
+        title: "Common Pitfalls to Avoid",
+        type: "callout",
+        calloutType: "warning",
+        items: [
+          "Assuming CGTMSE itself lends money—you must apply to a bank or NBFC; CGTMSE only acts as guarantor to the lender.",
+          "Believing collateral-free guarantees automatic loan approval—banks still rigorously verify creditworthiness, DSCR, and business viability.",
+          "Applying without a valid Udyam Registration number.",
+>>>>>>> origin/main
         ],
       },
     ],
     faqs: [
+<<<<<<< HEAD
       { q: "Can profits or surpluses be distributed in a Section 8 company?", a: "No. Any profits, surpluses, or revenue generated must be strictly reinvested into the charitable objectives of the company." },
       { q: "How many directors are needed for a Section 8 company?", a: "A minimum of 2 directors are required for a private Section 8 company, and at least one director must be an Indian resident." },
       { q: "Can a Section 8 company be converted into a regular private limited company?", a: "Yes, but it requires a stringent legal procedure under Section 8(4) including approval from the Regional Director and surrender of all tax concessions." },
@@ -2040,6 +3072,35 @@ The ODOP approach seeks to promote:
       { id: "samadhaan", label: "MSME Samadhaan & Delayed Payment Protection" },
       { id: "documents", label: "Information & Details Required" },
       { id: "process", label: "5-Step Free Udyam Online Application Process" },
+=======
+      { q: "Does CGTMSE provide loans directly to businesses?", a: "No. CGTMSE provides guarantee cover to Member Lending Institutions (banks/NBFCs). You must apply directly to an eligible lender." },
+      { q: "What is the maximum loan limit covered under CGTMSE?", a: "The maximum credit facility eligible for guarantee cover is ₹10 Crore per MSE borrower under CGS-I." },
+      { q: "Is Udyam Registration mandatory for a CGTMSE loan?", a: "Yes. CGTMSE rules mandate a valid Udyam Registration Number for every borrower when a guarantee application is filed." },
+      { q: "Can trading businesses apply for CGTMSE?", a: "Yes, retail and wholesale trade businesses are eligible for CGTMSE coverage under defined guidelines." },
+    ],
+  },
+  {
+    id: 19,
+    slug: "copyright-protection-india",
+    title: "Copyright Protection in India: Registration, Process, Benefits and Fees",
+    category: "Legal & IP Protection",
+    readTime: "7 min read",
+    date: "Aug 21, 2026",
+    author: "ArthoVista Advisory Team",
+    featured: false,
+    excerpt: "Complete guide to copyright registration in India under the Copyright Act 1957. Automatic rights vs registration, Form XIV e-filing, fees, and copyright vs trademark differences.",
+    metaDescription: "Guide to Copyright Protection in India. Learn about literary, artistic, software, and musical works, Form XIV filing, statutory fee schedules, Diary numbers, and prima facie evidence.",
+    keywords: ["Copyright registration India", "Copyright Act 1957", "software copyright filing", "Form XIV copyright portal", "copyright vs trademark difference"],
+    tableOfContents: [
+      { id: "what-is-copyright", label: "What Is Copyright Protection?" },
+      { id: "automatic-vs-reg", label: "Automatic Protection vs Registration" },
+      { id: "who-should-register", label: "Who Should Consider Registration?" },
+      { id: "benefits", label: "Key Benefits of Registration" },
+      { id: "fee-schedule", label: "Official Government Fee Schedule" },
+      { id: "documents", label: "Documents Required" },
+      { id: "process", label: "7-Step Online Registration Workflow" },
+      { id: "copyright-vs-tm", label: "Copyright vs Trademark" },
+>>>>>>> origin/main
       { id: "mistakes", label: "Common Mistakes to Avoid" },
       { id: "faqs", label: "Frequently Asked Questions" },
     ],
@@ -2047,6 +3108,7 @@ The ODOP approach seeks to promote:
       {
         id: "intro",
         type: "lead",
+<<<<<<< HEAD
         content: `Udyam Registration is the official, government-backed registration for Micro, Small, and Medium Enterprises (MSMEs) issued by the Ministry of Micro, Small and Medium Enterprises. It is the single gateway required to unlock collateral-free bank loans, 35% government subsidies (PMEGP/PMFME), 1% interest subventions, tender fee exemptions, and legal protection against delayed customer payments.`,
       },
       {
@@ -2071,10 +3133,26 @@ The ODOP approach seeks to promote:
             ["Micro Enterprise", "Up to ₹2.5 Crore", "Up to ₹10 Crore"],
             ["Small Enterprise", "Up to ₹25 Crore", "Up to ₹100 Crore"],
             ["Medium Enterprise", "Up to ₹125 Crore", "Up to ₹500 Crore"],
+=======
+        content: `A business may spend months creating original website content, custom software source code, training manuals, photographs, promotional videos, or distinctive artwork. Once that content is published online, protecting it from unauthorized duplication or piracy becomes crucial. Under India's Copyright Act, 1957, copyright protects original literary, dramatic, musical, artistic works, cinematograph films, sound recordings, and computer software.`,
+      },
+      {
+        id: "automatic-vs-reg",
+        title: "Automatic Protection vs Formal Registration",
+        type: "table",
+        tableData: {
+          headers: ["Parameter", "Automatic Copyright Protection", "Formal Copyright Registration"],
+          rows: [
+            ["How It Arises", "Automatically upon the creation of the original work in tangible form", "Through formal application to the Copyright Office via Form XIV"],
+            ["Legal Certificate", "No certificate is issued", "Official Certificate of Registration with Register entry"],
+            ["Court Admissibility", "Ownership must be proven with extensive contemporaneous records", "Certificate acts as prima facie evidence of ownership in court under Section 48"],
+            ["Customs & Anti-Piracy", "Difficult to enforce without formal registration", "Enables border control seizure of infringing pirated goods"],
+>>>>>>> origin/main
           ],
         },
       },
       {
+<<<<<<< HEAD
         id: "key-benefits",
         title: "Top 8 Benefits of Udyam MSME Certificate",
         type: "cards",
@@ -2231,10 +3309,47 @@ The ODOP approach seeks to promote:
             ["Fast-Track Patent Examination (Form 18A)", "₹20,000", "₹4,000", "80% Fee Rebate + Disposal in < 1 Year"],
             ["Trademark E-Filing (per class)", "₹9,000", "₹4,500", "50% Fee Rebate"],
             ["Patent / TM Facilitator Legal Charges", "Market Rate (₹25k-₹1L)", "Government pays attorney fees directly", "Free Legal Assistance"],
+=======
+        id: "who-should-register",
+        title: "Who Should Consider Copyright Registration?",
+        type: "list",
+        items: [
+          "Software developers and SaaS companies (protecting source code and object code)",
+          "Authors, writers, and educational publishers",
+          "Graphic designers, visual artists, and architects",
+          "Website owners and digital marketing agencies (protecting UI layouts and proprietary content)",
+          "Music composers, record labels, and film production houses",
+          "Startups and MSMEs producing unique training content and product documentation",
+        ],
+      },
+      {
+        id: "benefits",
+        title: "5 Key Benefits of Copyright Registration",
+        type: "cards",
+        cards: [
+          { title: "Prima Facie Legal Proof", desc: "The Certificate of Registration serves as rebuttable presumption of ownership in judicial litigation." },
+          { title: "Statutory Damages & Injunctions", desc: "Easily secure interim ex-parte injunctions and claim civil damages against copycats and pirates." },
+          { title: "Commercial Licensing & Royalties", desc: "Clear documented title facilitates software licensing agreements, content syndication, and IP valuation." },
+          { title: "Lifetime + 60 Years Protection", desc: "Literary, musical, and artistic works enjoy protection for the author's lifetime plus 60 years." },
+        ],
+      },
+      {
+        id: "fee-schedule",
+        title: "Official Government Fee Schedule (Copyright Portal)",
+        type: "table",
+        tableData: {
+          headers: ["Category of Creative Work", "Government Fee (Per Work)"],
+          rows: [
+            ["Literary, Dramatic, Musical or Artistic Works", "₹500"],
+            ["Literary or Artistic Work used in relation to Goods/Services (Commercial)", "₹2,000"],
+            ["Sound Recordings", "₹2,000"],
+            ["Cinematograph Films", "₹5,000"],
+>>>>>>> origin/main
           ],
         },
       },
       {
+<<<<<<< HEAD
         id: "seed-fund",
         title: "Startup India Seed Fund Scheme (SISFS)",
         type: "cards",
@@ -2283,10 +3398,49 @@ The ODOP approach seeks to promote:
           "Submitting standard generic trading or services models without demonstrating any technological innovation or scalability.",
           "Submitting incomplete pitch decks without explaining the problem-solution fit or product differentiation.",
           "Applying as a sole proprietorship firm (sole proprietorships are not eligible for DPIIT recognition).",
+=======
+        id: "process",
+        title: "7-Step Online Copyright Registration Process",
+        type: "steps",
+        steps: [
+          { step: "1", title: "Identify Category of Work", desc: "Classify work under Literary (including software code), Artistic, Musical, Sound, or Cinematograph." },
+          { step: "2", title: "Establish Authorship & Ownership", desc: "Obtain employee/contractor IP assignment agreements and No-Objection Certificates." },
+          { step: "3", title: "File Form XIV Online", desc: "Submit application on the Copyright e-filing portal (copyright.gov.in)." },
+          { step: "4", title: "Upload / Submit Work Copies", desc: "Upload digital copies of artwork/documents or submit source code excerpts for software." },
+          { step: "5", title: "Pay Statutory Fee", desc: "Pay government fees online and generate unique Dairy Number." },
+          { step: "6", title: "Mandatory 30-Day Objection Window", desc: "The application is open for 30 days for any third-party objections." },
+          { step: "7", title: "Examination & Certificate Issuance", desc: "Examiner verifies compliance; upon clearance, the Certificate of Registration is issued." },
+        ],
+      },
+      {
+        id: "copyright-vs-tm",
+        title: "Copyright vs Trademark: What Is the Difference?",
+        type: "table",
+        tableData: {
+          headers: ["Feature", "Copyright", "Trademark"],
+          rows: [
+            ["Primary Protection", "Protects original creative expression (content, code, art, music)", "Protects commercial brand identifiers (names, logos, slogans, marks)"],
+            ["Governing Statute", "Copyright Act, 1957", "Trade Marks Act, 1999"],
+            ["Protection Duration", "Author's lifetime + 60 years", "10 years (renewable indefinitely)"],
+            ["Key Purpose", "Prevents unauthorized copying and reproduction", "Prevents consumer confusion regarding brand origin"],
+          ],
+        },
+      },
+      {
+        id: "mistakes",
+        title: "Common Copyright Filing Mistakes",
+        type: "callout",
+        calloutType: "warning",
+        items: [
+          "Filing without clear IP assignment agreements from freelance designers or third-party developers.",
+          "Attempting to copyright mere business ideas or short slogans (slogans require trademark protection).",
+          "Failing to respond to discrepancies or examiner queries within the stipulated time frame.",
+>>>>>>> origin/main
         ],
       },
     ],
     faqs: [
+<<<<<<< HEAD
       { q: "Is a sole proprietorship eligible for Startup India DPIIT recognition?", a: "No. Only Private Limited Companies, LLPs, and Registered Partnership Firms are eligible for DPIIT recognition." },
       { q: "How long does it take to get a DPIIT certificate?", a: "DPIIT Recognition certificates are typically issued within 2 to 5 business days from online submission." },
       { q: "Does DPIIT recognition guarantee ₹50 Lakh seed funding?", a: "No. DPIIT recognition makes you eligible to apply for SISFS, but final funding approval is evaluated by the respective incubator's seed fund committee." },
@@ -2576,17 +3730,29 @@ The ODOP approach seeks to promote:
       { q: "What is the maximum tenure for a Loan Against Property?", a: "Most commercial banks and housing finance companies offer repayment tenures up to 15 years." },
       { q: "Can an agricultural land be used as collateral for a commercial LAP?", a: "Generally, banks do not accept agricultural land for commercial LAP unless it has undergone formal land conversion (NA conversion) to commercial/industrial use." },
       { q: "Does the bank keep the original property papers?", a: "Yes. The lending bank holds the original property title deeds in safe custody until the entire loan is repaid and NOC is issued." },
+=======
+      { q: "Is copyright registration mandatory in India?", a: "No. Copyright protection arises automatically upon creation. However, registration provides invaluable prima facie evidence in court." },
+      { q: "Can computer software and source code be copyrighted?", a: "Yes. Computer software programs and source code are protected as 'Literary Works' under the Copyright Act, 1957." },
+      { q: "Does copyright protect an idea?", a: "No. Copyright protects the original tangible expression of an idea, not the abstract idea or concept itself." },
+>>>>>>> origin/main
     ],
   },
   {
     id: 20,
+<<<<<<< HEAD
     slug: "digital-services-for-msme-growth",
     title: "Digital Transformation for MSMEs: Strategy, Tech Stack, Automation & Growth",
     category: "Digital Marketing & Growth",
+=======
+    slug: "salaried-personal-loan-india",
+    title: "Salaried Personal Loan in India: Eligibility, Documents, Process & Key Factors",
+    category: "Personal & Education Loans",
+>>>>>>> origin/main
     readTime: "8 min read",
     date: "Aug 21, 2026",
     author: "ArthoVista Advisory Team",
     featured: false,
+<<<<<<< HEAD
     excerpt: "How Indian MSMEs and growing businesses leverage digital transformation: conversion-focused websites, integrated CRMs, SEO search visibility, and omnichannel social lead funnels.",
     metaDescription: "Strategic guide to Digital Transformation for MSMEs in India. Explore modern tech stacks, automated CRM funnels, search engine marketing, and digital workflow optimization.",
     keywords: ["digital transformation MSME", "business digitization India", "MSME tech stack", "lead generation automation", "digital marketing strategy business"],
@@ -2597,12 +3763,26 @@ The ODOP approach seeks to promote:
       { id: "roi-impact", label: "Measuring ROI & Cost Efficiency" },
       { id: "roadmap", label: "6-Step Digital Adoption Roadmap" },
       { id: "mistakes", label: "Common Digital Strategy Mistakes" },
+=======
+    excerpt: "Complete guide for salaried employees applying for personal loans in India. RBI Key Fact Statement (KFS) rules, APR transparency, EMI budgeting, and credit checks.",
+    metaDescription: "Comprehensive guide to Salaried Personal Loans in India. Learn about salary eligibility, FOIR metrics, CIBIL score factors, RBI Key Fact Statement rules, and instant digital verification.",
+    keywords: ["Salaried personal loan India", "personal loan eligibility salary", "RBI Key Fact Statement KFS", "personal loan documents checklist", "APR interest personal loan"],
+    tableOfContents: [
+      { id: "what-is-personal-loan", label: "What Is a Salaried Personal Loan?" },
+      { id: "what-lenders-check", label: "What Do Lenders Check?" },
+      { id: "kfs-rules", label: "RBI Key Fact Statement (KFS) & APR" },
+      { id: "documents", label: "Documents Required" },
+      { id: "process", label: "8-Step Personal Loan Workflow" },
+      { id: "pricing-factors", label: "Interest Rates & Total Cost Factors" },
+      { id: "mistakes", label: "Common Pitfalls to Avoid" },
+>>>>>>> origin/main
       { id: "faqs", label: "Frequently Asked Questions" },
     ],
     sections: [
       {
         id: "intro",
         type: "lead",
+<<<<<<< HEAD
         content: `In an era where over 85% of B2B buyers and retail consumers research products and services online before signing contracts, digital transformation is no longer a luxury reserved for enterprise conglomerates. For Indian MSMEs, manufacturers, and professional firms, adopting modern web architecture, automated CRM pipelines, organic SEO, and targeted social media marketing is the single highest-ROI lever to outpace competitors and acquire high-ticket clients.`,
       },
       {
@@ -3203,10 +4383,35 @@ The ODOP approach seeks to promote:
           { title: "Increase in Authorized Capital (SH-7)", desc: "Filing within 30 days upon passing ordinary resolution to expand authorized share capital." },
           { title: "Allotment of Shares (PAS-3)", desc: "Filing return of allotment within 30 days of issuing new equity shares or CCPS to investors." },
           { title: "Creation / Modification of Charge (CHG-1)", desc: "Registering hypothecation or mortgage charges within 30 days of securing bank term loans." },
+=======
+        content: `A regular monthly salary provides lenders with clear evidence of repayment capacity. An unsecured personal loan allows salaried employees to finance emergency medical expenses, weddings, home renovations, debt consolidation, or major purchases without pledging assets. However, approval, loan amount, and interest rates depend heavily on your net take-home pay, employer category, and credit score.`,
+      },
+      {
+        id: "what-lenders-check",
+        title: "Key Eligibility & Underwriting Parameters",
+        type: "cards",
+        cards: [
+          { title: "Net Monthly Salary", desc: "Determines basic repayment capacity; tier-1 banks typically require minimum ₹25,000–₹35,000 net monthly credit." },
+          { title: "FOIR (< 40%-50%)", desc: "Fixed Obligation to Income Ratio ensures existing EMIs plus proposed EMI remain under 50% of net income." },
+          { title: "Credit Score (CIBIL 750+)", desc: "Higher scores unlock lower interest rates, zero collateral demands, and waiver of processing fees." },
+          { title: "Employer Categorization", desc: "Employees of listed MNCs, PSUs, and Fortune 500 firms receive preferential 'Super Prime' interest rates." },
+        ],
+      },
+      {
+        id: "kfs-rules",
+        title: "RBI Transparency Mandate: Key Fact Statement (KFS)",
+        type: "callout",
+        calloutType: "info",
+        items: [
+          "**Standardized KFS Document:** Under RBI regulations, all regulated banks and NBFCs must provide a clear Key Fact Statement before loan agreement execution.",
+          "**All-In Cost (APR):** Discloses the true Annual Percentage Rate (APR) factoring in headline interest rates, processing fees, insurance, and administrative charges.",
+          "**Cooling-Off Period:** Borrowers have a defined look-up window to exit the digital loan without penalty by repaying the principal and proportionate APR.",
+>>>>>>> origin/main
         ],
       },
       {
         id: "documents",
+<<<<<<< HEAD
         title: "Documents Required for ROC Annual Filings",
         type: "documents",
         businessDocs: [
@@ -3220,10 +4425,25 @@ The ODOP approach seeks to promote:
           "Valid DSC of practicing Chartered Accountant (CA) or Company Secretary (CS)",
           "List of Shareholders and share transfers executed during the financial year",
           "Form MGT-8 certification by practicing CS (for larger private companies)",
+=======
+        title: "Documents Required for Salaried Personal Loan",
+        type: "documents",
+        businessDocs: [
+          "PAN Card (Mandatory identity verification)",
+          "Aadhaar Card or Passport / Voter ID for address verification",
+          "Recent passport-size photograph",
+          "Company Employee ID Card",
+        ],
+        systemDocs: [
+          "Salary Slips for the last 3 consecutive months",
+          "Bank Statements for the salary account for the last 6 months showing monthly salary credits",
+          "Form 16 / ITR for the last 1–2 assessment years (for higher loan quantums)",
+>>>>>>> origin/main
         ],
       },
       {
         id: "process",
+<<<<<<< HEAD
         title: "6-Step Annual ROC Compliance Workflow",
         type: "steps",
         steps: [
@@ -3243,10 +4463,24 @@ The ODOP approach seeks to promote:
           { title: "Heavy Daily Additional Late Fees", desc: "MCA levies additional late fees of ₹100 per day per form with zero upper ceiling, quickly accumulating into lakhs." },
           { title: "Director Disqualification (Sec 164)", desc: "Failure to file annual returns for 3 consecutive years results in automatic 5-year disqualification of all directors and DIN deactivation." },
           { title: "Company Strike-Off & Bank Freezing", desc: "ROC issues show-cause notice and strikes off inactive companies under Section 248, freezing current bank accounts." },
+=======
+        title: "8-Step Personal Loan Application Process",
+        type: "steps",
+        steps: [
+          { step: "1", title: "Assess Financial Need", desc: "Borrow only the exact required amount; calculate affordable EMI using loan calculators." },
+          { step: "2", title: "Check Credit Profile", desc: "Review your CIBIL score and ensure no unpaid credit card dues or overdue loan records." },
+          { step: "3", title: "Compare Lender Offers", desc: "Compare APRs, processing charges, prepayment penalties, and tenure options." },
+          { step: "4", title: "Gather Salary Proofs", desc: "Download recent e-salary slips and digital bank statements with salary credit narrations." },
+          { step: "5", title: "Submit Digital Application", desc: "Complete online e-KYC and bank account aggregator verification." },
+          { step: "6", title: "Credit & Employment Verification", desc: "Lender conducts automated credit bureau checks and official email verification." },
+          { step: "7", title: "Review KFS & Loan Sanction", desc: "Carefully inspect the Key Fact Statement, repayment schedule, and loan agreement." },
+          { step: "8", title: "e-NACH Mandate & Disbursement", desc: "Set up auto-debit e-mandate; funds are credited directly into your salary account within hours." },
+>>>>>>> origin/main
         ],
       },
       {
         id: "mistakes",
+<<<<<<< HEAD
         title: "Common ROC Compliance Mistakes",
         type: "callout",
         calloutType: "warning",
@@ -3254,10 +4488,20 @@ The ODOP approach seeks to promote:
           "Assuming that a company with zero revenue or zero operations does not need to file annual returns (mandatory for all active entities).",
           "Forgetting to file Form INC-20A within 180 days of incorporation, leading to ₹50,000 company penalty and operational blocks.",
           "Missing the 30 September DIR-3 KYC deadline, leading to instant ₹5,000 late fee per director.",
+=======
+        title: "Common Mistakes to Avoid",
+        type: "callout",
+        calloutType: "warning",
+        items: [
+          "Applying to multiple digital lenders simultaneously, causing hard credit inquiry spikes that degrade your CIBIL score.",
+          "Focusing solely on low monthly EMIs by taking longer tenures, resulting in drastically higher total interest outgo.",
+          "Ignoring prepayment charges, penal interest rates, and loan insurance costs.",
+>>>>>>> origin/main
         ],
       },
     ],
     faqs: [
+<<<<<<< HEAD
       { q: "Is annual ROC filing mandatory if my company had zero revenue?", a: "Yes. Even if a company has zero revenue, zero transactions, or made a loss, filing Form AOC-4 and MGT-7 is legally mandatory every year." },
       { q: "What is the penalty for late filing of Form AOC-4 and MGT-7?", a: "The MCA charges an additional fee of ₹100 per day per form from the day following the statutory due date until the date of actual filing." },
       { q: "What happens if a director's DIN is deactivated due to missed KYC?", a: "The director cannot digitally sign any MCA forms, incorporate new entities, or alter company records until DIR-3 KYC is filed with a ₹5,000 penalty." },
@@ -4049,3 +5293,11 @@ The ODOP approach seeks to promote:
     ],
   },
 ];
+=======
+      { q: "Can I get a personal loan if I have existing EMIs?", a: "Yes, provided your total monthly EMI obligations (including the new loan) stay within 40% to 50% of your net monthly salary." },
+      { q: "What is a Key Fact Statement (KFS)?", a: "A KFS is a mandatory, standardized document summarizing the total cost of borrowing, APR, fees, and conditions under RBI guidelines." },
+      { q: "Can I prepay or close my personal loan early?", a: "Yes, though banks and NBFCs may charge a nominal foreclosure fee on fixed-rate unsecured personal loans as per their disclosed schedule of charges." },
+    ],
+  },
+];
+>>>>>>> origin/main

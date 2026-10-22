@@ -9,6 +9,7 @@ export const api = axios.create({
   withCredentials: true // send cookies
 });
 
+<<<<<<< HEAD
 // Helper to decode JWT payload safely without external dependencies
 const getJwtPayload = (jwtToken) => {
   try {
@@ -36,11 +37,14 @@ const getTokenRemainingMs = (jwtToken) => {
   return remaining > 0 ? remaining : 0;
 };
 
+=======
+>>>>>>> origin/main
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('accessToken') || null);
   const [loading, setLoading] = useState(true);
 
+<<<<<<< HEAD
   // Helper to handle expired session (1-day limit)
   const handleSessionExpired = (message = 'Your session has expired. Please login again.') => {
     sessionStorage.setItem('authErrorMessage', message);
@@ -54,6 +58,8 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+=======
+>>>>>>> origin/main
   // Set auth header whenever token changes
   useEffect(() => {
     if (token) {
@@ -65,6 +71,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
+<<<<<<< HEAD
   // Initial load: Fetch current user profile if token exists and is not expired
   useEffect(() => {
     const initAuth = async () => {
@@ -77,6 +84,12 @@ export const AuthProvider = ({ children }) => {
           return;
         }
 
+=======
+  // Initial load: Fetch current user profile if token exists
+  useEffect(() => {
+    const initAuth = async () => {
+      if (token) {
+>>>>>>> origin/main
         try {
           const res = await api.get('/auth/me');
           if (res.data.success) {
@@ -84,8 +97,27 @@ export const AuthProvider = ({ children }) => {
           }
         } catch (error) {
           console.error('Error fetching initial profile:', error);
+<<<<<<< HEAD
           if (error.response?.status === 401) {
             handleSessionExpired('Your session has expired. Please login again.');
+=======
+          // If token is invalid or expired, try to refresh first
+          if (error.response && error.response.status === 401) {
+            try {
+              const refreshRes = await axios.post('/api/auth/refresh');
+              if (refreshRes.data.success) {
+                setToken(refreshRes.data.accessToken);
+                const meRes = await axios.get('/api/auth/me', {
+                  headers: { Authorization: `Bearer ${refreshRes.data.accessToken}` }
+                });
+                setUser(meRes.data.user);
+              } else {
+                logout();
+              }
+            } catch (err) {
+              logout();
+            }
+>>>>>>> origin/main
           } else {
             logout();
           }
@@ -97,6 +129,7 @@ export const AuthProvider = ({ children }) => {
     initAuth();
   }, []);
 
+<<<<<<< HEAD
   // 1-Day (24-Hour) Session Timer & Active Visibility Check
   useEffect(() => {
     if (!token) return;
@@ -154,6 +187,39 @@ export const AuthProvider = ({ children }) => {
 
           const msg = error.response.data?.message || 'Your session has expired. Please login again.';
           handleSessionExpired(msg);
+=======
+  // Axios interceptor to handle expired tokens and auto-refresh
+  useEffect(() => {
+    const interceptor = api.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        const originalRequest = error.config;
+        
+        // Check if error is 401 (Unauthorized) and has code TOKEN_EXPIRED
+        if (
+          error.response && 
+          error.response.status === 401 && 
+          error.response.data.code === 'TOKEN_EXPIRED' && 
+          !originalRequest._retry
+        ) {
+          originalRequest._retry = true;
+          try {
+            // Attempt to fetch new token using refresh endpoint
+            const res = await axios.post('/api/auth/refresh');
+            if (res.data.success) {
+              const newAccessToken = res.data.accessToken;
+              setToken(newAccessToken);
+              
+              // Update original request headers and retry
+              originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+              return api(originalRequest);
+            }
+          } catch (refreshError) {
+            console.error('Refresh token failed:', refreshError);
+            logout();
+            return Promise.reject(refreshError);
+          }
+>>>>>>> origin/main
         }
         return Promise.reject(error);
       }
@@ -162,20 +228,29 @@ export const AuthProvider = ({ children }) => {
     return () => {
       api.interceptors.response.eject(interceptor);
     };
+<<<<<<< HEAD
   }, []);
+=======
+  }, [token]);
+>>>>>>> origin/main
 
   // Login handler
   const login = async (username, password) => {
     try {
+<<<<<<< HEAD
       const cleanUsername = (username || '').trim();
       sessionStorage.removeItem('authErrorMessage');
       const res = await api.post('/auth/login', { username: cleanUsername, password });
+=======
+      const res = await api.post('/auth/login', { username, password });
+>>>>>>> origin/main
       if (res.data.success) {
         setToken(res.data.accessToken);
         setUser(res.data.user);
         return { success: true, user: res.data.user };
       }
     } catch (error) {
+<<<<<<< HEAD
       if (error.response?.data?.message) {
         return {
           success: false,
@@ -191,6 +266,11 @@ export const AuthProvider = ({ children }) => {
       return {
         success: false,
         message: 'Login failed. Please check your credentials.'
+=======
+      return {
+        success: false,
+        message: error.response?.data?.message || 'Login failed. Please check your credentials.'
+>>>>>>> origin/main
       };
     }
   };
@@ -202,11 +282,17 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       console.error('Logout error on server:', err);
     }
+<<<<<<< HEAD
     sessionStorage.removeItem('authErrorMessage');
     setToken(null);
     setUser(null);
     localStorage.removeItem('accessToken');
     delete api.defaults.headers.common['Authorization'];
+=======
+    setToken(null);
+    setUser(null);
+    localStorage.removeItem('accessToken');
+>>>>>>> origin/main
   };
 
   // Refresh user profile helper
@@ -235,4 +321,7 @@ export const useAuth = () => {
   }
   return context;
 };
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
