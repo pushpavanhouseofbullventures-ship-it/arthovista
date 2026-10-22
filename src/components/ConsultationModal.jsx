@@ -56,11 +56,24 @@ export default function ConsultationModal() {
           source: "global-consultation-modal",
         }),
       });
+
       const data = await res.json();
-      if (data.success) {
+
+      if (res.ok && data.success) {
+        // Send successful lead event to Google Tag Manager
+        window.dataLayer = window.dataLayer || [];
+
+        window.dataLayer.push({
+          event: "lead_form_success",
+          form_name: "global_consultation_modal",
+          service_name: form.service || "General Consultation"
+        });
+
         setStatus("success");
       } else {
-        setErrMsg(data.message || "Unable to send request. Please try again.");
+        setErrMsg(
+          data.message || "Unable to send request. Please try again."
+        );
         setStatus("error");
       }
     } catch {
