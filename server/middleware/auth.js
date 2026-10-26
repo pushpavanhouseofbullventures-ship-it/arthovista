@@ -20,14 +20,10 @@ const protect = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-<<<<<<< HEAD
     const user = await User.findById(decoded.id)
       .select('-password')
       .lean();
 
-=======
-    const user = await User.findById(decoded.id).select('-password');
->>>>>>> origin/main
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -42,30 +38,19 @@ const protect = async (req, res, next) => {
       });
     }
 
-<<<<<<< HEAD
     user.id = user._id.toString();
     user.hasBiometrics = Boolean(user.faceEmbeddings && user.faceEmbeddings.length > 0);
     user.faceEmbeddingsCount = user.faceEmbeddings ? user.faceEmbeddings.length : 0;
-=======
->>>>>>> origin/main
     req.user = user;
     next();
   } catch (error) {
     console.error('Token validation error:', error.message);
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> origin/main
     if (error.name === 'TokenExpiredError') {
       return res.status(401).json({
         success: false,
         code: 'TOKEN_EXPIRED',
-<<<<<<< HEAD
         message: 'Your session has expired. Please login again.'
-=======
-        message: 'Token has expired.'
->>>>>>> origin/main
       });
     }
 

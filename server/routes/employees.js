@@ -27,30 +27,21 @@ const upload = multer({
 router.get('/', protect, authorize('Admin', 'Manager'), async (req, res, next) => {
   try {
     const { department, search, role } = req.query;
-<<<<<<< HEAD
     // Exclude Admin from employee directory list
     let query = {
       role: { $ne: 'Admin' },
       email: { $ne: 'shivamthakur12012@gmail.com' }
     };
-=======
-    let query = {};
->>>>>>> origin/main
 
     if (department) {
       query.department = department;
     }
 
-<<<<<<< HEAD
     if (role && role !== 'Admin') {
-=======
-    if (role) {
->>>>>>> origin/main
       query.role = role;
     }
 
     if (search) {
-<<<<<<< HEAD
       query.$and = [
         { role: { $ne: 'Admin' } },
         { email: { $ne: 'shivamthakur12012@gmail.com' } },
@@ -95,23 +86,6 @@ router.get('/', protect, authorize('Admin', 'Manager'), async (req, res, next) =
       success: true,
       count: sanitizedEmployees.length,
       data: sanitizedEmployees
-=======
-      query.$or = [
-        { fullName: { $regex: search, $options: 'i' } },
-        { employeeId: { $regex: search, $options: 'i' } },
-        { email: { $regex: search, $options: 'i' } }
-      ];
-    }
-
-    const employees = await User.find(query)
-      .populate('department', 'name code')
-      .select('-password');
-
-    res.status(200).json({
-      success: true,
-      count: employees.length,
-      data: employees
->>>>>>> origin/main
     });
   } catch (error) {
     next(error);
@@ -120,12 +94,8 @@ router.get('/', protect, authorize('Admin', 'Manager'), async (req, res, next) =
 
 router.get('/:id', protect, async (req, res, next) => {
   try {
-<<<<<<< HEAD
     const currentUserId = req.user.id || req.user._id;
     if (req.user.role !== 'Admin' && req.user.role !== 'Manager' && currentUserId !== req.params.id) {
-=======
-    if (req.user.role !== 'Admin' && req.user.role !== 'Manager' && req.user.id !== req.params.id) {
->>>>>>> origin/main
       return res.status(403).json({
         success: false,
         message: 'Access denied'
@@ -134,12 +104,8 @@ router.get('/:id', protect, async (req, res, next) => {
 
     const employee = await User.findById(req.params.id)
       .populate('department', 'name code')
-<<<<<<< HEAD
       .select('-password -faceEmbeddings')
       .lean();
-=======
-      .select('-password');
->>>>>>> origin/main
 
     if (!employee) {
       return res.status(404).json({
@@ -150,15 +116,11 @@ router.get('/:id', protect, async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-<<<<<<< HEAD
       data: {
         ...employee,
         hasBiometrics: Boolean(employee.faceEmbeddings && employee.faceEmbeddings.length > 0),
         faceEmbeddingsCount: employee.faceEmbeddings ? employee.faceEmbeddings.length : 0
       }
-=======
-      data: employee
->>>>>>> origin/main
     });
   } catch (error) {
     next(error);
@@ -166,7 +128,6 @@ router.get('/:id', protect, async (req, res, next) => {
 });
 
 router.post('/', protect, authorize('Admin'), async (req, res, next) => {
-<<<<<<< HEAD
   const {
     fullName,
     employeeId,
@@ -176,17 +137,6 @@ router.post('/', protect, authorize('Admin'), async (req, res, next) => {
     role,
     department,
     designation,
-=======
-  const { 
-    fullName, 
-    employeeId, 
-    email, 
-    password, 
-    phone, 
-    role, 
-    department, 
-    designation, 
->>>>>>> origin/main
     joiningDate,
     status,
     address
@@ -246,7 +196,6 @@ router.put('/:id', protect, authorize('Admin', 'Manager'), async (req, res, next
       });
     }
 
-<<<<<<< HEAD
     // Permanent Lock: System Admin profile cannot be edited via Employee Management
     if (
       employee.role === 'Admin' ||
@@ -259,8 +208,6 @@ router.put('/:id', protect, authorize('Admin', 'Manager'), async (req, res, next
       });
     }
 
-=======
->>>>>>> origin/main
     if (updateFields.role === 'Admin') {
       const targetEmail = updateFields.email || employee.email;
       if (targetEmail.toLowerCase() !== 'shivamthakur12012@gmail.com') {
@@ -271,24 +218,6 @@ router.put('/:id', protect, authorize('Admin', 'Manager'), async (req, res, next
       }
     }
 
-<<<<<<< HEAD
-=======
-    if (employee.role === 'Admin') {
-      if (updateFields.role && updateFields.role !== 'Admin') {
-        return res.status(400).json({
-          success: false,
-          message: 'Security Restriction: The Admin role cannot be changed.'
-        });
-      }
-      if (updateFields.email && updateFields.email.toLowerCase() !== 'shivamthakur12012@gmail.com') {
-        return res.status(400).json({
-          success: false,
-          message: 'Security Restriction: The Admin email address cannot be changed.'
-        });
-      }
-    }
-
->>>>>>> origin/main
     if (password) {
       employee.password = password;
     }
@@ -375,7 +304,6 @@ router.post('/:id/face-embeddings', protect, authorize('Admin', 'Manager'), asyn
       });
     }
 
-<<<<<<< HEAD
     if (
       employee.role === 'Admin' ||
       employee.email.toLowerCase() === 'shivamthakur12012@gmail.com' ||
@@ -387,8 +315,6 @@ router.post('/:id/face-embeddings', protect, authorize('Admin', 'Manager'), asyn
       });
     }
 
-=======
->>>>>>> origin/main
     employee.faceEmbeddings = embeddings;
     await employee.save();
 
@@ -412,7 +338,6 @@ router.delete('/:id', protect, authorize('Admin'), async (req, res, next) => {
       });
     }
 
-<<<<<<< HEAD
     if (
       employee.employeeId === 'ADMIN001' ||
       employee.role === 'Admin' ||
@@ -421,12 +346,6 @@ router.delete('/:id', protect, authorize('Admin'), async (req, res, next) => {
       return res.status(403).json({
         success: false,
         message: 'Security Restriction: Primary Administrator account (shivamthakur12012@gmail.com) is permanently fixed and cannot be deleted or removed.'
-=======
-    if (employee.employeeId === 'ADMIN001') {
-      return res.status(400).json({
-        success: false,
-        message: 'Cannot delete the system primary admin user'
->>>>>>> origin/main
       });
     }
 

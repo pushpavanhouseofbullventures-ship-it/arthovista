@@ -25,13 +25,10 @@ const AttendanceSchema = new mongoose.Schema({
     faceVerified: {
       type: Boolean,
       default: false
-<<<<<<< HEAD
     },
     livenessVerified: {
       type: Boolean,
       default: false
-=======
->>>>>>> origin/main
     }
   },
   checkOut: {
@@ -45,7 +42,6 @@ const AttendanceSchema = new mongoose.Schema({
     },
     deviceInfo: String,
     browser: String,
-<<<<<<< HEAD
     ip: String,
     faceVerified: {
       type: Boolean,
@@ -55,9 +51,6 @@ const AttendanceSchema = new mongoose.Schema({
       type: Boolean,
       default: false
     }
-=======
-    ip: String
->>>>>>> origin/main
   },
   status: {
     type: String,
@@ -75,11 +68,8 @@ const AttendanceSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 AttendanceSchema.index({ employee: 1, date: 1 }, { unique: true });
-<<<<<<< HEAD
 AttendanceSchema.index({ employee: 1, createdAt: -1 });
 AttendanceSchema.index({ date: 1 });
 AttendanceSchema.index({ status: 1 });
-=======
->>>>>>> origin/main
 
 module.exports = mongoose.model('Attendance', AttendanceSchema, 'Employee_Attendance');
