@@ -24,32 +24,20 @@ async function seedAdmin() {
     }
 
     // 1. Find if a user with shivamthakur12012@gmail.com exists
-<<<<<<< HEAD
-    let shivam = await User.findOne({ email: 'shivamthakur12012@gmail.com' }).select('+password');
-=======
     let shivam = await User.findOne({ email: 'shivamthakur12012@gmail.com' });
->>>>>>> origin/main
     if (!shivam) {
       console.log('Seeding Shivam Kumar as the sole Admin user...');
       shivam = await User.create({
         fullName: 'Shivam Kumar',
         employeeId: 'ADMIN001',
         email: 'shivamthakur12012@gmail.com',
-<<<<<<< HEAD
-        password: 'Shivam@123321',
-=======
         password: 'adminpassword123',
->>>>>>> origin/main
         role: 'Admin',
         status: 'Active',
         phone: '1234567890',
         designation: 'Managing Director'
       });
-<<<<<<< HEAD
-      console.log('Sole Admin seeded successfully. Credentials: shivamthakur12012@gmail.com / Shivam@123321');
-=======
       console.log('Sole Admin seeded successfully. Credentials: shivamthakur12012@gmail.com / adminpassword123');
->>>>>>> origin/main
     } else {
       let modified = false;
       if (shivam.role !== 'Admin') {
@@ -60,25 +48,9 @@ async function seedAdmin() {
         shivam.employeeId = 'ADMIN001';
         modified = true;
       }
-<<<<<<< HEAD
-      if (shivam.status !== 'Active') {
-        shivam.status = 'Active';
-        modified = true;
-      }
-      const isPasswordMatch = await shivam.matchPassword('Shivam@123321');
-      if (!isPasswordMatch) {
-        shivam.password = 'Shivam@123321';
-        modified = true;
-        console.log('Updating Admin password to match Shivam@123321...');
-      }
-      if (modified) {
-        await shivam.save();
-        console.log('Updated shivamthakur12012@gmail.com role/employeeId/credentials.');
-=======
       if (modified) {
         await shivam.save();
         console.log('Updated shivamthakur12012@gmail.com role/employeeId to Admin/ADMIN001.');
->>>>>>> origin/main
       }
     }
 
@@ -99,11 +71,7 @@ function scheduleHolidayCheck() {
   const checkHoliday = async () => {
     try {
       const todayStr = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
-<<<<<<< HEAD
-
-=======
       
->>>>>>> origin/main
       const Holiday = require('./models/Holiday');
       const holiday = await Holiday.findOne({ date: todayStr });
       if (holiday) {
@@ -154,144 +122,9 @@ function scheduleHolidayCheck() {
   }, getMsUntil9AM());
 }
 
-<<<<<<< HEAD
-async function recalculateExistingAttendanceWorkHours() {
-  try {
-    const Attendance = require('./models/Attendance');
-    const records = await Attendance.find({
-      'checkIn.time': { $ne: null },
-      'checkOut.time': { $ne: null }
-    });
-
-    let updatedCount = 0;
-    for (const record of records) {
-      const cin = new Date(record.checkIn.time).getTime();
-      const cout = new Date(record.checkOut.time).getTime();
-      if (cin && cout && cout > cin) {
-        const hoursRaw = (cout - cin) / (1000 * 60 * 60);
-        const correctHours = Math.round(hoursRaw * 100) / 100;
-        const overtime = correctHours > 8 ? Math.round((correctHours - 8) * 100) / 100 : 0;
-
-        let status = record.status;
-        if (correctHours >= 8) {
-          if (status === 'Half Day') {
-            status = 'Present';
-          }
-        } else if (correctHours >= 4 && correctHours < 8) {
-          status = 'Half Day';
-        }
-
-        if (record.workHours !== correctHours || record.overtime !== overtime || record.status !== status) {
-          record.workHours = correctHours;
-          record.overtime = overtime;
-          record.status = status;
-          await record.save();
-          updatedCount++;
-        }
-      }
-    }
-    if (updatedCount > 0) {
-      console.log(`✅ Recalculated and corrected ${updatedCount} attendance record(s) work hours.`);
-    }
-  } catch (err) {
-    console.error('Error recalculating attendance work hours:', err.message);
-  }
-}
-
-async function seedBlogsAndNewsletters() {
-  try {
-    const Blog = require('./models/Blog');
-    const Newsletter = require('./models/Newsletter');
-
-    const blogCount = await Blog.countDocuments();
-    if (blogCount === 0) {
-      console.log('Seeding initial MSME Blogs into database...');
-      // Sample seed post
-      await Blog.create([
-        {
-          slug: 'iso-certification-india',
-          title: 'ISO Certification in India: Types, Process, Documents, Cost & Benefits',
-          category: 'Certifications & Compliance',
-          readTime: '8 min read',
-          date: 'Aug 21, 2026',
-          author: 'ArthoVista Advisory Team',
-          featured: true,
-          excerpt: 'A structured guide to choosing the right ISO standard, understanding the certification journey, avoiding common mistakes, and knowing the true cost factors in India.',
-          metaDescription: 'Complete guide to ISO Certification in India. Explore ISO 9001, 14001, 27001, 45001, 22000, 50001, 21001, 8-step audit process, document checklist, cost breakdown, and FAQs.',
-          keywords: ['ISO certification in India', 'ISO 9001 quality management', 'ISO 27001 information security'],
-          tableOfContents: [
-            { id: 'what-is-iso', label: 'What Is ISO Certification?' },
-            { id: 'which-iso', label: 'Which ISO Certification Is Right for You?' },
-            { id: 'process', label: 'Step-by-Step Certification Process' }
-          ],
-          sections: [
-            {
-              id: 'what-is-iso',
-              title: 'What Is ISO Certification?',
-              content: 'International Organization for Standardization (ISO) certification is an internationally recognized seal of approval that an enterprise conforms to verified quality management, environmental, information security, or safety frameworks.',
-              bullets: [
-                'Enhanced tender eligibility for central and state procurement',
-                'Global buyer confidence for export markets',
-                'Reduced operational waste and streamlined process workflows'
-              ]
-            }
-          ],
-          status: 'Published'
-        }
-      ]);
-      console.log('Initial blogs seeded.');
-    }
-
-    const newsletterCount = await Newsletter.countDocuments();
-    if (newsletterCount === 0) {
-      console.log('Seeding initial Gazette Editions into database...');
-      await Newsletter.create([
-        {
-          edition: 'Issue #52',
-          title: 'PMEGP 2026 Expansion: Revised Subsidy Caps & Priority Lending',
-          date: 'February 2026',
-          desc: 'A detailed breakdown of the latest KVIC circular updating project cost ceilings up to ₹50 Lakhs for manufacturing with 35% rural subsidies.',
-          highlights: [
-            'Manufacturing ceiling raised to ₹50 Lakhs',
-            'Special 35% capital subsidy for rural women & SC/ST founders',
-            'Fast-track nodal bank sanctions roadmap'
-          ],
-          readTime: '4 min read',
-          tag: 'Govt. Subsidies',
-          status: 'Published'
-        },
-        {
-          edition: 'Issue #51',
-          title: 'CGTMSE Guarantee Overhaul: Collateral-Free Loans Up to ₹5 Crore',
-          date: 'January 2026',
-          desc: "Ministry of MSME's expanded credit guarantee mechanism, reducing annual guarantee fee for micro enterprises and women-led ventures.",
-          highlights: [
-            'Guarantee coverage expanded to ₹500 Lakhs',
-            'Annual fee reduced to 0.37% for micro units',
-            'Simplified hybrid collateral guidelines'
-          ],
-          readTime: '3 min read',
-          tag: 'MSME Loans',
-          status: 'Published'
-        }
-      ]);
-      console.log('Initial Gazette editions seeded.');
-    }
-  } catch (err) {
-    console.error('Error seeding blogs/newsletters:', err.message);
-  }
-}
-
 mongoose.connection.on('connected', () => {
   seedAdmin();
   scheduleHolidayCheck();
-  recalculateExistingAttendanceWorkHours();
-  seedBlogsAndNewsletters();
-=======
-mongoose.connection.on('connected', () => {
-  seedAdmin();
-  scheduleHolidayCheck();
->>>>>>> origin/main
 });
 
 // Connect to Database (with auto-retry on failure)
@@ -328,11 +161,6 @@ app.use('/api/leaves', require('./routes/leaves'));
 app.use('/api/holidays', require('./routes/holidays'));
 app.use('/api/events', require('./routes/events'));
 app.use('/api/announcements', require('./routes/announcements'));
-<<<<<<< HEAD
-app.use('/api/blogs', require('./routes/blogs'));
-app.use('/api/newsletters', require('./routes/newsletters'));
-=======
->>>>>>> origin/main
 
 // Base Route
 app.get('/', (req, res) => {

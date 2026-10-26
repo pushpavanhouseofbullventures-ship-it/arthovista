@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { api, useAuth } from '../../context/AuthContext';
-<<<<<<< HEAD
-import {
-  CheckCircle2,
-  Clock,
-  ChevronRight,
-  Megaphone,
-  Loader2,
-  CalendarCheck2,
-=======
 import { 
   CheckCircle2, 
   Clock, 
@@ -17,7 +8,6 @@ import {
   Megaphone,
   Loader2, 
   CalendarCheck2, 
->>>>>>> origin/main
   AlertCircle,
   Calendar as CalendarIcon,
   ListFilter,
@@ -112,19 +102,6 @@ const EmployeeDashboard = () => {
   };
 
   useEffect(() => {
-<<<<<<< HEAD
-    // Parallelize all initial fetches for fastest initial paint
-    Promise.allSettled([
-      fetchEmployeeStats(),
-      fetchCalendar(calendarYear, calendarMonth),
-      fetchHistory(),
-      api.get('/auth/me').then(res => {
-        if (res.data.success) {
-          setProfileData(res.data.user);
-        }
-      }).catch(err => console.error('Failed to load profile for dashboard:', err))
-    ]);
-=======
     fetchEmployeeStats();
     fetchCalendar(calendarYear, calendarMonth);
     fetchHistory();
@@ -140,7 +117,6 @@ const EmployeeDashboard = () => {
       }
     };
     fetchProfile();
->>>>>>> origin/main
   }, []);
 
   const handleCopy = (text, fieldName) => {
@@ -156,11 +132,7 @@ const EmployeeDashboard = () => {
     const now = new Date();
     const diffTime = Math.abs(now - start);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-<<<<<<< HEAD
-
-=======
     
->>>>>>> origin/main
     if (diffDays < 30) return `${diffDays} days`;
     const months = Math.floor(diffDays / 30);
     if (months < 12) return `${months} month${months > 1 ? 's' : ''}`;
@@ -230,27 +202,9 @@ const EmployeeDashboard = () => {
 
   if (loading) {
     return (
-<<<<<<< HEAD
-      <div className="flex flex-col items-center justify-center min-h-[50vh] text-slate-500 dark:text-slate-400 space-y-4 animate-fadeIn">
-        <div className="relative flex items-center justify-center">
-          <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 dark:bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center">
-            <CalendarCheck2 className="w-7 h-7 text-indigo-600 dark:text-indigo-400 animate-pulse" />
-          </div>
-          <Loader2 className="w-16 h-16 animate-spin text-primary-500 absolute -inset-1 opacity-70" />
-        </div>
-        <div className="text-center space-y-1">
-          <p className="text-sm font-bold text-slate-800 dark:text-slate-100">
-            Loading Attendance Console
-          </p>
-          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm">
-            Synchronizing shift roster, monthly logs, and live biometrics status...
-          </p>
-        </div>
-=======
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-slate-400">
         <Loader2 className="w-9 h-9 animate-spin text-primary-500 mb-2" />
         <p className="text-sm font-medium">Loading employee attendance console...</p>
->>>>>>> origin/main
       </div>
     );
   }
@@ -273,17 +227,10 @@ const EmployeeDashboard = () => {
 
   // Filter logs history
   const filteredLogs = historyLogs.filter(log => {
-<<<<<<< HEAD
-    const matchesSearch = log.date.includes(logsSearch) ||
-      (log.checkIn?.deviceInfo && log.checkIn.deviceInfo.toLowerCase().includes(logsSearch.toLowerCase())) ||
-      (log.checkIn?.gps?.address && log.checkIn.gps.address.toLowerCase().includes(logsSearch.toLowerCase()));
-
-=======
     const matchesSearch = log.date.includes(logsSearch) || 
       (log.checkIn?.deviceInfo && log.checkIn.deviceInfo.toLowerCase().includes(logsSearch.toLowerCase())) ||
       (log.checkIn?.gps?.address && log.checkIn.gps.address.toLowerCase().includes(logsSearch.toLowerCase()));
     
->>>>>>> origin/main
     const matchesStatus = logsStatusFilter === 'All' || log.status === logsStatusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -297,32 +244,20 @@ const EmployeeDashboard = () => {
 
   return (
     <div className="space-y-8 animate-fadeIn">
-<<<<<<< HEAD
-
-=======
       
->>>>>>> origin/main
       {/* Short Attendance Alert Banner */}
       {data?.shortAttendanceAlert && (
         <div className="flex items-center gap-3 p-4 rounded-3xl bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 text-red-700 dark:text-red-400 text-sm leading-relaxed shadow-sm">
           <AlertCircle className="w-5 h-5 shrink-0 animate-bounce" />
           <div className="flex-1">
-<<<<<<< HEAD
-            <span className="font-bold">⚠️ Notice: Short Attendance Alert!</span> Your attendance percentage for this month is <span className="font-bold">{data.attendancePercentage}%</span> (minimum required is 80%). Please check in regularly to maintain active standing.
-=======
             <span className="font-bold">⚠️ Notice: Short Attendance Alert!</span> Your attendance percentage for this month is <span className="font-bold">{data.attendancePercentage}%</span> (minimum required is 75%). Please check in regularly to maintain active standing.
->>>>>>> origin/main
           </div>
         </div>
       )}
 
       {/* Top Banner: Shift Info, Welcome & Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-<<<<<<< HEAD
-
-=======
         
->>>>>>> origin/main
         {/* Main Banner (8 Columns) */}
         <div className="lg:col-span-8 bg-gradient-to-r from-primary-600 via-indigo-600 to-indigo-800 text-white p-6 md:p-8 rounded-3xl shadow-xl relative overflow-hidden flex flex-col justify-between min-h-[200px]">
           <div className="absolute right-0 bottom-0 top-0 w-1/2 bg-[radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.18),transparent_70%)] pointer-events-none" />
@@ -339,17 +274,10 @@ const EmployeeDashboard = () => {
             </div>
 
             <h2 className="text-2xl md:text-3xl font-black tracking-tight">
-<<<<<<< HEAD
-              {todayLog?.checkOut?.time
-                ? "Shift Completed! Great work today."
-                : todayLog?.checkIn?.time
-                  ? "You are Logged In. Have a productive day!"
-=======
               {todayLog?.checkOut?.time 
                 ? "Shift Completed! Great work today." 
                 : todayLog?.checkIn?.time 
                   ? "You are Logged In. Have a productive day!" 
->>>>>>> origin/main
                   : "Welcome! Ready to mark attendance?"}
             </h2>
 
@@ -396,13 +324,8 @@ const EmployeeDashboard = () => {
           {cardMetrics.map((card, idx) => {
             const Icon = card.icon;
             return (
-<<<<<<< HEAD
-              <div
-                key={idx}
-=======
               <div 
                 key={idx} 
->>>>>>> origin/main
                 className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-800 shadow-sm flex items-center justify-between hover:border-primary-500/30 transition-all"
               >
                 <div className="flex items-center gap-3.5">
@@ -452,18 +375,11 @@ const EmployeeDashboard = () => {
             const isToday = day.date === todayStr;
 
             return (
-<<<<<<< HEAD
-              <div
-                key={idx}
-                className={`relative p-4 rounded-2xl border text-center flex flex-col justify-between min-h-[160px] transition-all duration-300 hover:scale-[1.03] hover:shadow-md ${getStatusClass(day.status)} ${isToday ? 'ring-2 ring-primary-500 shadow-lg shadow-primary-500/10' : ''
-                  }`}
-=======
               <div 
                 key={idx} 
                 className={`relative p-4 rounded-2xl border text-center flex flex-col justify-between min-h-[160px] transition-all duration-300 hover:scale-[1.03] hover:shadow-md ${getStatusClass(day.status)} ${
                   isToday ? 'ring-2 ring-primary-500 shadow-lg shadow-primary-500/10' : ''
                 }`}
->>>>>>> origin/main
               >
                 {isToday && (
                   <span className="absolute -top-2.5 left-1/2 transform -translate-x-1/2 bg-primary-600 text-white text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full shadow">
@@ -477,11 +393,7 @@ const EmployeeDashboard = () => {
                     {new Date(day.date).toLocaleDateString([], { month: 'short', day: 'numeric' })}
                   </p>
                 </div>
-<<<<<<< HEAD
-
-=======
                 
->>>>>>> origin/main
                 <div className="my-2.5 space-y-1 bg-white/40 dark:bg-black/20 rounded-xl p-2 text-[10px]">
                   <div className="flex justify-between items-center text-slate-700 dark:text-slate-300">
                     <span className="opacity-60 text-[9px]">In:</span>
@@ -511,11 +423,7 @@ const EmployeeDashboard = () => {
 
       {/* Monthly Attendance Calendar View */}
       <div className="bg-white dark:bg-slate-900 p-6 md:p-8 rounded-3xl border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-6">
-<<<<<<< HEAD
-
-=======
         
->>>>>>> origin/main
         {/* Month Selector & Summary Stats Bar */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-6">
           <div className="flex items-center gap-3">
@@ -527,11 +435,7 @@ const EmployeeDashboard = () => {
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
-<<<<<<< HEAD
-
-=======
               
->>>>>>> origin/main
               <span className="px-4 text-sm font-extrabold text-slate-800 dark:text-slate-100 min-w-[140px] text-center">
                 {monthNames[calendarMonth - 1]} {calendarYear}
               </span>
@@ -583,11 +487,7 @@ const EmployeeDashboard = () => {
           </div>
         ) : (
           <div className="space-y-2">
-<<<<<<< HEAD
-
-=======
             
->>>>>>> origin/main
             {/* Day Headers (Mon - Sun) */}
             <div className="grid grid-cols-7 gap-2 text-center text-[11px] font-bold text-slate-400 uppercase tracking-wider py-2">
               <div>Mon</div>
@@ -675,11 +575,7 @@ const EmployeeDashboard = () => {
 
       {/* Detailed Attendance Logs History Table */}
       <div className="bg-white dark:bg-slate-900 p-6 md:p-8 rounded-3xl border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-6">
-<<<<<<< HEAD
-
-=======
         
->>>>>>> origin/main
         {/* Filter Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -818,18 +714,11 @@ const EmployeeDashboard = () => {
             announcements.map((ann) => (
               <div key={ann._id} className="p-4 bg-slate-50 dark:bg-slate-950/40 rounded-2xl border border-slate-100 dark:border-slate-800/80 space-y-2">
                 <div className="flex justify-between items-center text-[10px]">
-<<<<<<< HEAD
-                  <span className={`px-2 py-0.5 rounded font-bold uppercase ${ann.priority === 'High'
-                    ? 'bg-rose-50 text-rose-600 dark:bg-rose-950/20'
-                    : 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/20'
-                    }`}>
-=======
                   <span className={`px-2 py-0.5 rounded font-bold uppercase ${
                     ann.priority === 'High' 
                       ? 'bg-rose-50 text-rose-600 dark:bg-rose-950/20' 
                       : 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/20'
                   }`}>
->>>>>>> origin/main
                     {ann.priority} Priority
                   </span>
                   <span className="text-slate-400">
@@ -849,11 +738,7 @@ const EmployeeDashboard = () => {
         const currentProfile = profileData || user;
         return (
           <div className="bg-white dark:bg-slate-900 p-6 md:p-8 rounded-3xl border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-6">
-<<<<<<< HEAD
-
-=======
             
->>>>>>> origin/main
             {/* Profile Section Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
               <div className="flex items-center gap-2.5">
@@ -885,11 +770,7 @@ const EmployeeDashboard = () => {
 
             {/* Profile Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-<<<<<<< HEAD
-
-=======
               
->>>>>>> origin/main
               {/* Card 1: Avatar, Name, Employee ID & Biometrics */}
               <div className="p-5 rounded-2xl bg-slate-50/70 dark:bg-slate-950/50 border border-slate-100 dark:border-slate-800/80 flex flex-col justify-between space-y-4">
                 <div className="flex items-center gap-4">
@@ -941,14 +822,9 @@ const EmployeeDashboard = () => {
 
                   <div className="flex justify-between items-center">
                     <span className="text-slate-400 font-medium">Biometric Face ID:</span>
-<<<<<<< HEAD
-                    <span className={`font-bold flex items-center gap-1 ${currentProfile?.hasBiometrics ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-500'
-                      }`}>
-=======
                     <span className={`font-bold flex items-center gap-1 ${
                       currentProfile?.hasBiometrics ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-500'
                     }`}>
->>>>>>> origin/main
                       <Fingerprint className="w-3.5 h-3.5" />
                       {currentProfile?.hasBiometrics ? 'Registered & Active' : 'Pending'}
                     </span>
@@ -962,11 +838,7 @@ const EmployeeDashboard = () => {
                   <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
                     Organizational Details
                   </span>
-<<<<<<< HEAD
-
-=======
                   
->>>>>>> origin/main
                   <div className="flex items-center gap-2 text-xs">
                     <Building2 className="w-4 h-4 text-slate-400 shrink-0" />
                     <div>
@@ -1051,11 +923,7 @@ const EmployeeDashboard = () => {
       {selectedDayDetails && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 max-w-md w-full shadow-2xl space-y-5 animate-scaleUp">
-<<<<<<< HEAD
-
-=======
             
->>>>>>> origin/main
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
               <div>
                 <h4 className="text-base font-bold text-slate-800 dark:text-slate-200">

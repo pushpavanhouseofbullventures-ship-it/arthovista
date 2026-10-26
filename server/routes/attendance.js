@@ -18,29 +18,11 @@ const getTodayDateString = () => {
 
 router.get('/today', protect, async (req, res, next) => {
   try {
-<<<<<<< HEAD
-    if (req.user.role === 'Admin' || req.user.email?.toLowerCase() === 'shivamthakur12012@gmail.com') {
-      return res.status(200).json({
-        success: true,
-        exists: false,
-        isExempt: true,
-        message: 'Administrator accounts are exempt from attendance tracking.'
-      });
-    }
-
-    const today = getTodayDateString();
-    const userId = req.user.id || req.user._id;
-    const attendance = await Attendance.findOne({
-      employee: userId,
-      date: today
-    }).lean();
-=======
     const today = getTodayDateString();
     const attendance = await Attendance.findOne({
       employee: req.user.id,
       date: today
     });
->>>>>>> origin/main
 
     res.status(200).json({
       success: true,
@@ -60,47 +42,14 @@ router.get('/history', protect, async (req, res, next) => {
         query.employee = req.query.employeeId;
       }
     } else {
-<<<<<<< HEAD
-      query.employee = req.user.id || req.user._id;
-    }
-
-    if (req.query.date) {
-      query.date = req.query.date;
-    } else if (req.query.month) {
-=======
       query.employee = req.user.id;
     }
 
     if (req.query.month) {
->>>>>>> origin/main
       // Month format: YYYY-MM
       query.date = { $regex: `^${req.query.month}` };
     }
 
-<<<<<<< HEAD
-    // Exclude Admin accounts from attendance history logs
-    const adminUsers = await User.find({
-      $or: [
-        { role: 'Admin' },
-        { email: 'shivamthakur12012@gmail.com' }
-      ]
-    }).select('_id').lean();
-    const adminIds = adminUsers.map(u => u._id);
-
-    if (adminIds.length > 0 && !query.employee) {
-      query.employee = { $nin: adminIds };
-    }
-
-    const history = await Attendance.find(query)
-      .populate({
-        path: 'employee',
-        select: 'fullName employeeId department designation profilePhoto email role',
-        populate: { path: 'department', select: 'name code' }
-      })
-      .sort({ date: -1, createdAt: -1 })
-      .limit(100)
-      .lean();
-=======
     const history = await Attendance.find(query)
       .populate({
         path: 'employee',
@@ -109,7 +58,6 @@ router.get('/history', protect, async (req, res, next) => {
       })
       .sort({ date: -1, createdAt: -1 })
       .limit(100);
->>>>>>> origin/main
 
     res.status(200).json({
       success: true,
@@ -125,53 +73,16 @@ router.get('/history', protect, async (req, res, next) => {
 // @access  Private
 router.get('/calendar', protect, async (req, res, next) => {
   try {
-<<<<<<< HEAD
-    const currentUserId = req.user.id || req.user._id;
-    const targetUserId = (req.query.employeeId && (req.user.role === 'Admin' || req.user.role === 'Manager'))
-      ? req.query.employeeId
-      : currentUserId;
-=======
     const targetUserId = (req.query.employeeId && (req.user.role === 'Admin' || req.user.role === 'Manager'))
       ? req.query.employeeId
       : req.user.id;
->>>>>>> origin/main
 
     const today = new Date();
     const year = parseInt(req.query.year) || today.getFullYear();
     const month = parseInt(req.query.month) || (today.getMonth() + 1); // 1-12
-<<<<<<< HEAD
-    const daysInMonth = new Date(year, month, 0).getDate();
-
-    // Check if target user is Admin (Attendance is not for Admin)
-    const targetUser = await User.findById(targetUserId).select('role email').lean();
-    if (targetUser && (targetUser.role === 'Admin' || targetUser.email?.toLowerCase() === 'shivamthakur12012@gmail.com')) {
-      return res.status(200).json({
-        success: true,
-        data: {
-          year,
-          month,
-          isExempt: true,
-          message: 'Administrator is exempt from attendance tracking.',
-          summary: {
-            daysInMonth,
-            workingDays: 0,
-            presentDays: 0,
-            lateDays: 0,
-            halfDays: 0,
-            absentDays: 0,
-            leaveDays: 0,
-            totalWorkHours: 0,
-            attendancePercentage: 100
-          },
-          calendar: []
-        }
-      });
-    }
-=======
 
     // Get total days in month
     const daysInMonth = new Date(year, month, 0).getDate();
->>>>>>> origin/main
     const mStr = String(month).padStart(2, '0');
 
     const startDateStr = `${year}-${mStr}-01`;
@@ -183,8 +94,6 @@ router.get('/calendar', protect, async (req, res, next) => {
       monthDates.push(`${year}-${mStr}-${dStr}`);
     }
 
-<<<<<<< HEAD
-=======
     // 1. Fetch holidays
     const holidays = await Holiday.find({
       date: { $gte: startDateStr, $lte: endDateStr }
@@ -193,63 +102,28 @@ router.get('/calendar', protect, async (req, res, next) => {
     holidays.forEach(h => { holidayMap[h.date] = h; });
 
     // 2. Fetch approved leaves
->>>>>>> origin/main
     const startRange = new Date(startDateStr);
     const endRange = new Date(endDateStr);
     endRange.setHours(23, 59, 59, 999);
 
-<<<<<<< HEAD
-    // Fetch holidays, approved leaves, and logs concurrently in parallel!
-    const [holidays, leaveRequests, logs] = await Promise.all([
-      Holiday.find({
-        date: { $gte: startDateStr, $lte: endDateStr }
-      }).lean(),
-      LeaveRequest.find({
-        employee: targetUserId,
-        status: 'Approved',
-        startDate: { $lte: endRange },
-        endDate: { $gte: startRange }
-      }).lean(),
-      Attendance.find({
-        employee: targetUserId,
-        date: { $in: monthDates }
-      }).lean()
-    ]);
-
-    const holidayMap = {};
-    holidays.forEach(h => { holidayMap[h.date] = h; });
-=======
     const leaveRequests = await LeaveRequest.find({
       employee: targetUserId,
       status: 'Approved',
       startDate: { $lte: endRange },
       endDate: { $gte: startRange }
     });
->>>>>>> origin/main
 
     const isDateOnLeave = (dateStr) => {
       const d = new Date(dateStr);
       return leaveRequests.find(leave => {
         const lStart = new Date(leave.startDate);
-<<<<<<< HEAD
-        lStart.setHours(0, 0, 0, 0);
-        const lEnd = new Date(leave.endDate);
-        lEnd.setHours(23, 59, 59, 999);
-=======
         lStart.setHours(0,0,0,0);
         const lEnd = new Date(leave.endDate);
         lEnd.setHours(23,59,59,999);
->>>>>>> origin/main
         return d >= lStart && d <= lEnd;
       });
     };
 
-<<<<<<< HEAD
-    const logMap = {};
-    logs.forEach(l => { logMap[l.date] = l; });
-
-    // Build calendar days
-=======
     // 3. Fetch attendance logs for user
     const logs = await Attendance.find({
       employee: targetUserId,
@@ -259,7 +133,6 @@ router.get('/calendar', protect, async (req, res, next) => {
     logs.forEach(l => { logMap[l.date] = l; });
 
     // 4. Build calendar days
->>>>>>> origin/main
     const now = new Date();
     const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
@@ -298,13 +171,9 @@ router.get('/calendar', protect, async (req, res, next) => {
         leaveCount++;
       } else if (isPastOrToday) {
         status = 'Absent';
-<<<<<<< HEAD
-      }
-=======
         absentCount++;
       }
 
->>>>>>> origin/main
       return {
         date: dateStr,
         dayNumber: dateObj.getDate(),
@@ -358,31 +227,9 @@ router.get('/calendar', protect, async (req, res, next) => {
 });
 
 router.post('/check-in', protect, async (req, res, next) => {
-<<<<<<< HEAD
-  // Attendance is not for Admin
-  if (req.user.role === 'Admin' || req.user.email?.toLowerCase() === 'shivamthakur12012@gmail.com') {
-    return res.status(403).json({
-      success: false,
-      message: 'Attendance tracking is not applicable for Administrator accounts.'
-    });
-  }
-
-  const { faceDescriptor, gps, deviceInfo, browser, livenessVerified } = req.body;
-  const clientIp = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-
-  if (!livenessVerified) {
-    return res.status(403).json({
-      success: false,
-      code: 'LIVENESS_REQUIRED',
-      message: 'Live human biometric verification required. Face detection from static photos, printed images, or screens is strictly prohibited.'
-    });
-  }
-
-=======
   const { faceDescriptor, gps, deviceInfo, browser } = req.body;
   const clientIp = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
->>>>>>> origin/main
   if (!faceDescriptor || !Array.isArray(faceDescriptor)) {
     return res.status(400).json({
       success: false,
@@ -398,14 +245,8 @@ router.post('/check-in', protect, async (req, res, next) => {
   }
 
   try {
-<<<<<<< HEAD
-    const userId = req.user.id || req.user._id;
-    const employee = await User.findById(userId).select('faceEmbeddings').lean();
-    if (!employee || !employee.faceEmbeddings || employee.faceEmbeddings.length === 0) {
-=======
     const employee = await User.findById(req.user.id);
     if (!employee.faceEmbeddings || employee.faceEmbeddings.length === 0) {
->>>>>>> origin/main
       return res.status(400).json({
         success: false,
         message: 'No registered biometrics found for this profile. Please contact IT Admin.'
@@ -414,19 +255,6 @@ router.post('/check-in', protect, async (req, res, next) => {
 
     const faceCheck = verifyFace(faceDescriptor, employee.faceEmbeddings);
     if (!faceCheck.verified) {
-<<<<<<< HEAD
-      const bestDist = (faceCheck.minDistance !== undefined ? faceCheck.minDistance : faceCheck.medianDistance).toFixed(3);
-      return res.status(400).json({
-        success: false,
-        code: 'BIOMETRIC_MISMATCH',
-        message: `Biometric verification failed. Face match score too low (best distance: ${bestDist}, matched ${faceCheck.matchCount}/${faceCheck.totalEmbeddings} frames). Please ensure only the enrolled employee attempts check-in.`
-      });
-    }
-
-    const officeLat = parseFloat(process.env.OFFICE_LAT || '28.6126546');
-    const officeLng = parseFloat(process.env.OFFICE_LNG || '77.3660593');
-    const officeRadius = parseFloat(process.env.OFFICE_RADIUS || '60');
-=======
       return res.status(401).json({
         success: false,
         message: `Biometric verification failed. Face match score too low (distance: ${faceCheck.medianDistance.toFixed(3)}, matched ${faceCheck.matchCount}/${faceCheck.totalEmbeddings} frames). Please ensure only the enrolled employee attempts check-in.`
@@ -436,7 +264,6 @@ router.post('/check-in', protect, async (req, res, next) => {
     const officeLat = parseFloat(process.env.OFFICE_LAT || '28.6139');
     const officeLng = parseFloat(process.env.OFFICE_LNG || '77.2090');
     const officeRadius = parseFloat(process.env.OFFICE_RADIUS || '200');
->>>>>>> origin/main
 
     const geofenceCheck = checkGeofence(gps.lat, gps.lng, officeLat, officeLng, officeRadius);
     if (!geofenceCheck.inRange) {
@@ -447,11 +274,7 @@ router.post('/check-in', protect, async (req, res, next) => {
     }
 
     const today = getTodayDateString();
-<<<<<<< HEAD
-    let record = await Attendance.findOne({ employee: userId, date: today });
-=======
     let record = await Attendance.findOne({ employee: req.user.id, date: today });
->>>>>>> origin/main
 
     if (record && record.checkIn && record.checkIn.time) {
       return res.status(400).json({
@@ -477,21 +300,12 @@ router.post('/check-in', protect, async (req, res, next) => {
       deviceInfo: deviceInfo || 'Unknown Device',
       browser: browser || 'Unknown Browser',
       ip: clientIp,
-<<<<<<< HEAD
-      faceVerified: true,
-      livenessVerified: Boolean(livenessVerified)
-=======
       faceVerified: true
->>>>>>> origin/main
     };
 
     if (!record) {
       record = await Attendance.create({
-<<<<<<< HEAD
-        employee: userId,
-=======
         employee: req.user.id,
->>>>>>> origin/main
         date: today,
         checkIn: checkInData,
         status: status
@@ -513,30 +327,9 @@ router.post('/check-in', protect, async (req, res, next) => {
 });
 
 router.post('/check-out', protect, async (req, res, next) => {
-<<<<<<< HEAD
-  // Attendance is not for Admin
-  if (req.user.role === 'Admin' || req.user.email?.toLowerCase() === 'shivamthakur12012@gmail.com') {
-    return res.status(403).json({
-      success: false,
-      message: 'Attendance tracking is not applicable for Administrator accounts.'
-    });
-  }
-  const { faceDescriptor, gps, deviceInfo, browser, livenessVerified } = req.body;
-  const clientIp = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-
-  if (!livenessVerified) {
-    return res.status(403).json({
-      success: false,
-      code: 'LIVENESS_REQUIRED',
-      message: 'Live human biometric verification required. Face detection from static photos, printed images, or screens is strictly prohibited.'
-    });
-  }
-
-=======
   const { faceDescriptor, gps, deviceInfo, browser } = req.body;
   const clientIp = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
->>>>>>> origin/main
   if (!faceDescriptor || !Array.isArray(faceDescriptor)) {
     return res.status(400).json({
       success: false,
@@ -552,14 +345,8 @@ router.post('/check-out', protect, async (req, res, next) => {
   }
 
   try {
-<<<<<<< HEAD
-    const userId = req.user.id || req.user._id;
-    const today = getTodayDateString();
-    const record = await Attendance.findOne({ employee: userId, date: today });
-=======
     const today = getTodayDateString();
     const record = await Attendance.findOne({ employee: req.user.id, date: today });
->>>>>>> origin/main
 
     if (!record || !record.checkIn || !record.checkIn.time) {
       return res.status(400).json({
@@ -575,29 +362,6 @@ router.post('/check-out', protect, async (req, res, next) => {
       });
     }
 
-<<<<<<< HEAD
-    const employee = await User.findById(userId).select('faceEmbeddings').lean();
-    if (!employee || !employee.faceEmbeddings || employee.faceEmbeddings.length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: 'No registered biometrics found for this profile. Please contact IT Admin.'
-      });
-    }
-
-    const faceCheck = verifyFace(faceDescriptor, employee.faceEmbeddings);
-    if (!faceCheck.verified) {
-      const bestDist = (faceCheck.minDistance !== undefined ? faceCheck.minDistance : faceCheck.medianDistance).toFixed(3);
-      return res.status(400).json({
-        success: false,
-        code: 'BIOMETRIC_MISMATCH',
-        message: `Biometric verification failed. Face match score too low (best distance: ${bestDist}, matched ${faceCheck.matchCount}/${faceCheck.totalEmbeddings} frames). Please ensure only the enrolled employee attempts check-out.`
-      });
-    }
-
-    const officeLat = parseFloat(process.env.OFFICE_LAT || '28.6126546');
-    const officeLng = parseFloat(process.env.OFFICE_LNG || '77.3660593');
-    const officeRadius = parseFloat(process.env.OFFICE_RADIUS || '60');
-=======
     const employee = await User.findById(req.user.id);
     
     const faceCheck = verifyFace(faceDescriptor, employee.faceEmbeddings);
@@ -611,7 +375,6 @@ router.post('/check-out', protect, async (req, res, next) => {
     const officeLat = parseFloat(process.env.OFFICE_LAT || '28.6139');
     const officeLng = parseFloat(process.env.OFFICE_LNG || '77.2090');
     const officeRadius = parseFloat(process.env.OFFICE_RADIUS || '200');
->>>>>>> origin/main
 
     const geofenceCheck = checkGeofence(gps.lat, gps.lng, officeLat, officeLng, officeRadius);
     if (!geofenceCheck.inRange) {
@@ -623,11 +386,6 @@ router.post('/check-out', protect, async (req, res, next) => {
 
     const checkoutTime = new Date();
     const checkinTime = new Date(record.checkIn.time);
-<<<<<<< HEAD
-
-    // Accurate working duration from actual check-in to check-out
-    const diffMs = Math.max(0, checkoutTime.getTime() - checkinTime.getTime());
-=======
     
     // Shift officially starts from 10:00 AM.
     // If employee checked in before 10:00 AM, working hours count starts at 10:00 AM.
@@ -637,7 +395,6 @@ router.post('/check-out', protect, async (req, res, next) => {
 
     const effectiveStartTime = checkinTime < shiftStart ? shiftStart : checkinTime;
     const diffMs = Math.max(0, checkoutTime - effectiveStartTime);
->>>>>>> origin/main
     const workHoursRaw = diffMs / (1000 * 60 * 60);
     const workHours = Math.round(workHoursRaw * 100) / 100;
 
@@ -646,19 +403,7 @@ router.post('/check-out', protect, async (req, res, next) => {
       overtime = Math.round((workHours - 8) * 100) / 100;
     }
 
-<<<<<<< HEAD
-    // Determine status based on actual work hours and check-in timeliness
-    if (workHours >= 8) {
-      // Full working day: preserve 'Late' if checked in late, otherwise 'Present'
-      if (record.status !== 'Late') {
-        record.status = 'Present';
-      }
-    } else if (workHours >= 4 && workHours < 8) {
-      record.status = 'Half Day';
-    } else {
-=======
     if (workHours < 8) {
->>>>>>> origin/main
       record.status = 'Half Day';
     }
 
@@ -671,13 +416,7 @@ router.post('/check-out', protect, async (req, res, next) => {
       },
       deviceInfo: deviceInfo || 'Unknown Device',
       browser: browser || 'Unknown Browser',
-<<<<<<< HEAD
-      ip: clientIp,
-      faceVerified: true,
-      livenessVerified: Boolean(livenessVerified)
-=======
       ip: clientIp
->>>>>>> origin/main
     };
 
     record.workHours = workHours;

@@ -1,9 +1,5 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Phone } from "lucide-react";
-<<<<<<< HEAD
-import { useConsultation } from "../context/ConsultationContext";
-=======
->>>>>>> origin/main
 
 export default function CtaBanner({
   title = "Ready to Grow Your Business?",
@@ -12,7 +8,6 @@ export default function CtaBanner({
   primaryTo = "/contact",
   showPhone = true,
 }) {
-
   return (
     <section className="max-w-7xl mx-auto px-6 md:px-8 my-16">
       <div className="bg-orange-600 rounded-2xl px-8 py-12 md:py-16 text-center">
@@ -24,7 +19,6 @@ export default function CtaBanner({
           </Link>
           {showPhone && (
             <a href="tel:+919899902568" className="btn-outline-white">
->>>>>>> origin/main
               <Phone size={16} /> +91 98999 02568
             </a>
           )}
