@@ -210,34 +210,78 @@ export default function Home() {
   const [homeNewsletterEmail, setHomeNewsletterEmail] = useState("");
   const [homeNewsletterStatus, setHomeNewsletterStatus] = useState("idle");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus("loading");
-    setErrMsg("");
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email,
-          service: formData.service || "General Consultation",
-          source: "website-home-hero",
-        }),
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setStatus("loading");
+  //   setErrMsg("");
+  //   try {
+  //     const res = await fetch("/api/contact", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         name: formData.name,
+  //         phone: formData.phone,
+  //         email: formData.email,
+  //         service: formData.service || "General Consultation",
+  //         source: "website-home-hero",
+  //       }),
+  //     }); 
+  //     const data = await res.json();
+  //     if (data.success) {
+  //       setStatus("success");
+  //     } else {
+  //       setErrMsg(data.message || "Something went wrong.");
+  //       setStatus("error");
+  //     }
+  //   } catch {
+  //     setErrMsg("Network error. Please try again.");
+  //     setStatus("error");
+  //   }
+  // };
+
+  
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setStatus("loading");
+  setErrMsg("");
+
+  try {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        service: formData.service || "General Consultation",
+        source: "website-home-hero",
+      }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      // Google Tag Manager - Successful Lead Submission
+      window.dataLayer = window.dataLayer || [];
+
+      window.dataLayer.push({
+        event: "lead_form_success",
+        form_name: "homepage_consultation",
+        service_name: formData.service || "General Consultation",
       });
-      const data = await res.json();
-      if (data.success) {
-        setStatus("success");
-      } else {
-        setErrMsg(data.message || "Something went wrong.");
-        setStatus("error");
-      }
-    } catch {
-      setErrMsg("Network error. Please try again.");
+
+      // Display success message
+      setStatus("success");
+    } else {
+      setErrMsg(data.message || "Something went wrong.");
       setStatus("error");
     }
-  };
+  } catch {
+    setErrMsg("Network error. Please try again.");
+    setStatus("error");
+  }
+};
+
 
   return (
     <div className="w-full">
