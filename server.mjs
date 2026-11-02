@@ -3,6 +3,7 @@ import { readFileSync, statSync, existsSync } from "fs";
 import { resolve, dirname, join } from "path";
 import { fileURLToPath } from "url";
 import handler from "./api/contact.js";
+import attendanceApp from "./server/server.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 10000;
@@ -97,15 +98,28 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // 2. Static Site routing (serving /dist folder built by Vite)
+  // 2. Attendance & Employee Portal API + Uploads
+  if (req.url.startsWith("/api") || req.url.startsWith("/uploads")) {
+    attendanceApp(req, res);
+    return;
+  }
+
+  // 3. Static Site routing (serving /dist folder built by Vite)
   // Strip query parameters
   const pathname = req.url.split("?")[0];
   let filePath = join(__dirname, "dist", pathname === "/" ? "index.html" : pathname);
 
   let exists = existsSync(filePath) && statSync(filePath).isFile();
 
-  // If path doesn't exist, fall back to index.html (supports Single Page Application client routing)
+  // If path doesn't exist: return 404 for missing static assets with extensions,
+  // or fall back to index.html for Single Page Application client routing.
   if (!exists) {
+    const hasFileExt = /\.[a-zA-Z0-9]+$/.test(pathname);
+    if (hasFileExt && !pathname.endsWith('.html')) {
+      res.writeHead(404, { "Content-Type": "text/plain" });
+      res.end("File Not Found");
+      return;
+    }
     filePath = join(__dirname, "dist", "index.html");
     exists = existsSync(filePath);
   }
@@ -127,6 +141,10 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, () => {
-  console.log(`🚀 Production server running on http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== "test") {
+  server.listen(PORT, () => {
+    console.log(`🚀 Production server running on http://localhost:${PORT}`);
+  });
+}
+
+export { server };

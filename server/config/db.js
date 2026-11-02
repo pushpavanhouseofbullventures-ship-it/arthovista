@@ -21,7 +21,8 @@ const connectDB = async () => {
   } catch (error) {
     console.error(`MongoDB connection error: ${error.message}`);
     console.log('Retrying in 5 seconds...');
-    setTimeout(connectDB, 5000);
+    const timer = setTimeout(connectDB, 5000);
+    if (timer.unref) timer.unref();
   }
 };
 

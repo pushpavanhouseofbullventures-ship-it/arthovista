@@ -116,10 +116,12 @@ function scheduleHolidayCheck() {
     return target.getTime() - now.getTime();
   };
 
-  setTimeout(function runDaily() {
+  const timer = setTimeout(function runDaily() {
     checkHoliday();
-    setInterval(checkHoliday, 24 * 60 * 60 * 1000);
+    const interval = setInterval(checkHoliday, 24 * 60 * 60 * 1000);
+    if (interval.unref) interval.unref();
   }, getMsUntil9AM());
+  if (timer.unref) timer.unref();
 }
 
 mongoose.connection.on('connected', () => {
@@ -128,7 +130,9 @@ mongoose.connection.on('connected', () => {
 });
 
 // Connect to Database (with auto-retry on failure)
-connectDB();
+if (process.env.NODE_ENV !== 'test') {
+  connectDB();
+}
 
 // Middleware
 app.use(helmet());
