@@ -1,0 +1,1018 @@
+import React, { useRef, useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+import * as faceapi from '@vladmandic/face-api';
+import confetti from 'canvas-confetti';
+import { api, useAuth } from '../../context/AuthContext';
+import {
+  Camera,
+  MapPin,
+  Loader2,
+  CheckCircle2,
+  AlertTriangle,
+  Play,
+  UserCheck,
+  Building,
+  Navigation,
+  ShieldCheck,
+  Sparkles
+} from 'lucide-react';
+import { loadEssentialFaceModels, areFaceModelsLoaded } from '../../utils/faceModelLoader';
+import { generate256dEmbedding } from '../../utils/faceEmbedding256';
+import { AntiSpoofDetector } from '../../utils/antiSpoofing';
+
+const OFFICE_LAT = 28.6126546;
+const OFFICE_LNG = 77.3660593;
+const OFFICE_RADIUS = 60; // 60 meters strict radius
+
+const calculateHaversineDistance = (lat1, lon1, lat2, lon2) => {
+  const R = 6371000; // meters
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+    Math.cos((lat2 * Math.PI) / 180) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return Math.round(R * c * 10) / 10;
+};
+
+// Euclidean distance between 2 landmark points
+const dist = (p1, p2) => {
+  if (!p1 || !p2) return 0;
+  const dx = (p1.x || 0) - (p2.x || 0);
+  const dy = (p1.y || 0) - (p2.y || 0);
+  return Math.sqrt(dx * dx + dy * dy);
+};
+
+// Eye Aspect Ratio (EAR) using 68 facial landmarks
+const computeEyeMetrics = (landmarks) => {
+  if (!landmarks) return { ear: 0.30, leftEAR: 0.30, rightEAR: 0.30 };
+  const pts = landmarks.positions || (typeof landmarks.getPositions === 'function' ? landmarks.getPositions() : null);
+  if (!pts || pts.length < 48) return { ear: 0.30, leftEAR: 0.30, rightEAR: 0.30 };
+
+  // Left eye: 36 (outer), 39 (inner), 37 & 38 (top), 40 & 41 (bottom)
+  const leftDistH = dist(pts[36], pts[39]);
+  const leftDistV1 = dist(pts[37], pts[41]);
+  const leftDistV2 = dist(pts[38], pts[40]);
+  const leftEAR = leftDistH > 0 ? (leftDistV1 + leftDistV2) / (2.0 * leftDistH) : 0.30;
+
+  // Right eye: 42 (inner), 45 (outer), 43 & 44 (top), 46 & 47 (bottom)
+  const rightDistH = dist(pts[42], pts[45]);
+  const rightDistV1 = dist(pts[43], pts[47]);
+  const rightDistV2 = dist(pts[44], pts[46]);
+  const rightEAR = rightDistH > 0 ? (rightDistV1 + rightDistV2) / (2.0 * rightDistH) : 0.30;
+
+  const ear = (leftEAR + rightEAR) / 2.0;
+  return { ear, leftEAR, rightEAR };
+};
+
+const computeEAR = (landmarks) => computeEyeMetrics(landmarks).ear;
+
+const AttendancePortal = () => {
+  const { user, refreshProfile } = useAuth();
+  const isAdmin = user?.role === 'Admin' || user?.email?.toLowerCase() === 'shivamthakur12012@gmail.com';
+
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const streamRef = useRef(null);
+  const animFrameRef = useRef(null);
+  const isLoopRunningRef = useRef(false);
+
+  // Liveness & Anti-Spoofing tracking refs
+  const antiSpoofDetectorRef = useRef(new AntiSpoofDetector());
+  const eyeStateRef = useRef('OPEN'); // 'OPEN' | 'CLOSED'
+  const blinkCountRef = useRef(0);
+  const lastDescriptorRef = useRef(null);
+  const staticFramesCountRef = useRef(0);
+  const lastLandmarksRef = useRef(null);
+
+  const [todayStatus, setTodayStatus] = useState(null);
+  const [modelsLoaded, setModelsLoaded] = useState(areFaceModelsLoaded());
+  const [cameraActive, setCameraActive] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState(true);
+  const [processing, setProcessing] = useState(false);
+
+  // GPS & Geofencing
+  const [gpsLoading, setGpsLoading] = useState(false);
+  const [coords, setCoords] = useState(null);
+  const [address, setAddress] = useState('');
+  const [distanceMeters, setDistanceMeters] = useState(null);
+  const [isWithinRange, setIsWithinRange] = useState(false);
+
+  // Real-time liveness state
+  const [livenessVerified, setLivenessVerified] = useState(false);
+  const [isSpoofAlert, setIsSpoofAlert] = useState(false);
+  const [faceInView, setFaceInView] = useState(false);
+  const [livenessMessage, setLivenessMessage] = useState('Position your face in the oval frame');
+
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [systemFeedback, setSystemFeedback] = useState('Standby - Please fetch GPS coordinates first.');
+
+  useEffect(() => {
+    if (isAdmin) {
+      setLoadingStatus(false);
+      return;
+    }
+    refreshProfile();
+    fetchTodayStatus();
+    loadFaceModels();
+    resolveGPS();
+
+    return () => {
+      stopCamera();
+    };
+  }, [isAdmin]);
+
+  const fetchTodayStatus = async () => {
+    try {
+      const res = await api.get('/attendance/today');
+      if (res.data.success) {
+        setTodayStatus(res.data.data);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingStatus(false);
+    }
+  };
+
+  const loadFaceModels = async () => {
+    if (areFaceModelsLoaded()) {
+      setModelsLoaded(true);
+      return;
+    }
+    try {
+      await loadEssentialFaceModels();
+      setModelsLoaded(true);
+    } catch (err) {
+      console.error('Error loading face-api models:', err);
+      setError('Biometric engine failed to load. Check internet connection.');
+    }
+  };
+
+  const resolveGPS = () => {
+    setGpsLoading(true);
+    setError('');
+    setSuccess('');
+    setAddress('');
+    setSystemFeedback('Locating device position with high accuracy...');
+
+    if (!navigator.geolocation) {
+      setError('Geolocation is not supported by your browser.');
+      setGpsLoading(false);
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setCoords({ lat: latitude, lng: longitude });
+
+        const distFromOffice = calculateHaversineDistance(latitude, longitude, OFFICE_LAT, OFFICE_LNG);
+        setDistanceMeters(distFromOffice);
+        const inRange = distFromOffice <= OFFICE_RADIUS;
+        setIsWithinRange(inRange);
+
+        if (!inRange) {
+          setError(`You are ${distFromOffice}m from the office. Attendance is only permitted within ${OFFICE_RADIUS} meters.`);
+          setSystemFeedback(`Outside 60m office zone (${distFromOffice}m away). Move closer to office.`);
+        } else {
+          setSystemFeedback(`GPS Verified: ${distFromOffice}m from office (Within 60m zone). Activate camera to verify.`);
+        }
+
+        // UNBLOCK GPS IMMEDIATELY so camera and check-in are NOT delayed by external geocoding!
+        setGpsLoading(false);
+
+        // Fetch street address in background with timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+        fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`,
+          { headers: { 'User-Agent': 'AttendanceHubSystem/1.0' }, signal: controller.signal }
+        )
+          .then((res) => {
+            clearTimeout(timeoutId);
+            if (res.ok) return res.json();
+            throw new Error('Reverse geocode status ' + res.status);
+          })
+          .then((data) => {
+            setAddress(data.display_name || `Office Geofenced Zone (${latitude.toFixed(4)}, ${longitude.toFixed(4)})`);
+          })
+          .catch(() => {
+            clearTimeout(timeoutId);
+            setAddress(`Office Geofenced Zone (${latitude.toFixed(4)}, ${longitude.toFixed(4)})`);
+          });
+      },
+      (err) => {
+        console.error('GPS Geolocation error:', err);
+        let msg = 'Failed to retrieve location.';
+        if (err.code === 1) msg = 'Location access denied. Please enable location permissions in browser settings.';
+        setError(msg);
+        setGpsLoading(false);
+      },
+      { enableHighAccuracy: true, timeout: 5000, maximumAge: 30000 }
+    );
+  };
+
+  const startCamera = async () => {
+    if (!isWithinRange) {
+      setError(`Cannot start camera: You must be within ${OFFICE_RADIUS} meters of the office (Current: ${distanceMeters || 'unknown'}m).`);
+      return;
+    }
+
+    setError('');
+    setSuccess('');
+    setLivenessVerified(false);
+    setIsSpoofAlert(false);
+    antiSpoofDetectorRef.current.reset();
+    blinkCountRef.current = 0;
+    eyeStateRef.current = 'OPEN';
+    staticFramesCountRef.current = 0;
+    lastLandmarksRef.current = null;
+    lastDescriptorRef.current = null;
+
+    try {
+      if (!areFaceModelsLoaded()) {
+        loadEssentialFaceModels().catch(() => {});
+      }
+
+      let stream;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: 640, height: 480, facingMode: 'user' },
+          audio: false,
+        });
+      } catch (_constraintErr) {
+        stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+      }
+
+      streamRef.current = stream;
+      setCameraActive(true);
+      setSystemFeedback('Webcam active. Look into camera to verify face.');
+      setLivenessMessage('👤 Face detected — Position your face in center');
+
+      const video = videoRef.current;
+      if (video) {
+        video.srcObject = stream;
+        video.play().catch((playErr) => console.warn('Video play warning:', playErr));
+      }
+
+      startRealtimeFaceLoop();
+    } catch (err) {
+      console.error('Webcam error:', err.name, err.message);
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(t => t.stop());
+        streamRef.current = null;
+      }
+      if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+        setError('Camera permission denied. Please allow camera access in your browser settings.');
+      } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+        setError('No webcam detected. Please connect a camera and try again.');
+      } else {
+        setError(`Cannot access webcam: ${err.message || err.name}`);
+      }
+    }
+  };
+
+  const stopCamera = useCallback(() => {
+    isLoopRunningRef.current = false;
+    if (animFrameRef.current) {
+      cancelAnimationFrame(animFrameRef.current);
+      animFrameRef.current = null;
+    }
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
+    setCameraActive(false);
+    setFaceInView(false);
+    setIsSpoofAlert(false);
+    setLivenessVerified(false);
+  }, []);
+
+  const isAutoVerifyingRef = useRef(false);
+
+  // Real-time Anti-Spoofing & Liveness Face Loop (Ultra-Responsive & Spoof-Proof)
+  const startRealtimeFaceLoop = () => {
+    isLoopRunningRef.current = true;
+    isAutoVerifyingRef.current = false;
+    antiSpoofDetectorRef.current.reset();
+
+    const processFrame = async () => {
+      if (!isLoopRunningRef.current) return;
+
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+
+      if (!video || video.readyState < 2 || video.videoWidth === 0 || video.videoHeight === 0) {
+        animFrameRef.current = requestAnimationFrame(processFrame);
+        return;
+      }
+
+      try {
+        const displaySize = { width: video.videoWidth, height: video.videoHeight };
+
+        if (canvas.width !== displaySize.width || canvas.height !== displaySize.height) {
+          canvas.width = displaySize.width;
+          canvas.height = displaySize.height;
+          try {
+            faceapi.matchDimensions(canvas, displaySize);
+          } catch (_e) {}
+        }
+
+        // High-speed landmark tracking with single face detection (30-60 FPS)
+        let detection = await faceapi
+          .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions({ inputSize: 224, scoreThreshold: 0.18 }))
+          .withFaceLandmarks();
+
+        if (!detection) {
+          detection = await faceapi
+            .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions({ inputSize: 160, scoreThreshold: 0.12 }))
+            .withFaceLandmarks();
+        }
+
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (detection) {
+          setFaceInView(true);
+
+          // Real-time Dynamic Liveness Verification (Defeats static photos)
+          const liveCheck = antiSpoofDetectorRef.current.processFrame(video, detection);
+
+          if (liveCheck.isSpoof) {
+            setIsSpoofAlert(true);
+            setLivenessVerified(false);
+            setLivenessMessage(liveCheck.actionNeeded);
+            setSystemFeedback('Security Alert: Static photo or screen detected.');
+          } else if (liveCheck.passed) {
+            setIsSpoofAlert(false);
+            setLivenessVerified(true);
+            setLivenessMessage(liveCheck.actionNeeded);
+
+            if (!isAutoVerifyingRef.current) {
+              isAutoVerifyingRef.current = true;
+              setSystemFeedback('Live face verified! Authenticating attendance...');
+              triggerAutoVerification();
+            }
+          } else {
+            setIsSpoofAlert(false);
+            setLivenessVerified(false);
+            setLivenessMessage(liveCheck.actionNeeded);
+            setSystemFeedback(liveCheck.actionNeeded);
+          }
+
+          const rawPts = detection.landmarks
+            ? (detection.landmarks.positions || (typeof detection.landmarks.getPositions === 'function' ? detection.landmarks.getPositions() : []))
+            : [];
+          const pts = rawPts.map(p => ({
+            x: p.x !== undefined ? p.x : (p._x !== undefined ? p._x : 0),
+            y: p.y !== undefined ? p.y : (p._y !== undefined ? p._y : 0)
+          }));
+
+          // Visual biometric mesh & Active Face Indicators
+          const box = detection.detection.box;
+          ctx.save();
+          const frameColor = isAutoVerifyingRef.current
+            ? '#10b981'
+            : liveCheck.isSpoof
+              ? '#ef4444'
+              : liveCheck.passed
+                ? '#10b981'
+                : '#38bdf8';
+          ctx.strokeStyle = frameColor;
+          ctx.lineWidth = liveCheck.isSpoof ? 3.5 : 2.5;
+          ctx.beginPath();
+
+          // Corner brackets
+          const cornerLen = 22;
+          // Top Left
+          ctx.moveTo(box.x, box.y + cornerLen);
+          ctx.lineTo(box.x, box.y);
+          ctx.lineTo(box.x + cornerLen, box.y);
+          // Top Right
+          ctx.moveTo(box.x + box.width - cornerLen, box.y);
+          ctx.lineTo(box.x + box.width);
+          ctx.lineTo(box.x + box.width, box.y + cornerLen);
+          // Bottom Left
+          ctx.moveTo(box.x, box.y + box.height - cornerLen);
+          ctx.lineTo(box.x, box.y + box.height);
+          ctx.lineTo(box.x + cornerLen, box.y + box.height);
+          // Bottom Right
+          ctx.moveTo(box.x + box.width - cornerLen, box.y + box.height);
+          ctx.lineTo(box.x + box.width);
+          ctx.lineTo(box.x + box.width, box.y - cornerLen);
+          ctx.stroke();
+
+          // Static Image / Spoof Restriction Canvas Overlay Tag
+          if (liveCheck.isSpoof) {
+            ctx.fillStyle = 'rgba(239, 68, 68, 0.9)';
+            const tagText = '⛔ PHOTO DETECTED — RESTRICTED';
+            ctx.font = 'bold 12px sans-serif';
+            const tagWidth = ctx.measureText(tagText).width;
+            ctx.fillRect(box.x, Math.max(0, box.y - 24), tagWidth + 16, 22);
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText(tagText, box.x + 8, Math.max(16, box.y - 8));
+          }
+
+          // Eye landmark dot indicators
+          ctx.fillStyle = isAutoVerifyingRef.current ? '#34d399' : liveCheck.isSpoof ? '#ef4444' : '#38bdf8';
+          for (let i = 36; i <= 47; i++) {
+            const pt = pts[i];
+            if (pt) {
+              ctx.beginPath();
+              ctx.arc(pt.x, pt.y, 2.4, 0, 2 * Math.PI);
+              ctx.fill();
+            }
+          }
+
+          // Nose & Mouth landmark indicators for live tracking
+          ctx.fillStyle = isAutoVerifyingRef.current ? '#10b981' : liveCheck.passed ? '#34d399' : '#fbbf24';
+          [30, 48, 54, 57].forEach(idx => {
+            const pt = pts[idx];
+            if (pt) {
+              ctx.beginPath();
+              ctx.arc(pt.x, pt.y, 1.8, 0, 2 * Math.PI);
+              ctx.fill();
+            }
+          });
+
+          ctx.restore();
+        } else {
+          setFaceInView(false);
+          setIsSpoofAlert(false);
+          setLivenessVerified(false);
+          setLivenessMessage('👤 Align your face inside the circle frame');
+        }
+      } catch (loopErr) {
+        console.warn('Face loop error:', loopErr);
+      }
+
+      animFrameRef.current = requestAnimationFrame(processFrame);
+    };
+
+    animFrameRef.current = requestAnimationFrame(processFrame);
+  };
+
+  const triggerAutoVerification = async () => {
+    // Automatically determine whether to check-in or check-out
+    const actionType = (!todayStatus || !todayStatus.checkIn?.time) ? 'check-in' : 'check-out';
+
+    if (todayStatus?.checkIn?.time && todayStatus?.checkOut?.time) {
+      setSystemFeedback('Attendance already completed for today.');
+      setSuccess('You have completed both check-in and check-out for today.');
+      stopCamera();
+      return;
+    }
+
+    if (!coords) {
+      setError('GPS coordinates not resolved yet. Please wait...');
+      isAutoVerifyingRef.current = false;
+      return;
+    }
+
+    if (!isWithinRange) {
+      setError(`Access Denied: You are ${distanceMeters}m away from the office. Allowed radius: ${OFFICE_RADIUS}m.`);
+      isAutoVerifyingRef.current = false;
+      return;
+    }
+
+    // Require dynamic live verification (defeats static captured photos)
+    if (!antiSpoofDetectorRef.current.livenessPassed) {
+      setError('Live verification required. Please smile or turn head slightly.');
+      isAutoVerifyingRef.current = false;
+      return;
+    }
+
+    const video = videoRef.current;
+    if (!video || video.readyState < 2) {
+      isAutoVerifyingRef.current = false;
+      return;
+    }
+
+    setProcessing(true);
+    setError('');
+    setSuccess('');
+    setSystemFeedback('Authenticating face signature...');
+
+    try {
+      // Rapid descriptor calculation (< 30ms with 224 inputSize)
+      let fullDetection = await faceapi
+        .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions({ inputSize: 224, scoreThreshold: 0.25 }))
+        .withFaceLandmarks()
+        .withFaceDescriptor();
+
+      if (!fullDetection) {
+        fullDetection = await faceapi
+          .detectSingleFace(video, new faceapi.SsdMobilenetv1Options({ minConfidence: 0.35 }))
+          .withFaceLandmarks()
+          .withFaceDescriptor();
+      }
+
+      if (!fullDetection) {
+        setError('No clear face detected. Look directly into the camera.');
+        setProcessing(false);
+        setLivenessVerified(false);
+        setTimeout(() => { isAutoVerifyingRef.current = false; }, 1200);
+        return;
+      }
+
+      const userAgent = navigator.userAgent;
+      const platform = navigator.platform;
+
+      const endpoint = actionType === 'check-in' ? '/attendance/check-in' : '/attendance/check-out';
+      const descriptor128 = Array.from(fullDetection.descriptor);
+
+      const res = await api.post(endpoint, {
+        faceDescriptor: descriptor128,
+        gps: {
+          lat: coords.lat,
+          lng: coords.lng,
+          address: address
+        },
+        deviceInfo: platform,
+        browser: userAgent,
+        livenessVerified: true
+      });
+
+      if (res.data.success) {
+        setSuccess(res.data.message);
+        setSystemFeedback('✅ Biometrics verified! Attendance successfully recorded.');
+        triggerSuccessCelebration();
+        setTimeout(() => {
+          stopCamera();
+        }, 1200);
+        fetchTodayStatus();
+      }
+    } catch (err) {
+      console.error('Auto-attendance error:', err);
+      setError(err.response?.data?.message || 'Biometric verification or geofencing failure.');
+      setSystemFeedback('Verification failed. Re-align face with camera.');
+      setLivenessVerified(false);
+      antiSpoofDetectorRef.current.reset();
+      setTimeout(() => {
+        isAutoVerifyingRef.current = false;
+      }, 2000);
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  const triggerSuccessCelebration = () => {
+    confetti({
+      particleCount: 120,
+      spread: 80,
+      origin: { y: 0.6 }
+    });
+  };
+
+  const formatTimeString = (dateStr) => {
+    return new Date(dateStr).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  };
+
+  if (isAdmin) {
+    return (
+      <div className="max-w-4xl mx-auto py-8 px-4 space-y-6 animate-fadeIn">
+        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-8 md:p-12 shadow-xl text-center space-y-6 relative overflow-hidden">
+          {/* Ambient Glows */}
+          <div className="absolute top-0 right-0 -mt-10 -mr-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-indigo-500 to-primary-600 text-white flex items-center justify-center shadow-xl shadow-indigo-500/20">
+            <ShieldCheck className="w-10 h-10" />
+          </div>
+
+          <div className="space-y-2 max-w-lg mx-auto">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/40">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              Primary Administrator Account
+            </span>
+            <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+              Attendance Tracking Not Applicable
+            </h2>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              As the System Administrator (<strong className="text-slate-900 dark:text-slate-200 font-mono">shivamthakur12012@gmail.com</strong>), your account is permanently exempt from biometric facial scans, GPS geofencing, and daily check-ins.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto pt-2 text-left">
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200/80 dark:border-slate-800/80">
+              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wide block">Admin Status</span>
+              <p className="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-1">Full System Access</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200/80 dark:border-slate-800/80">
+              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wide block">Biometric Scan</span>
+              <p className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mt-1">Exempt / Not Required</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200/80 dark:border-slate-800/80">
+              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wide block">Geofence Rule</span>
+              <p className="text-xs font-bold text-indigo-600 dark:text-indigo-400 mt-1">Universal Operational</p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
+            <Link
+              to="/admin"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-700 hover:to-indigo-700 text-white font-bold text-xs shadow-lg shadow-primary-500/20 active:scale-95 transition-all"
+            >
+              Go to Admin Dashboard
+            </Link>
+            <Link
+              to="/admin/employees"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition-colors"
+            >
+              Manage Employees
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (loadingStatus && !todayStatus) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] text-slate-500 dark:text-slate-400 space-y-4 animate-fadeIn">
+        <div className="relative flex items-center justify-center">
+          <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 dark:bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center">
+            <ShieldCheck className="w-7 h-7 text-indigo-600 dark:text-indigo-400 animate-pulse" />
+          </div>
+          <Loader2 className="w-16 h-16 animate-spin text-primary-500 absolute -inset-1 opacity-70" />
+        </div>
+        <div className="text-center space-y-1">
+          <p className="text-sm font-bold text-slate-800 dark:text-slate-100">
+            Connecting to Attendance Hub
+          </p>
+          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm">
+            Verifying daily check-in status...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const hasBiometrics = Boolean(user?.hasBiometrics || (user?.faceEmbeddingsCount && user?.faceEmbeddingsCount > 0) || (user?.faceEmbeddings && user?.faceEmbeddings.length > 0));
+  if (!hasBiometrics) {
+    return (
+      <div className="max-w-2xl mx-auto glass-panel p-8 rounded-3xl border border-amber-200/50 dark:border-amber-900/30 bg-amber-50/20 text-center space-y-4">
+        <AlertTriangle className="w-16 h-16 text-amber-500 mx-auto animate-bounce" />
+        <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">Biometrics Registration Required</h2>
+        <p className="text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+          You cannot mark attendance because you do not have face recognition data registered on your profile. Please contact an HR administrator to complete your biometrics enrollment.
+        </p>
+      </div>
+    );
+  }
+
+  const isCheckedIn = Boolean(todayStatus?.checkIn?.time);
+  const isCheckedOut = Boolean(todayStatus?.checkOut?.time);
+
+  return (
+    <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+      <div className="lg:col-span-7 space-y-6">
+
+        {/* Office Shift Information Header */}
+        <div className="flex flex-wrap items-center justify-between gap-2 p-3.5 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200/60 dark:border-indigo-900/40 text-xs text-indigo-900 dark:text-indigo-200">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+            <span>Official Shift Start: <strong>10:00 AM IST</strong></span>
+          </div>
+          <span className="text-[11px] opacity-80">
+            Mon – Sat Active • Check-ins after 10:00 AM marked Late
+          </span>
+        </div>
+
+        {error && (
+          <div className="flex items-start gap-3 p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 text-red-600 dark:text-red-400 text-sm font-medium rounded-2xl animate-fade-in">
+            <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
+            <span>{error}</span>
+          </div>
+        )}
+
+        {success && (
+          <div className="flex items-start gap-3 p-4 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-sm font-medium rounded-2xl animate-fade-in">
+            <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" />
+            <span>{success}</span>
+          </div>
+        )}
+
+        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/60 dark:border-slate-800 overflow-hidden shadow-sm">
+          <div className="relative aspect-video bg-slate-950 flex items-center justify-center overflow-hidden">
+
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              playsInline
+              className={`w-full h-full object-cover scale-x-[-1] transition-opacity duration-150 ${cameraActive ? 'opacity-100' : 'opacity-0 absolute pointer-events-none'}`}
+            />
+            <canvas
+              ref={canvasRef}
+              className={`absolute inset-0 w-full h-full object-cover scale-x-[-1] transition-opacity duration-150 ${cameraActive ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+            />
+
+            {/* Real-time Biometric Targeting HUD */}
+            {cameraActive && (
+              <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center">
+                <div className={`w-56 h-56 md:w-64 md:h-64 rounded-full border-2 border-dashed flex flex-col items-center justify-center transition-all duration-300 ${livenessVerified
+                  ? 'border-emerald-400 shadow-[0_0_30px_rgba(52,211,153,0.45)] scale-105'
+                  : isSpoofAlert
+                    ? 'border-red-500 shadow-[0_0_35px_rgba(239,68,68,0.5)] animate-pulse scale-95'
+                    : faceInView
+                      ? 'border-sky-400/80'
+                      : 'border-primary-500/40'
+                  }`}>
+                  {livenessVerified ? (
+                    <ShieldCheck className="w-10 h-10 text-emerald-400 animate-bounce" />
+                  ) : isSpoofAlert ? (
+                    <AlertTriangle className="w-10 h-10 text-red-500 animate-bounce" />
+                  ) : (
+                    <UserCheck className="w-7 h-7 text-sky-400/70" />
+                  )}
+                </div>
+
+                {/* Real-time floating HUD prompt */}
+                <div className="mt-3 px-4 py-1.5 rounded-full bg-slate-900/90 backdrop-blur-md border border-slate-700 text-xs font-semibold text-white flex items-center gap-2 shadow-lg">
+                  {livenessVerified ? (
+                    <>
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-400 animate-spin" />
+                      <span className="text-emerald-400 font-medium">⚡ Face Verified — Authenticating...</span>
+                    </>
+                  ) : isSpoofAlert ? (
+                    <>
+                      <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
+                      <span className="text-red-300 font-semibold">{livenessMessage}</span>
+                    </>
+                  ) : faceInView ? (
+                    <>
+                      <span className="w-2 h-2 rounded-full bg-sky-400 animate-ping" />
+                      <span>{livenessMessage}</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="w-2 h-2 rounded-full bg-slate-400 animate-ping" />
+                      <span>{livenessMessage}</span>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {!cameraActive && (
+              <div className="flex flex-col items-center gap-3 text-slate-600 py-16 text-center px-4">
+                <Camera className="w-16 h-16 stroke-[1.2] opacity-40 text-slate-400" />
+                <div>
+                  <p className="text-sm font-bold text-slate-800 dark:text-slate-200">Automatic Biometric Terminal</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm font-medium">
+                    Activate camera & position your face — attendance will be verified and recorded automatically.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {processing && (
+              <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center text-white">
+                <div className="flex items-center gap-3 bg-slate-800/95 border border-slate-700 px-6 py-4 rounded-2xl shadow-xl">
+                  <Loader2 className="w-5 h-5 animate-spin text-primary-500" />
+                  <span className="text-sm font-semibold">Authenticating Live Face Biometrics...</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="p-6 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 space-y-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+              <div>
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Terminal Status</p>
+                <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-0.5">{systemFeedback}</p>
+              </div>
+
+              <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto justify-end">
+                <button
+                  onClick={resolveGPS}
+                  disabled={gpsLoading || processing}
+                  className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-bold disabled:opacity-50 transition-colors shadow-2xs cursor-pointer"
+                >
+                  {gpsLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Navigation className="w-3.5 h-3.5" />}
+                  {coords ? 'Refresh GPS' : 'Fetch GPS'}
+                </button>
+
+                {coords && isWithinRange && !cameraActive && !isCheckedOut && (
+                  <button
+                    onClick={startCamera}
+                    disabled={processing}
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-700 hover:to-indigo-700 text-white text-xs font-bold shadow-md transition-all cursor-pointer"
+                  >
+                    <Play className="w-3.5 h-3.5" />
+                    Activate Camera (Auto-Scan)
+                  </button>
+                )}
+
+                {cameraActive && (
+                  <button
+                    onClick={stopCamera}
+                    disabled={processing}
+                    className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer shadow-2xs"
+                  >
+                    Close Camera
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Status Information Badge */}
+            <div className="pt-1">
+              {isCheckedIn && isCheckedOut ? (
+                <div className="p-3.5 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/30 rounded-2xl text-center text-xs font-bold text-emerald-800 dark:text-emerald-400 flex items-center justify-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  Attendance Completed for Today (Checked In & Checked Out)
+                </div>
+              ) : cameraActive ? (
+                <div className="p-3.5 bg-indigo-50 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-900/30 rounded-2xl flex items-center justify-between text-xs text-indigo-950 dark:text-indigo-300 font-semibold">
+                  <div className="flex items-center gap-2.5">
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-indigo-600"></span>
+                    </span>
+                    <span>Auto-Verification active — Just look at the screen to mark <strong>{!isCheckedIn ? 'Check-In' : 'Check-Out'}</strong></span>
+                  </div>
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-300">
+                    Hands-Free
+                  </span>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div className="lg:col-span-5 space-y-6">
+
+        <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wide border-b border-slate-100 dark:border-slate-800 pb-3 flex items-center justify-between">
+            Today's Log details
+            {todayStatus?.status && (
+              <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ${todayStatus.status === 'Present'
+                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-400'
+                : todayStatus.status === 'Late'
+                  ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/30 dark:text-amber-400'
+                  : todayStatus.status === 'Half Day'
+                    ? 'bg-orange-100 text-orange-800 dark:bg-orange-950/30 dark:text-orange-400'
+                    : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400'
+                }`}>
+                {todayStatus.status}
+              </span>
+            )}
+          </h3>
+
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${todayStatus && todayStatus.checkIn
+                ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/20 dark:text-emerald-400'
+                : 'bg-slate-100 text-slate-500 dark:bg-slate-800'
+                }`}>
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Check-In</p>
+                {todayStatus?.checkIn?.time ? (
+                  <div className="mt-1">
+                    <p className="text-sm font-bold text-slate-900 dark:text-slate-100">
+                      {formatTimeString(todayStatus.checkIn.time)}
+                    </p>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 truncate mt-0.5 font-medium">
+                      {todayStatus.checkIn.gps?.address || 'GPS Address'}
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-xs text-slate-500 font-medium mt-1">Pending Check-In</p>
+                )}
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${todayStatus && todayStatus.checkOut
+                ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/20 dark:text-emerald-400'
+                : 'bg-slate-100 text-slate-500 dark:bg-slate-800'
+                }`}>
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Check-Out</p>
+                {todayStatus?.checkOut?.time ? (
+                  <div className="mt-1">
+                    <p className="text-sm font-bold text-slate-900 dark:text-slate-100">
+                      {formatTimeString(todayStatus.checkOut.time)}
+                    </p>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 truncate mt-0.5 font-medium">
+                      {todayStatus.checkOut.gps?.address || 'GPS Address'}
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-xs text-slate-500 font-medium mt-1">Pending Check-Out</p>
+                )}
+              </div>
+            </div>
+
+            {todayStatus && todayStatus.workHours > 0 && (
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-3">
+
+                {todayStatus.status === 'Half Day' && (
+                  <div className="flex items-start gap-2.5 p-3 bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-900/40 rounded-2xl">
+                    <span className="text-orange-500 text-base leading-none mt-0.5">⚠️</span>
+                    <div>
+                      <p className="text-xs font-bold text-orange-800 dark:text-orange-400">Half Day Recorded</p>
+                      <p className="text-[11px] text-orange-700 dark:text-orange-400 mt-0.5 font-medium">
+                        You worked <span className="font-bold">{todayStatus.workHours} hrs</span> — less than the required 8 hrs full shift.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Work Hours</span>
+                    <p className={`text-lg font-bold ${todayStatus.status === 'Half Day'
+                      ? 'text-orange-600'
+                      : 'text-slate-900 dark:text-slate-100'
+                      }`}>
+                      {todayStatus.workHours} hrs
+                    </p>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Overtime</span>
+                    <p className="text-lg font-bold text-teal-600">{todayStatus.overtime || 0} hrs</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wide border-b border-slate-100 dark:border-slate-800 pb-3">
+            Location geofencing
+          </h3>
+
+          <div className="space-y-3.5">
+            {coords ? (
+              <>
+                <div className="flex gap-2 text-xs">
+                  <MapPin className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-bold text-slate-800 dark:text-slate-200">Resolved Coordinates</span>
+                    <p className="font-mono text-slate-600 dark:text-slate-400 mt-0.5 font-medium">{coords.lat.toFixed(6)}, {coords.lng.toFixed(6)}</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-2 text-xs">
+                  <Building className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-bold text-slate-800 dark:text-slate-200">Resolved Location Address</span>
+                    <p className="text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed font-medium">{address}</p>
+                  </div>
+                </div>
+
+                <div className={`p-3.5 rounded-2xl border flex flex-col gap-1.5 text-xs transition-colors ${isWithinRange
+                  ? 'bg-emerald-50/80 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-900/30 text-emerald-900 dark:text-emerald-300'
+                  : 'bg-red-50/80 dark:bg-red-950/20 border-red-200 dark:border-red-900/30 text-red-900 dark:text-red-300'
+                  }`}>
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold">Office Geofence (Radius 60m):</span>
+                    <span className={`font-bold px-2 py-0.5 rounded-full text-[10px] ${isWithinRange
+                      ? 'bg-emerald-200 text-emerald-900 dark:bg-emerald-900/60 dark:text-emerald-200'
+                      : 'bg-red-200 text-red-900 dark:bg-red-900/60 dark:text-red-200'
+                      }`}>
+                      {isWithinRange ? 'Within 60m Range' : 'Outside 60m Range'}
+                    </span>
+                  </div>
+                  <div className="text-[11px] font-mono font-medium opacity-90">
+                    Distance from office: <strong>{distanceMeters !== null ? `${distanceMeters}m` : 'Calculating...'}</strong>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-6 text-slate-500">
+                <Navigation className="w-8 h-8 mx-auto stroke-[1.5] mb-2 animate-bounce text-slate-400" />
+                <p className="text-xs font-bold text-slate-700">Location verification required.</p>
+                <p className="text-[11px] text-slate-500 mt-0.5 font-medium">Please click "Fetch GPS" to begin check-in.</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  );
+};
+
+export default AttendancePortal;
