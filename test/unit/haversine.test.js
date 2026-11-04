@@ -37,3 +37,4 @@ describe('Haversine Unit Tests', () => {
     assert.ok(outsideResult.distanceMeters > 100);
   });
 });
+

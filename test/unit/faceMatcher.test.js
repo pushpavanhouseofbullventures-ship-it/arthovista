@@ -37,3 +37,4 @@ describe('Face Matcher Unit Tests', () => {
     assert.ok(res.minDistance < 0.45);
   });
 });
+
