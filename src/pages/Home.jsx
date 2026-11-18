@@ -9,6 +9,7 @@ import {
   Mail, Send, Check, Bell
 } from "lucide-react";
 import { blogPosts } from "../data/blogData";
+import MarketingConversation from "../components/MarketingConversation";
 
 /* ---------- DATA ---------- */
 const stats = [
@@ -147,6 +148,10 @@ function useCountUp(target, duration = 2000) {
   const ref = useRef(null);
 
   useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") {
+      setCount(target);
+      return;
+    }
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -239,48 +244,48 @@ export default function Home() {
   //   }
   // };
 
-  
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setStatus("loading");
-  setErrMsg("");
 
-  try {
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email,
-        service: formData.service || "General Consultation",
-        source: "website-home-hero",
-      }),
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("loading");
+    setErrMsg("");
 
-    const data = await res.json();
-
-    if (res.ok && data.success) {
-      // Google Tag Manager - Successful Lead Submission
-      window.dataLayer = window.dataLayer || [];
-
-      window.dataLayer.push({
-        event: "lead_form_success",
-        form_name: "homepage_consultation",
-        service_name: formData.service || "General Consultation",
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          service: formData.service || "General Consultation",
+          source: "website-home-hero",
+        }),
       });
 
-      // Display success message
-      setStatus("success");
-    } else {
-      setErrMsg(data.message || "Something went wrong.");
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        // Google Tag Manager - Successful Lead Submission
+        window.dataLayer = window.dataLayer || [];
+
+        window.dataLayer.push({
+          event: "lead_form_success",
+          form_name: "homepage_consultation",
+          service_name: formData.service || "General Consultation",
+        });
+
+        // Display success message
+        setStatus("success");
+      } else {
+        setErrMsg(data.message || "Something went wrong.");
+        setStatus("error");
+      }
+    } catch {
+      setErrMsg("Network error. Please try again.");
       setStatus("error");
     }
-  } catch {
-    setErrMsg("Network error. Please try again.");
-    setStatus("error");
-  }
-};
+  };
 
 
   return (
@@ -445,6 +450,10 @@ const handleSubmit = async (e) => {
           </div>
         </div>
       </section>
+      {/* Animated 3D Advisors with Live Writing Bubbles */}
+      <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 my-6 sm:my-8 flex justify-center">
+        <MarketingConversation />
+      </div>
 
       {/* ====== STATS SECTION ====== */}
       <section className="stats-section">

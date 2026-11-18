@@ -25,3 +25,16 @@ if (!window.matchMedia) {
     dispatchEvent: () => false,
   });
 }
+
+// Polyfill IntersectionObserver if missing in jsdom
+if (typeof global.IntersectionObserver === 'undefined') {
+  global.IntersectionObserver = class IntersectionObserver {
+    constructor(callback) {
+      this.callback = callback;
+    }
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  };
+  window.IntersectionObserver = global.IntersectionObserver;
+}

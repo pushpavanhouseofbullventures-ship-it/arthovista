@@ -711,9 +711,6 @@ const AdminDashboard = () => {
                   <th className="py-3 px-4">Check-In</th>
                   <th className="py-3 px-4">Check-Out</th>
                   <th className="py-3 px-4">Work Hours</th>
-                  <th className="py-3 px-4">Verification</th>
-                  <th className="py-3 px-4 text-right">Location</th>
-
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
@@ -759,16 +756,6 @@ const AdminDashboard = () => {
                         <span className="text-[10px] text-emerald-500 ml-1">(+{log.overtime} OT)</span>
                       )}
                     </td>
-                    <td className="py-3 px-4">
-                      <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
-                        <ShieldCheck className="w-3.5 h-3.5" />
-                        <span className="text-[11px] font-semibold">Face & GPS Verified</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4 text-right text-slate-500 dark:text-slate-400 text-[11px] truncate max-w-[180px]" title={log.checkIn?.gps?.address}>
-                      {log.checkIn?.gps?.address || 'Office Geofenced Zone'}
-                    </td>
-
                   </tr>
                 ))}
               </tbody>

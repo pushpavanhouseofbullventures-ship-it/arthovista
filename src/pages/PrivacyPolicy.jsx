@@ -14,9 +14,6 @@ export default function PrivacyPolicy() {
 
   return (
     <div className="relative pt-8 pb-24 overflow-hidden">
-      {/* Background Lighting */}
-      <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-teal-500/10 blur-[150px] rounded-full pointer-events-none" />
-
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Navigation back */}
         <div className="mb-6">

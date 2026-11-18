@@ -79,24 +79,15 @@ export default function Contact() {
         throw new Error(data.message || "Something went wrong. Please try again.");
       }
 
-      window.dataLayer = window.dataLayer || [];
-
-      window.dataLayer.push({
-        event: "lead_form_success",
-        form_name: "contact_page_form",
-        service_name: formData.service || "General Consultation"
-      });
-
-      console.log("GTM Lead Event Pushed");
-
       setSubmitted(true);
-      setFormData({
-        name: "",
-        phone: "",
-        email: "",
-        service: "",
-        message: ""
-      });
+      if (typeof window !== "undefined" && Array.isArray(window.dataLayer)) {
+        window.dataLayer.push({
+          event: "lead_form_success",
+          form_name: "contact_page_form",
+          service_name: formData.service || "General Consultation",
+        });
+      }
+      setFormData({ name: "", phone: "", email: "", service: "", message: "" });
       setTimeout(() => setSubmitted(false), 6000);
     } catch (err) {
       setError(err.message);
