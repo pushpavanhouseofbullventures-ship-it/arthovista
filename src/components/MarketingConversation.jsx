@@ -280,10 +280,14 @@ export default function MarketingConversation({ className = "" }) {
         )}
       </div>
 
-      {/* ── GENUINE ADVISORS (WITH ENEGO-STYLE SOFT BOTTOM GRADIENT BLUR) ── */}
+      {/* ── GENUINE ADVISORS (SEAMLESS BOTTOM ALPHA FADE MATCHING REFERENCE) ── */}
       <div
         onClick={handleCtaClick}
-        className="cursor-pointer relative flex items-end justify-center w-full px-2 pt-0 pb-0 -mt-1 group overflow-hidden"
+        className="cursor-pointer relative flex items-end justify-center w-full px-2 pt-0 pb-0 -mt-1 group"
+        style={{
+          maskImage: "linear-gradient(to bottom, black 68%, rgba(0,0,0,0.75) 80%, rgba(0,0,0,0.25) 92%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 68%, rgba(0,0,0,0.75) 80%, rgba(0,0,0,0.25) 92%, transparent 100%)",
+        }}
         title="Click to consult with Aman & Priya"
       >
         {/* Soft Ambient Floor Shadow */}
@@ -293,10 +297,6 @@ export default function MarketingConversation({ className = "" }) {
         <div
           className={`relative w-[48%] sm:w-[50%] max-w-[220px] sm:max-w-[260px] flex-shrink-0 transition-transform duration-300 origin-bottom ${isBoyActiveSpeaker ? "scale-[1.02]" : "opacity-95 hover:opacity-100"
             }`}
-          style={{
-            maskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 45%, rgba(0,0,0,0.8) 65%, rgba(0,0,0,0.2) 88%, rgba(0,0,0,0) 100%)",
-            WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 45%, rgba(0,0,0,0.8) 65%, rgba(0,0,0,0.2) 88%, rgba(0,0,0,0) 100%)",
-          }}
         >
           {/* Subtle Ambient Halo when speaking */}
           {isBoyActiveSpeaker && (
@@ -309,7 +309,7 @@ export default function MarketingConversation({ className = "" }) {
             <img
               src="/marketing-boy.png"
               alt="Aman - MSME Funding Consultant"
-              className="w-full h-auto mr-48 object-contain block drop-shadow-md select-none pointer-events-none"
+              className="w-full h-auto object-contain block drop-shadow-md select-none pointer-events-none"
               loading="eager"
               draggable={false}
               onError={(e) => {
@@ -325,10 +325,6 @@ export default function MarketingConversation({ className = "" }) {
         <div
           className={`relative w-[48%] sm:w-[50%] max-w-[220px] sm:max-w-[260px] flex-shrink-0 -ml-8 sm:-ml-12 transition-transform duration-300 origin-bottom ${isGirlActiveSpeaker ? "scale-[1.02]" : "opacity-95 hover:opacity-100"
             }`}
-          style={{
-            maskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 45%, rgba(0,0,0,0.8) 65%, rgba(0,0,0,0.2) 88%, rgba(0,0,0,0) 100%)",
-            WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 45%, rgba(0,0,0,0.8) 65%, rgba(0,0,0,0.2) 88%, rgba(0,0,0,0) 100%)",
-          }}
         >
           {/* Subtle Ambient Halo when speaking */}
           {isGirlActiveSpeaker && (
@@ -341,7 +337,7 @@ export default function MarketingConversation({ className = "" }) {
             <img
               src="/marketing-girl.png"
               alt="Priya - Growth & Subsidy Specialist"
-              className="w-full h-auto ml-48 object-contain block drop-shadow-md select-none pointer-events-none"
+              className="w-full h-auto object-contain block drop-shadow-md select-none pointer-events-none"
               loading="eager"
               draggable={false}
               onError={(e) => {
@@ -352,9 +348,6 @@ export default function MarketingConversation({ className = "" }) {
             />
           </picture>
         </div>
-
-        {/* Bottom Soft Gradient Fade & Blur Overlay (Matches enego.co.in) */}
-        <div className="absolute inset-x-0 bottom-0 h-24 sm:h-32 pointer-events-none bg-gradient-to-t from-white via-white/80 to-transparent z-10" />
       </div>
     </div>
   );
