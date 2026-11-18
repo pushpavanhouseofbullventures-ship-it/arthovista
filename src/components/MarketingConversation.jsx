@@ -197,8 +197,8 @@ export default function MarketingConversation({ className = "" }) {
               )}
             </p>
 
-            {/* Speech Tail pointing accurately down to Aman */}
-            <div className="absolute -bottom-1.5 left-10 sm:left-14 w-3.5 h-3.5 bg-white border-r border-b border-slate-200 rotate-45" />
+            {/* Speech Tail pointing accurately down to Aman (Right side, matching girl's pointer) */}
+            <div className="absolute -bottom-1.5 right-10 sm:right-14 w-3.5 h-3.5 bg-white border-r border-b border-slate-200 rotate-45" />
           </div>
         </div>
 
