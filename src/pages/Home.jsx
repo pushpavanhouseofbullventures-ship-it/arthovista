@@ -295,10 +295,6 @@ export default function Home() {
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-10 grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Content */}
           <div className="animate-slide-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-teal-50 border border-teal-200 text-teal-700 text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-4 sm:mb-6">
-              <Shield size={14} className="text-amber-500 shrink-0" />
-              <span>Empanelled Advisory · 500+ MSMEs Empowered</span>
-            </div>
             <h1
               className="font-display font-black text-slate-900 leading-tight tracking-tight"
               style={{ fontSize: "clamp(28px, 4.5vw, 54px)" }}
@@ -847,7 +843,7 @@ export default function Home() {
           <p className="text-slate-600 font-medium text-base mt-4 max-w-lg mx-auto">
             Join 500+ businesses that chose ArthoVista as their trusted growth partner.
           </p>
-          <div className="flex flex-wrap gap-3 justify-center mt-8">
+          <div className="flex flex-wrap gap-3 bg-gradient-to-br from-teal-900 via-slate-900 to-slate-950 justify-center mt-8">
             <button
               onClick={() => openConsultationModal("General Business Consultation")}
               className="btn-primary-3d cursor-pointer"

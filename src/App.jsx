@@ -7,7 +7,6 @@ import { AuthProvider } from "./context/AuthContext";
 
 // Main Site Components
 import Navbar from "./components/Navbar";
-import StickyBar from "./components/StickyBar";
 import Footer from "./components/Footer";
 import CookieConsent from "./components/CookieConsent";
 import ConsultationModal from "./components/ConsultationModal";
@@ -150,7 +149,6 @@ function MainLayoutWrapper() {
     <div className="min-h-screen flex flex-col bg-[#f1f5f9] text-slate-700 font-sans relative overflow-x-clip">
       <StarfieldBackground />
       <div className="relative z-10 flex flex-col min-h-screen">
-        <StickyBar />
         <Navbar />
         <main className="flex-1 w-full max-w-[100vw] overflow-x-clip">
           <Suspense fallback={<PageLoader />}>
