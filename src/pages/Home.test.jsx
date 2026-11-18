@@ -19,23 +19,18 @@ describe('Homepage Integration Tests', () => {
     vi.clearAllMocks();
   });
 
-  it('renders hero title, lead assessment form, and the boy & girl animation placed below it', () => {
+  it('renders hero title, consultation buttons, and the boy & girl animation in hero', () => {
     renderHome();
 
     // Verify Hero Headings
     expect(screen.getByText(/Accelerate Your/i)).toBeDefined();
     expect(screen.getByText(/Business Growth/i)).toBeDefined();
 
-    // Verify Lead Assessment Form
-    expect(screen.getByText(/Get Free Business Assessment/i)).toBeDefined();
-    expect(screen.getByPlaceholderText('Full Name')).toBeDefined();
-    expect(screen.getByPlaceholderText('Phone Number')).toBeDefined();
-
-    // There are multiple "Book Free Consultation" CTA buttons on the page
-    const consultationButtons = screen.getAllByRole('button', { name: /Book Free Consultation/i });
+    // Verify Free Consultation Buttons
+    const consultationButtons = screen.getAllByRole('button', { name: /Free Consultation/i });
     expect(consultationButtons.length).toBeGreaterThanOrEqual(1);
 
-    // Verify Animated Marketing Conversation is rendered below the form
+    // Verify Animated Marketing Conversation is rendered in Hero
     const conversationContainer = screen.getByTestId('marketing-conversation-container');
     expect(conversationContainer).toBeDefined();
 
@@ -46,19 +41,15 @@ describe('Homepage Integration Tests', () => {
     expect(conversationContainer.contains(girlImg)).toBe(true);
   });
 
-  it('allows user to interact with the form fields while character animation runs', () => {
+  it('allows user to interact with the consultation CTAs while character animation runs', () => {
     renderHome();
-
-    const nameInput = screen.getByPlaceholderText('Full Name');
-    const phoneInput = screen.getByPlaceholderText('Phone Number');
-
-    fireEvent.change(nameInput, { target: { value: 'Vikram Singh' } });
-    fireEvent.change(phoneInput, { target: { value: '9876543210' } });
-
-    expect(nameInput.value).toBe('Vikram Singh');
-    expect(phoneInput.value).toBe('9876543210');
 
     // Verify the character animation container remains intact and responsive
     expect(screen.getByTestId('marketing-conversation-container')).toBeDefined();
+
+    // Verify CTA button triggers
+    const freeConsultBtn = screen.getAllByRole('button', { name: /Free Consultation/i })[0];
+    expect(freeConsultBtn).toBeDefined();
+    fireEvent.click(freeConsultBtn);
   });
 });

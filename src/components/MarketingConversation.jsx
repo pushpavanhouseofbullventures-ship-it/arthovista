@@ -309,7 +309,7 @@ export default function MarketingConversation({ className = "" }) {
             <img
               src="/marketing-boy.png"
               alt="Aman - MSME Funding Consultant"
-              className="w-full h-auto object-contain block drop-shadow-md select-none pointer-events-none"
+              className="w-full ml-0 h-auto object-contain block drop-shadow-md select-none pointer-events-none"
               loading="eager"
               draggable={false}
               onError={(e) => {
@@ -337,7 +337,7 @@ export default function MarketingConversation({ className = "" }) {
             <img
               src="/marketing-girl.png"
               alt="Priya - Growth & Subsidy Specialist"
-              className="w-full h-auto object-contain block drop-shadow-md select-none pointer-events-none"
+              className="w-full ml-12 h-auto object-contain block drop-shadow-md select-none pointer-events-none"
               loading="eager"
               draggable={false}
               onError={(e) => {

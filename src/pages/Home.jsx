@@ -291,7 +291,7 @@ export default function Home() {
   return (
     <div className="w-full">
       {/* ====== HERO SECTION ====== */}
-      <section className="relative flex items-center overflow-hidden border-b border-slate-200 py-10 sm:py-14 md:py-16 lg:py-20">
+      <section className="relative flex items-center overflow-hidden border-b border-slate-200 py-2 sm:py-4 md:py-4 lg:py-6">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-10 grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Content */}
           <div className="animate-slide-left">
@@ -351,105 +351,13 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right — 3D Lead Form Card */}
-          <div className="animate-slide-right md:animate-scale-in w-full max-w-lg mx-auto md:max-w-none">
-            <div
-              className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-7 md:p-8 relative overflow-hidden shadow-xl"
-            >
-              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-green-500 via-blue-500 to-green-500" />
-              <h2 className="font-display font-bold text-slate-900 text-lg sm:text-xl mb-1">
-                Get Free Business Assessment
-              </h2>
-              <p className="text-slate-600 text-xs sm:text-sm font-medium mb-5 sm:mb-6">
-                Our expert advisor will call you within 24 hours.
-              </p>
-
-              {status === "success" ? (
-                <div className="py-8 sm:py-10 text-center">
-                  <CheckCircle size={44} className="text-emerald-500 mx-auto mb-3" />
-                  <p className="text-slate-900 font-bold text-base sm:text-lg">Consultation Requested!</p>
-                  <p className="text-slate-600 text-xs sm:text-sm font-medium mt-1.5">Thank you! Our expert will call you within 24 hours.</p>
-                </div>
-              ) : (
-                <form className="space-y-3.5 sm:space-y-4" onSubmit={handleSubmit}>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Full Name"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    className="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 bg-white text-slate-800 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-                  />
-                  <input
-                    type="tel"
-                    required
-                    placeholder="Phone Number"
-                    value={formData.phone}
-                    onChange={(e) =>
-                      setFormData({ ...formData, phone: e.target.value })
-                    }
-                    className="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 bg-white text-slate-800 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email Address"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    className="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 bg-white text-slate-800 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-                  />
-                  <select
-                    value={formData.service}
-                    onChange={(e) =>
-                      setFormData({ ...formData, service: e.target.value })
-                    }
-                    className="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 bg-white text-slate-800 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer"
-                  >
-                    <option value="General Consultation Leads" className="bg-white text-slate-800">Select Service / Lead Category</option>
-                    <option value="PMEGP Subsidy Scheme Leads" className="bg-white text-slate-800">PMEGP Subsidy Scheme Leads (up to 35%)</option>
-                    <option value="CGTMSE Collateral-Free Loans Leads" className="bg-white text-slate-800">CGTMSE Collateral-Free Loans Leads (up to ₹5Cr)</option>
-                    <option value="Mudra Loans Leads" className="bg-white text-slate-800">Mudra Loans Leads (Shishu/Kishor/Tarun)</option>
-                    <option value="Startup India Seed Fund Leads" className="bg-white text-slate-800">Startup India Seed Fund Leads</option>
-                    <option value="MSME Sustainable (ZED) Certification Leads" className="bg-white text-slate-800">MSME Sustainable (ZED) Certification Leads</option>
-                    <option value="PM-FME Food Processing Subsidy Leads" className="bg-white text-slate-800">PM-FME Food Processing Subsidy Leads</option>
-                    <option value="Business Registration Leads" className="bg-white text-slate-800">Business Registration (Pvt Ltd, LLP, OPC)</option>
-                    <option value="ISO & Quality Certifications Leads" className="bg-white text-slate-800">ISO & Quality Certifications Leads</option>
-                    <option value="GST & Tax Compliance Leads" className="bg-white text-slate-800">GST & Tax Compliance Leads</option>
-                    <option value="NGO & Section 8 Leads" className="bg-white text-slate-800">NGO & Section 8 Leads</option>
-                    <option value="Digital Marketing & Growth Leads" className="bg-white text-slate-800">Digital Marketing & Growth Leads</option>
-                    <option value="DPR & Pitch Deck Leads" className="bg-white text-slate-800">DPR & Pitch Deck Leads</option>
-                  </select>
-
-                  {status === "error" && (
-                    <p className="text-red-600 text-xs font-semibold bg-red-50 border border-red-200 rounded-lg px-3 py-2">
-                      {errMsg}
-                    </p>
-                  )}
-
-                  <button
-                    type="submit"
-                    disabled={status === "loading"}
-                    className="btn-3d w-full bg-gradient-to-r from-green-500 via-blue-500 to-green-500 hover:opacity-95 text-white font-bold py-3 sm:py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all disabled:opacity-70 cursor-pointer shadow-lg shadow-green-500/25 text-xs sm:text-sm"
-                  >
-                    {status === "loading" ? "Booking..." : "Book Free Consultation"}
-                    <ArrowRight size={14} />
-                  </button>
-                  <p className="text-center text-[11px] sm:text-xs font-medium text-slate-500">
-                    No hidden fees · 100% Confidential
-                  </p>
-                </form>
-              )}
-            </div>
+          {/* Animated 3D Advisors with Live Writing Bubbles */}
+          <div className="w-full max-w-4xl mx-auto px-1 sm:px-6 my-6 sm:my-8 flex justify-center">
+            <MarketingConversation />
           </div>
+
         </div>
       </section>
-      {/* Animated 3D Advisors with Live Writing Bubbles */}
-      <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 my-6 sm:my-8 flex justify-center">
-        <MarketingConversation />
-      </div>
 
       {/* ====== STATS SECTION ====== */}
       <section className="stats-section">
