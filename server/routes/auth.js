@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 const User = require('../models/User');
 const { protect } = require('../middleware/auth');
 const sendEmail = require('../utils/email');
@@ -22,10 +23,21 @@ router.post('/login', async (req, res, next) => {
   const { username, password } = req.body;
 
   if (mongoose.connection.readyState !== 1) {
-    return res.status(503).json({
-      success: false,
-      message: 'Database server is currently connecting or offline. Please verify MONGODB_URI.'
-    });
+    if (mongoose.connection.readyState === 2) {
+      await new Promise((resolve) => {
+        const timeout = setTimeout(resolve, 5000);
+        mongoose.connection.once('connected', () => {
+          clearTimeout(timeout);
+          resolve();
+        });
+      });
+    }
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({
+        success: false,
+        message: 'Database server is currently connecting or offline. Please verify MONGODB_URI.'
+      });
+    }
   }
 
   if (!username || !password) {
