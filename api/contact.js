@@ -159,6 +159,7 @@ export default async function handler(req, res) {
       fetch(sheetsWebhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        redirect: 'follow',
         body: JSON.stringify({
           name: doc.name,
           phone: doc.phone,

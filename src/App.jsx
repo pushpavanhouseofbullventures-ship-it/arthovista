@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate, Outlet } from "rea
 import { useEffect, Suspense, lazy } from "react";
 
 // Context Providers
-import { ConsultationProvider } from "./context/ConsultationContext";
+import { ConsultationProvider, useConsultation } from "./context/ConsultationContext";
 import { AuthProvider } from "./context/AuthContext";
 
 // Main Site Components
@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import CookieConsent from "./components/CookieConsent";
 import ConsultationModal from "./components/ConsultationModal";
+import AutoConsultationTimer from "./components/AutoConsultationTimer";
 
 // Main Site Pages
 const Home = lazy(() => import("./pages/Home"));
@@ -173,6 +174,7 @@ function MainLayoutWrapper() {
         <Footer />
         <CookieConsent />
         <ConsultationModal />
+        <AutoConsultationTimer />
       </div>
     </div>
   );
