@@ -3,9 +3,14 @@ import { readFileSync, statSync, existsSync } from "fs";
 import { resolve, dirname, join } from "path";
 import { fileURLToPath } from "url";
 import handler from "./api/contact.js";
+import attendanceApp from "./server/server.js";
+
+const expressApp = typeof attendanceApp === "function" ? attendanceApp : attendanceApp.default;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.NODE_ENV === "production"
+  ? (process.env.PORT || 10000)
+  : (process.env.PORT && process.env.PORT !== "5000" ? process.env.PORT : 10000);
 
 // Load .env manually for local development if available
 try {
@@ -67,18 +72,24 @@ function createRes(res) {
 }
 
 const server = http.createServer(async (req, res) => {
-  // CORS configurations for API calls
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  // CORS configurations for API calls & static assets
+  const origin = req.headers.origin;
+  if (origin) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+  } else {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+  }
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
 
   if (req.method === "OPTIONS") {
-    res.writeHead(200);
+    res.writeHead(204);
     res.end();
     return;
   }
 
-  // 1. API Route mapping
+  // 1. API Route mapping for contact form
   if (req.url.startsWith("/api/contact")) {
     let body = {};
     if (req.method === "POST") {
@@ -97,19 +108,14 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // 2. Static Site routing (serving /dist folder built by Vite)
+  // 2. Attendance & Auth & All other API routes + Uploads
+  if (req.url.startsWith("/api/") || req.url.startsWith("/uploads")) {
+    return expressApp(req, res);
+  }
+
+  // 3. Static Site routing (serving /dist folder built by Vite)
   // Strip query parameters
   const pathname = req.url.split("?")[0];
-
-  // Guard: API routes that weren't matched should never return index.html
-  if (pathname.startsWith("/api/")) {
-    res.writeHead(502, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({
-      success: false,
-      message: "API service endpoint not found or backend service is offline."
-    }));
-    return;
-  }
 
   let filePath = join(__dirname, "dist", pathname === "/" ? "index.html" : pathname);
 

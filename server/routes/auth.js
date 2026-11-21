@@ -7,19 +7,26 @@ const { protect } = require('../middleware/auth');
 const sendEmail = require('../utils/email');
 
 const generateAccessToken = (userId) => {
-  return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
+  return jwt.sign({ id: userId }, process.env.JWT_SECRET || 'arthovista_secure_jwt_secret_key_2026', {
     expiresIn: process.env.JWT_EXPIRES_IN || '1d'
   });
 };
 
 const generateRefreshToken = (userId) => {
-  return jwt.sign({ id: userId }, process.env.JWT_REFRESH_SECRET, {
+  return jwt.sign({ id: userId }, process.env.JWT_REFRESH_SECRET || 'arthovista_secure_jwt_refresh_secret_key_2026', {
     expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d'
   });
 };
 
 router.post('/login', async (req, res, next) => {
   const { username, password } = req.body;
+
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({
+      success: false,
+      message: 'Database server is currently connecting or offline. Please verify MONGODB_URI.'
+    });
+  }
 
   if (!username || !password) {
     return res.status(400).json({
