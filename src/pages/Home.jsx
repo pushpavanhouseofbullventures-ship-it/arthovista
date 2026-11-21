@@ -208,85 +208,9 @@ export default function Home() {
     "ArthoVista helps MSMEs and startups with business consulting, loans, government schemes, funding and financial support across India."
   );
   const { openConsultationModal } = useConsultation();
-  const [formData, setFormData] = useState({ name: "", phone: "", email: "", service: "" });
-  const [status, setStatus] = useState("idle"); // idle | loading | success | error
-  const [errMsg, setErrMsg] = useState("");
   const [selectedSegment, setSelectedSegment] = useState(null);
   const [homeNewsletterEmail, setHomeNewsletterEmail] = useState("");
   const [homeNewsletterStatus, setHomeNewsletterStatus] = useState("idle");
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setStatus("loading");
-  //   setErrMsg("");
-  //   try {
-  //     const res = await fetch("/api/contact", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         name: formData.name,
-  //         phone: formData.phone,
-  //         email: formData.email,
-  //         service: formData.service || "General Consultation",
-  //         source: "website-home-hero",
-  //       }),
-  //     }); 
-  //     const data = await res.json();
-  //     if (data.success) {
-  //       setStatus("success");
-  //     } else {
-  //       setErrMsg(data.message || "Something went wrong.");
-  //       setStatus("error");
-  //     }
-  //   } catch {
-  //     setErrMsg("Network error. Please try again.");
-  //     setStatus("error");
-  //   }
-  // };
-
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus("loading");
-    setErrMsg("");
-
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email,
-          service: formData.service || "General Consultation",
-          source: "website-home-hero",
-        }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        // Google Tag Manager - Successful Lead Submission
-        window.dataLayer = window.dataLayer || [];
-
-        window.dataLayer.push({
-          event: "lead_form_success",
-          form_name: "homepage_consultation",
-          service_name: formData.service || "General Consultation",
-        });
-
-        // Display success message
-        setStatus("success");
-      } else {
-        setErrMsg(data.message || "Something went wrong.");
-        setStatus("error");
-      }
-    } catch {
-      setErrMsg("Network error. Please try again.");
-      setStatus("error");
-    }
-  };
-
 
   return (
     <div className="w-full">

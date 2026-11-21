@@ -3,9 +3,34 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
+const rateLimit = require('express-rate-limit');
 const User = require('../models/User');
 const { protect } = require('../middleware/auth');
 const sendEmail = require('../utils/email');
+
+// Rate limiter for login: 10 attempts per 15 minutes per IP
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: {
+    success: false,
+    message: 'Too many login attempts from this IP address. Please try again after 15 minutes.'
+  },
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
+// Rate limiter for OTP operations: 5 requests per 15 minutes per IP
+const otpLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: {
+    success: false,
+    message: 'Too many verification code requests. Please wait 15 minutes before trying again.'
+  },
+  standardHeaders: true,
+  legacyHeaders: false
+});
 
 const generateAccessToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET || 'arthovista_secure_jwt_secret_key_2026', {
@@ -19,7 +44,7 @@ const generateRefreshToken = (userId) => {
   });
 };
 
-router.post('/login', async (req, res, next) => {
+router.post('/login', loginLimiter, async (req, res, next) => {
   const { username, password } = req.body;
 
   if (mongoose.connection.readyState !== 1) {
@@ -207,7 +232,7 @@ router.post('/logout', protect, (req, res) => {
 // @route   POST /api/auth/forgot-password
 // @desc    Generate OTP and send it via email for forgot password
 // @access  Public
-router.post('/forgot-password', async (req, res, next) => {
+router.post('/forgot-password', otpLimiter, async (req, res, next) => {
   const { email } = req.body;
 
   if (!email) {
@@ -284,7 +309,7 @@ router.post('/forgot-password', async (req, res, next) => {
 // @route   POST /api/auth/verify-otp
 // @desc    Verify OTP code
 // @access  Public
-router.post('/verify-otp', async (req, res, next) => {
+router.post('/verify-otp', otpLimiter, async (req, res, next) => {
   const { email, otp } = req.body;
 
   if (!email || !otp) {
@@ -337,7 +362,7 @@ router.post('/verify-otp', async (req, res, next) => {
 // @route   POST /api/auth/reset-password
 // @desc    Reset password using OTP code
 // @access  Public
-router.post('/reset-password', async (req, res, next) => {
+router.post('/reset-password', otpLimiter, async (req, res, next) => {
   const { email, otp, password } = req.body;
 
   if (!email || !otp || !password) {

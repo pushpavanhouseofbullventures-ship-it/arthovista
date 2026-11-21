@@ -95,9 +95,19 @@ const server = http.createServer(async (req, res) => {
     if (req.method === "POST") {
       const raw = await new Promise((resolve) => {
         let data = "";
-        req.on("data", (chunk) => { data += chunk; });
+        req.on("data", (chunk) => {
+          data += chunk;
+          if (data.length > 50000) { // 50KB payload guard against Slowloris / OOM attacks
+            res.writeHead(413, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ success: false, message: "Payload too large." }));
+            req.destroy();
+            resolve(null);
+          }
+        });
         req.on("end", () => { resolve(data); });
+        req.on("error", () => { resolve(null); });
       });
+      if (raw === null) return;
       try {
         body = JSON.parse(raw);
       } catch (e) {

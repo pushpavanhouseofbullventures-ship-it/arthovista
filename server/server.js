@@ -52,15 +52,9 @@ async function seedAdmin() {
         shivam.status = 'Active';
         modified = true;
       }
-      const isPasswordMatch = await shivam.matchPassword('Shivam@123321');
-      if (!isPasswordMatch) {
-        shivam.password = 'Shivam@123321';
-        modified = true;
-        console.log('Updating Admin password to match Shivam@123321...');
-      }
       if (modified) {
         await shivam.save();
-        console.log('Updated shivamthakur12012@gmail.com role/employeeId/credentials.');
+        console.log('Updated shivamthakur12012@gmail.com role/employeeId.');
       }
     }
 

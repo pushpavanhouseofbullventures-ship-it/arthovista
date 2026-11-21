@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const Blog = require('../models/Blog');
+const User = require('../models/User');
 const { protect, authorize } = require('../middleware/auth');
 
 // @route   GET /api/blogs
@@ -11,8 +13,20 @@ router.get('/', async (req, res, next) => {
     const { category, search, status } = req.query;
     const query = {};
 
-    // Filter by status (default to Published for public users)
-    if (status) {
+    // Filter by status: only authenticated Admins/Managers can query non-published blogs
+    let canViewNonPublished = false;
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+      try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'arthovista_secure_jwt_secret_key_2026');
+        const user = await User.findById(decoded.id).select('role status').lean();
+        if (user && user.status === 'Active' && ['Admin', 'Manager'].includes(user.role)) {
+          canViewNonPublished = true;
+        }
+      } catch (_) {}
+    }
+
+    if (canViewNonPublished && status) {
       query.status = status;
     } else {
       query.status = 'Published';

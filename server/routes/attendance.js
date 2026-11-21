@@ -56,10 +56,16 @@ router.get('/history', protect, async (req, res, next) => {
     }
 
     if (req.query.date) {
-      query.date = req.query.date;
+      const cleanDate = String(req.query.date).trim();
+      if (/^\d{4}-\d{2}-\d{2}$/.test(cleanDate)) {
+        query.date = cleanDate;
+      }
     } else if (req.query.month) {
-      // Month format: YYYY-MM
-      query.date = { $regex: `^${req.query.month}` };
+      // Month format: YYYY-MM (strictly validate format to prevent regex injection)
+      const cleanMonth = String(req.query.month).trim();
+      if (/^\d{4}-\d{2}$/.test(cleanMonth)) {
+        query.date = { $regex: `^${cleanMonth}` };
+      }
     }
 
     // Exclude Admin accounts from attendance history logs

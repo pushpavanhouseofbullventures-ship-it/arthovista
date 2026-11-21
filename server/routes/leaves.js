@@ -149,6 +149,14 @@ router.put('/:id/status', protect, authorize('Admin', 'Manager'), async (req, re
       });
     }
 
+    // Security Check: Managers cannot approve their own leaves
+    if (leave.employee.toString() === req.user.id && req.user.role !== 'Admin') {
+      return res.status(403).json({
+        success: false,
+        message: 'Security Restriction: Managers cannot approve their own leave applications. Approval must be conducted by an Administrator.'
+      });
+    }
+
     leave.status = status;
     leave.approvedBy = req.user.id;
     leave.adminRemarks = adminRemarks || '';

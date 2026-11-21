@@ -123,20 +123,20 @@ const Reports = () => {
     // Rows
     const rows = filteredData.map(row => {
       const rowData = [
-        row.employee.fullName,
-        row.employee.employeeId,
-        row.employee.email,
-        row.employee.department,
-        row.employee.designation,
+        row.employee?.fullName || 'Former Employee',
+        row.employee?.employeeId || 'N/A',
+        row.employee?.email || 'N/A',
+        row.employee?.department?.name || row.employee?.department || 'N/A',
+        row.employee?.designation || 'N/A',
         row.punchInTime || 'Not Punched In',
         row.punchOutTime || 'Not Punched Out',
         row.totalWorkHours !== undefined ? row.totalWorkHours : 0,
-        row.presentDays,
-        row.absentDays,
-        row.lateDays,
-        row.halfDays,
-        row.leaveDays,
-        `${row.attendancePercentage}%`
+        row.presentDays || 0,
+        row.absentDays || 0,
+        row.lateDays || 0,
+        row.halfDays || 0,
+        row.leaveDays || 0,
+        `${row.attendancePercentage || 0}%`
       ];
 
       if (!isSingleDay) {

@@ -390,21 +390,28 @@ const AdminDashboard = () => {
             <span>Employees with Short Attendance (Below 75% this month)</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {data.shortAttendanceEmployees.map((emp) => (
-              <div key={emp.employee.id} className="bg-white dark:bg-slate-900/50 p-4 rounded-2xl border border-red-100 dark:border-red-950/50 flex items-center justify-between gap-3 text-xs">
-                <div>
-                  <p className="font-bold text-slate-800 dark:text-slate-200">{emp.employee.fullName}</p>
-                  <p className="text-slate-400 text-[10px] mt-0.5">{emp.employee.employeeId} • Attendance: <strong className="text-red-600 dark:text-red-400">{emp.attendancePercentage}%</strong></p>
+            {data.shortAttendanceEmployees.map((emp, index) => {
+              const empId = emp.employee?.id || emp.employee?._id || `emp-${index}`;
+              const empName = emp.employee?.fullName || 'Staff Member';
+              const empCode = emp.employee?.employeeId || 'ID';
+              return (
+                <div key={empId} className="bg-white dark:bg-slate-900/50 p-4 rounded-2xl border border-red-100 dark:border-red-950/50 flex items-center justify-between gap-3 text-xs">
+                  <div>
+                    <p className="font-bold text-slate-800 dark:text-slate-200">{empName}</p>
+                    <p className="text-slate-400 text-[10px] mt-0.5">{empCode} • Attendance: <strong className="text-red-600 dark:text-red-400">{emp.attendancePercentage}%</strong></p>
+                  </div>
+                  {emp.employee && (
+                    <button
+                      onClick={() => handleSendWarningEmail(empId)}
+                      disabled={sendingEmailId === empId}
+                      className="px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-[10px] transition-colors disabled:opacity-50"
+                    >
+                      {sendingEmailId === empId ? 'Sending...' : 'Send Email Alert'}
+                    </button>
+                  )}
                 </div>
-                <button
-                  onClick={() => handleSendWarningEmail(emp.employee.id)}
-                  disabled={sendingEmailId === emp.employee.id}
-                  className="px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-[10px] transition-colors disabled:opacity-50"
-                >
-                  {sendingEmailId === emp.employee.id ? 'Sending...' : 'Send Email Alert'}
-                </button>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}

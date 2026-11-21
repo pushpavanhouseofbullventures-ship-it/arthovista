@@ -42,19 +42,22 @@ router.get('/', protect, authorize('Admin', 'Manager'), async (req, res, next) =
     }
 
     if (search) {
-      query.$and = [
-        { role: { $ne: 'Admin' } },
-        { email: { $ne: 'shivamthakur12012@gmail.com' } },
-        {
-          $or: [
-            { fullName: { $regex: search, $options: 'i' } },
-            { employeeId: { $regex: search, $options: 'i' } },
-            { email: { $regex: search, $options: 'i' } }
-          ]
-        }
-      ];
-      delete query.role;
-      delete query.email;
+      const sanitizedSearch = String(search).replace(/[.*+?^${}()|[\]\\]/g, '\\$&').trim();
+      if (sanitizedSearch) {
+        query.$and = [
+          { role: { $ne: 'Admin' } },
+          { email: { $ne: 'shivamthakur12012@gmail.com' } },
+          {
+            $or: [
+              { fullName: { $regex: sanitizedSearch, $options: 'i' } },
+              { employeeId: { $regex: sanitizedSearch, $options: 'i' } },
+              { email: { $regex: sanitizedSearch, $options: 'i' } }
+            ]
+          }
+        ];
+        delete query.role;
+        delete query.email;
+      }
     }
 
     // Fast lean query with projection

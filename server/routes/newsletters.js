@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const Newsletter = require('../models/Newsletter');
 const Subscriber = require('../models/Subscriber');
+const User = require('../models/User');
 const { protect, authorize } = require('../middleware/auth');
 
 // @route   GET /api/newsletters
@@ -10,7 +12,21 @@ const { protect, authorize } = require('../middleware/auth');
 router.get('/', async (req, res, next) => {
   try {
     const { status } = req.query;
-    const query = status ? { status } : { status: 'Published' };
+
+    // Filter by status: only authenticated Admins/Managers can query non-published newsletters
+    let canViewNonPublished = false;
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+      try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'arthovista_secure_jwt_secret_key_2026');
+        const user = await User.findById(decoded.id).select('role status').lean();
+        if (user && user.status === 'Active' && ['Admin', 'Manager'].includes(user.role)) {
+          canViewNonPublished = true;
+        }
+      } catch (_) {}
+    }
+
+    const query = canViewNonPublished && status ? { status } : { status: 'Published' };
 
     const newsletters = await Newsletter.find(query)
       .sort({ createdAt: -1 })
