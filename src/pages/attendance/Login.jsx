@@ -53,8 +53,8 @@ const Login = () => {
     const result = await login(username, password);
     setSubmitting(false);
 
-    if (!result.success) {
-      setError(result.message);
+    if (!result?.success) {
+      setError(result?.message || 'Login failed. Please check your credentials.');
     }
   };
 

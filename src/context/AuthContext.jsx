@@ -170,11 +170,17 @@ export const AuthProvider = ({ children }) => {
       const cleanUsername = (username || '').trim();
       sessionStorage.removeItem('authErrorMessage');
       const res = await api.post('/auth/login', { username: cleanUsername, password });
-      if (res.data.success) {
+      if (res.data?.success) {
         setToken(res.data.accessToken);
         setUser(res.data.user);
         return { success: true, user: res.data.user };
       }
+      return {
+        success: false,
+        message: res.data?.message || (typeof res.data === 'string' && res.data.includes('<!DOCTYPE')
+          ? 'Backend authentication server unavailable. Please contact administrator.'
+          : 'Invalid credentials or server error.')
+      };
     } catch (error) {
       if (error.response?.data?.message) {
         return {

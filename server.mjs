@@ -100,6 +100,17 @@ const server = http.createServer(async (req, res) => {
   // 2. Static Site routing (serving /dist folder built by Vite)
   // Strip query parameters
   const pathname = req.url.split("?")[0];
+
+  // Guard: API routes that weren't matched should never return index.html
+  if (pathname.startsWith("/api/")) {
+    res.writeHead(502, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({
+      success: false,
+      message: "API service endpoint not found or backend service is offline."
+    }));
+    return;
+  }
+
   let filePath = join(__dirname, "dist", pathname === "/" ? "index.html" : pathname);
 
   let exists = existsSync(filePath) && statSync(filePath).isFile();
