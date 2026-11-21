@@ -153,6 +153,26 @@ export default async function handler(req, res) {
 
     console.log(`📨 New lead saved to collection: "${collectionName}" | ${name} (${phone}) — ${service || "General"}`);
 
+    // Automatically sync lead to Google Sheets (non-blocking)
+    const sheetsWebhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL || 'https://script.google.com/macros/s/AKfycbz-fOkpo4YYk3cq4Sa7XjleocgtGn4GoFyasDLnX4aq0jvXxLY1xqZWRWIfG4vZheAX/exec';
+    if (sheetsWebhookUrl) {
+      fetch(sheetsWebhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: doc.name,
+          phone: doc.phone,
+          email: doc.email,
+          service: doc.service,
+          message: doc.message,
+          source: doc.source,
+          date: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })
+        })
+      }).catch(err => {
+        console.warn('Google Sheets sync notice:', err.message);
+      });
+    }
+
     return res.status(201).json({
       success: true,
       message: "Thank you! Our expert will call you within 24 hours.",
