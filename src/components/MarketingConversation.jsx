@@ -295,12 +295,8 @@ export default function MarketingConversation({ className = "" }) {
 
         {/* ── AMAN (Boy Character) ── */}
         <div
-          data-testid="boy-speaker-container"
-          className={`relative w-[48%] sm:w-[50%] max-w-[220px] sm:max-w-[260px] flex-shrink-0 transition-all duration-500 origin-bottom ${
-            isBoyActiveSpeaker
-              ? "scale-105 sm:scale-110 z-10 brightness-[1.04] drop-shadow-xl"
-              : "scale-[0.95] sm:scale-[0.96] opacity-85 hover:opacity-100 brightness-95"
-          }`}
+          className={`relative w-[48%] sm:w-[50%] max-w-[220px] sm:max-w-[260px] flex-shrink-0 transition-transform duration-300 origin-bottom ${isBoyActiveSpeaker ? "scale-[1.02]" : "opacity-95 hover:opacity-100"
+            }`}
         >
           {/* Subtle Ambient Halo when speaking */}
           {isBoyActiveSpeaker && (
@@ -327,12 +323,8 @@ export default function MarketingConversation({ className = "" }) {
 
         {/* ── PRIYA (Girl Character) ── */}
         <div
-          data-testid="girl-speaker-container"
-          className={`relative w-[48%] sm:w-[50%] max-w-[220px] sm:max-w-[260px] flex-shrink-0 -ml-8 sm:-ml-12 transition-all duration-500 origin-bottom ${
-            isGirlActiveSpeaker
-              ? "scale-105 sm:scale-110 z-10 brightness-[1.04] drop-shadow-xl"
-              : "scale-[0.95] sm:scale-[0.96] opacity-85 hover:opacity-100 brightness-95"
-          }`}
+          className={`relative w-[48%] sm:w-[50%] max-w-[220px] sm:max-w-[260px] flex-shrink-0 -ml-8 sm:-ml-12 transition-transform duration-300 origin-bottom ${isGirlActiveSpeaker ? "scale-[1.02]" : "opacity-95 hover:opacity-100"
+            }`}
         >
           {/* Subtle Ambient Halo when speaking */}
           {isGirlActiveSpeaker && (

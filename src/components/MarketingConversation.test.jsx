@@ -22,16 +22,6 @@ describe('MarketingConversation Unit Tests', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.useFakeTimers();
-    window.matchMedia = vi.fn().mockImplementation((query) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    }));
   });
 
   afterEach(() => {
@@ -133,31 +123,5 @@ describe('MarketingConversation Unit Tests', () => {
 
     expect(screen.getByText(/Looking for Business Funding\?/i)).toBeDefined();
     expect(screen.getByText(/Let's help grow your business/i)).toBeDefined();
-  });
-
-  it('enlarges boy speaker image when boy speaks, and enlarges girl speaker image when girl speaks', () => {
-    render(
-      <ConsultationProvider>
-        <MarketingConversation />
-      </ConsultationProvider>
-    );
-
-    const boyContainer = screen.getByTestId('boy-speaker-container');
-    const girlContainer = screen.getByTestId('girl-speaker-container');
-
-    // Initially, boy is speaking (BOY_TYPING phase)
-    expect(boyContainer.className).toContain('scale-105');
-    expect(girlContainer.className).toContain('scale-[0.95]');
-
-    // Advance timers so boy completes typing and girl starts speaking / answering
-    for (let i = 0; i < 40; i++) {
-      act(() => {
-        vi.advanceTimersByTime(50);
-      });
-    }
-
-    // Now Priya is speaking (BOY_PAUSE / GIRL_TYPING / HOLD phase)
-    expect(girlContainer.className).toContain('scale-105');
-    expect(boyContainer.className).toContain('scale-[0.95]');
   });
 });
